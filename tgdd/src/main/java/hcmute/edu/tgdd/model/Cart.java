@@ -2,99 +2,82 @@ package hcmute.edu.tgdd.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Cart {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    private String customerPhone;
+    @Temporal(TemporalType.DATE)
+    private final Date date = new Date();
+    private String request;
+    private String coupon;
+    private int statusId;
 
-  private String customerPhone;
+    public Cart() {
+    }
 
-  @Temporal(TemporalType.DATE)
-  private Date date;
+    public Cart(String customerPhone, String request, String coupon, int statusId) {
+        this.customerPhone = customerPhone;
+        this.request = request;
+        this.coupon = coupon;
+        this.statusId = statusId;
+    }
 
-  private String request;
-  private String coupon;
-  private int statusId;
+    public int getId() {
+        return id;
+    }
 
-  public int getId() {
-    return id;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
 
-  public String getCustomerPhone() {
-    return customerPhone;
-  }
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
 
-  public void setCustomerPhone(String customerPhone) {
-    this.customerPhone = customerPhone;
-  }
+    public Date getDate() {
+        return date;
+    }
 
-  public Date getDate() {
-    return date;
-  }
+    public String getRequest() {
+        return request;
+    }
 
-  public void setDate(Date date) {
-    this.date = date;
-  }
+    public void setRequest(String request) {
+        this.request = request;
+    }
 
-  public String getRequest() {
-    return request;
-  }
+    public String getCoupon() {
+        return coupon;
+    }
 
-  public void setRequest(String request) {
-    this.request = request;
-  }
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
+    }
 
-  public String getCoupon() {
-    return coupon;
-  }
+    public int getStatusId() {
+        return statusId;
+    }
 
-  public void setCoupon(String coupon) {
-    this.coupon = coupon;
-  }
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
 
-  public int getStatusId() {
-    return statusId;
-  }
-
-  public void setStatusId(int statusId) {
-    this.statusId = statusId;
-  }
-
-  public Cart() {}
-
-  public Cart(String customerPhone, Date date, String request, String coupon, int statusId) {
-    this.customerPhone = customerPhone;
-    this.date = date;
-    this.request = request;
-    this.coupon = coupon;
-    this.statusId = statusId;
-  }
-
-  @Override
-  public String toString() {
-    return "Cart{"
-        + "id="
-        + id
-        + ", customerPhone='"
-        + customerPhone
-        + '\''
-        + ", date="
-        + date
-        + ", request='"
-        + request
-        + '\''
-        + ", coupon='"
-        + coupon
-        + '\''
-        + ", statusId="
-        + statusId
-        + '}';
-  }
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", customerPhone='" + customerPhone + '\'' +
+                ", date=" + date +
+                ", request='" + request + '\'' +
+                ", coupon='" + coupon + '\'' +
+                ", statusId=" + statusId +
+                '}';
+    }
 }

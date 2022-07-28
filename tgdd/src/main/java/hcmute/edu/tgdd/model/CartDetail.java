@@ -7,65 +7,61 @@ import javax.persistence.Id;
 
 @Entity
 public class CartDetail {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private int productId;
+	private int quantity;
+	private int cartId;
 
-  private int productId;
-  private int quantity;
-  private int cartId;
+	public CartDetail() {
+	}
 
-  public int getId() {
-    return id;
-  }
+	public CartDetail(int productId, int quantity, int cartId) {
+		this.productId = productId;
+		this.quantity = quantity;
+		this.cartId = cartId;
+	}
 
-  public void setId(int id) {
-    this.id = id;
-  }
+	public int getId() {
+		return id;
+	}
 
-  public int getProductId() {
-    return productId;
-  }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-  public void setProductId(int productId) {
-    this.productId = productId;
-  }
+	public int getProductId() {
+		return productId;
+	}
 
-  public int getQuantity() {
-    return quantity;
-  }
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
 
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
-  }
+	public int getQuantity() {
+		return quantity;
+	}
 
-  public int getCartId() {
-    return cartId;
-  }
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
-  public void setCartId(int cartId) {
-    this.cartId = cartId;
-  }
+	public int getCartId() {
+		return cartId;
+	}
 
-  public CartDetail() {}
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
 
-  public CartDetail(int productId, int quantity, int cartId) {
-    this.productId = productId;
-    this.quantity = quantity;
-    this.cartId = cartId;
-  }
-
-  @Override
-  public String toString() {
-    return "CartDetail{"
-        + "id="
-        + id
-        + ", productId="
-        + productId
-        + ", quantity="
-        + quantity
-        + ", cartId="
-        + cartId
-        + '}';
-  }
+	@Override
+	public String toString() {
+		return "CartDetail{" +
+				"id=" + id +
+				", productId=" + productId +
+				", quantity=" + quantity +
+				", cartId=" + cartId +
+				'}';
+	}
 }
