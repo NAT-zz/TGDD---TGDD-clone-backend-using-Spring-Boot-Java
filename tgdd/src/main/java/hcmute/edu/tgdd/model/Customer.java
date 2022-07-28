@@ -5,7 +5,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Customer {
-  @Id private String phone;
+  @Id
+  private String phone;
   private String fullName;
   private String address;
   private boolean gender;
