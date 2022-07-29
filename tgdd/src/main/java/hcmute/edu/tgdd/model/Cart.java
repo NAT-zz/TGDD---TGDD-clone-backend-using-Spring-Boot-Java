@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String customerPhone;
     @Temporal(TemporalType.DATE)
