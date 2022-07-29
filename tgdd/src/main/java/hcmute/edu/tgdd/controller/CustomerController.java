@@ -1,8 +1,8 @@
-package hcmute.edu.tgdd.controllers;
+package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Customer;
 import hcmute.edu.tgdd.model.ResponseObjectHttpStatus;
-import hcmute.edu.tgdd.repositiories.CustomerRepository;
+import hcmute.edu.tgdd.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

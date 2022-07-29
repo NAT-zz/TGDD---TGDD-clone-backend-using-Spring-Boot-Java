@@ -1,4 +1,4 @@
-package hcmute.edu.tgdd.repositiories;
+package hcmute.edu.tgdd.repository;
 
 import hcmute.edu.tgdd.model.Nation;
 import org.springframework.data.jpa.repository.JpaRepository;
