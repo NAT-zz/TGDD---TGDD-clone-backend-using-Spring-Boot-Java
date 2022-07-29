@@ -1,5 +1,6 @@
 package hcmute.edu.tgdd.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,8 @@ public class Kind {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-
+  
+  @Column(nullable = false, unique = true)
   private String name;
 
   public int getId() {
