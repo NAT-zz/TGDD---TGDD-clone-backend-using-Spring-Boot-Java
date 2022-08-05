@@ -1,7 +1,7 @@
 package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Cart;
-import hcmute.edu.tgdd.model.ResponseObject;
+import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.service.CartServiceImpl;
 import hcmute.edu.tgdd.utils.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,50 +18,50 @@ public class CartController {
 
 	// get all Cart
 	@GetMapping("")
-	ResponseObject getAllCart() {
+	DataResponse getAllCart() {
 		List<Cart> foundListCart = cartService.getAllCart();
 		if (foundListCart.size() > 0) {
-			return new ResponseObject("200 OK", "Get all Cart succesfully", foundListCart);
+			return new DataResponse(foundListCart);
 		}
-		return new ResponseObject("404 Not Found", "No Cart found", "");
+		return new DataResponse("400", "No Cart found", 200);
 	}
 
 	// find Cart by id
 	@GetMapping("/{id}")
-	ResponseObject findById(@PathVariable Integer id) {
+	DataResponse findById(@PathVariable Integer id) {
 		Optional<Cart> foundCart = cartService.findById(id);
 		return foundCart.isPresent() ?
-				new ResponseObject("200 OK", "Find Cart by id succesfully", foundCart)
+				new DataResponse(foundCart)
 				:
-				new ResponseObject("404 Not Found", "Cannot find Cart with id = " + id, "");
+				new DataResponse("400", "Cannot find Cart with id = " + id, 200);
 	}
 
 	// insert new Cart
 	@PostMapping("/insert")
-	ResponseObject insertCart(@RequestBody Cart newCart) {
+	DataResponse insertCart(@RequestBody Cart newCart) {
 		if(Validate.isPhone(newCart.getCustomerPhone())) {
-			return new ResponseObject("200 OK", "Insert Cart successfully", cartService.insertCart(newCart));
+			return new DataResponse(cartService.insertCart(newCart));
 		}
-		return new ResponseObject("400 Bad Request", "Invalid customer phone field", "");
+		return new DataResponse("400", "Invalid customer phone field", 200);
 	}
 
 	// update Cart if found, otherwise insert
 	@PutMapping("/{id}")
-	ResponseObject updateCart(@RequestBody Cart newCart, @PathVariable Integer id) {
+	DataResponse updateCart(@RequestBody Cart newCart, @PathVariable Integer id) {
 		if(Validate.isPhone(newCart.getCustomerPhone())) {
 			Cart updatedCart = cartService.updateCart(newCart, id);
-			return new ResponseObject("200 OK", "Update Cart successfully", updatedCart);
+			return new DataResponse(updatedCart);
 		}
-		return new ResponseObject("400 Bad Request", "Invalid customer phone field", "");
+		return new DataResponse("400", "Invalid customer phone field", 200);
 	}
 
 	// delete a Cart by id
 	@DeleteMapping("/{id}")
-	ResponseObject deleteCart(@PathVariable Integer id) {
+	DataResponse deleteCart(@PathVariable Integer id) {
 		if (cartService.existsById(id)) {
 			cartService.deleteCart(id);
-			return new ResponseObject("200 OK", "Delete Cart successfully", "");
+			return new DataResponse("");
 		}
-		return new ResponseObject("404 Not Found", "Cannot find Cart to delete", "");
+		return new DataResponse("400", "Cannot find Cart with id = " + id + " to delete", 200);
 	}
 }
