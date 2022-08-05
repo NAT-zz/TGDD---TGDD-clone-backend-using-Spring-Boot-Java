@@ -23,7 +23,9 @@ public class SampleData {
           AdminRepository adminRepository,
           KindRepository kindRepository,
           CartRepository cartRepository,
-          CartDetailRepository cartDetailRepository) {
+          CartDetailRepository cartDetailRepository,
+          ProductRepository productRepository,
+          StatusRepository statusRepository) {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
@@ -61,6 +63,20 @@ public class SampleData {
         CartDetail cartDetail2 = new CartDetail(2, 2, 2);
         logger.info("insert data: " + cartDetailRepository.save(cartDetail1));
         logger.info("insert data: " + cartDetailRepository.save(cartDetail2));
+        Product product1 = new Product("Iphone 13",1,1,1200,34,10,"iphone_13.png","iphone_13.mp4","Äáº¯t",1);
+        Product product2 = new Product("Iphone 14",2,1,1200,34,10,"iphone_14.png","iphone_14.mp4","Äáº¯t",1);
+        logger.info("insert data: " + productRepository.save(product1));
+        logger.info("insert data: " + productRepository.save(product2));
+
+        Status status1 = new Status("Chờ xác nhận");
+        Status status2 = new Status("Đang giao");
+        Status status3 = new Status("Đã nhận");
+        Status status4 = new Status("Đã hủy");
+        logger.info("insert data: " + statusRepository.save(status1));
+        logger.info("insert data: " + statusRepository.save(status2));
+        logger.info("insert data: " + statusRepository.save(status3));
+        logger.info("insert data: " + statusRepository.save(status4));
+
       }
     };
   }
