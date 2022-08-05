@@ -36,16 +36,16 @@ public class StatusController {
 
     }
     @PostMapping("/insert")
-    ResponseObject insertStatus(@RequestBody Status status){
+    DataResponse insertStatus(@RequestBody Status status){
         List<Status> listStatus = statusService.findByDescription(status.getDescription().trim());
         if(listStatus.size() > 0){
-            return new ResponseObject("Failed","Status description already taken ","");
+            throw new RuntimeException("Status description already taken");
         }
-        return new ResponseObject("Ok","Insert status successfully",statusService.save(status));
+        return new DataResponse(statusService.save(status));
     }
 
     @PutMapping("/{id}")
-    ResponseObject updateStatus(@RequestBody Status newStatus, @PathVariable Integer id){
+    DataResponse updateStatus(@RequestBody Status newStatus, @PathVariable Integer id){
         Status updateStatus = statusService.findById(id)
                 .map(status -> {
                     status.setDescription(newStatus.getDescription());
@@ -54,16 +54,16 @@ public class StatusController {
                     newStatus.setId(id);
                     return statusService.save(newStatus);
                 });
-        return new ResponseObject("Ok","Update status successfully",updateStatus);
+        return new DataResponse(updateStatus);
     }
     @DeleteMapping("/{id}")
-    ResponseObject deleteStatus(@PathVariable Integer id){
+    DataResponse deleteStatus(@PathVariable Integer id){
         boolean exists = statusService.existsById(id);
         if (exists) {
             statusService.deleteById(id);
-            return new ResponseObject("Ok","Delete Status successfully","");
+            return new DataResponse("");
 
         }
-        return new ResponseObject("Failed","Cannot find status to delete","");
+        throw  new RuntimeException("Cannot find status to delete");
     }
 }
