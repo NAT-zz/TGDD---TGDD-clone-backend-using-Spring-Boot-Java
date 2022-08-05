@@ -1,5 +1,6 @@
 package hcmute.edu.tgdd.controller;
 
+import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Status;
 import hcmute.edu.tgdd.model.ResponseObject;
 import hcmute.edu.tgdd.service.StatusService;
@@ -18,18 +19,20 @@ public class StatusController {
 
     @GetMapping("")
         //    List<Status> getAllStatus() { return statusService.getAllStatus(); }
-    ResponseObject getAllStatus()
+    DataResponse getAllStatus()
     {
         List<Status> listStatus = statusService.getAllStatus();
-        return new ResponseObject("0k","Get all status successfully",listStatus);
+        //return new ResponseObject("0k","Get all status successfully",listStatus);
+        return new DataResponse(listStatus);
     }
 
     @GetMapping("/{id}")
-    ResponseObject findById(@PathVariable Integer id){
+    DataResponse findById(@PathVariable Integer id) {
         Optional<Status> foundStatus = statusService.findById(id);
-        return foundStatus.isPresent() ?
-                new ResponseObject("Ok","Query status successfully",foundStatus):
-                new ResponseObject("Failed","Cannot find status with id = "+id,"");
+        if (foundStatus.isPresent())
+            return new DataResponse(foundStatus);
+        else
+            throw new RuntimeException("Cannot find status with id = " + id);
 
     }
     @PostMapping("/insert")
