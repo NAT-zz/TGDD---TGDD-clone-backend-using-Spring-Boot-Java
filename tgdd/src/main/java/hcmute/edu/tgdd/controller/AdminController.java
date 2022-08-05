@@ -49,7 +49,7 @@ public class AdminController {
 		Admin updateAdmin = null;
 		try
 		{
-			updateAdmin = adminService.updateAdminById(newAdmin, id);
+			//updateAdmin = adminService.updateAdminById(newAdmin, id);
 		}catch (Exception e) {
 			return new ResponseObject("404 Not Found", "Admin not found or duplicate data" + id, "");
 		}
