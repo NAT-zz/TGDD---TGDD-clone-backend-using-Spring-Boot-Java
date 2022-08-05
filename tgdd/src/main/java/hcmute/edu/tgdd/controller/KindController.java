@@ -64,7 +64,7 @@ public class KindController {
 		Kind updateKind = null;
 		try
 		{
-			updateKind = kindService.updateKindById(newKind, id);
+			//updateKind = kindService.updateKindById(newKind, id);
 		}catch (Exception e) {
 			return new ResponseObject("404 Not Found", "Kind not found or duplicate data", "");
 		}

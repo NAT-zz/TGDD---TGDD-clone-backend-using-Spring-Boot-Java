@@ -32,21 +32,21 @@ public class AdminService {
 	public Admin updateOrInsert(Admin admin) {
 		return adminRepository.save(admin);
 	}
-	public Admin updateAdminById(Admin newAdmin, int id) throws Exception{
+/*	public Admin updateAdminById(Admin newAdmin, int id) throws Exception{
 		Admin updateAdmin = findAdminById(id)
 				.map(admin -> {
 					admin.setAddress(newAdmin.getAddress());
 					admin.setFullname(newAdmin.getFullname());
 					admin.setEmail(newAdmin.getEmail());
 					admin.setPhone(newAdmin.getPhone());
-					
+
 					admin.setUsername(newAdmin.getUsername());
 					admin.setPassword(newAdmin.getPassword());
-					
+
 					return updateOrInsert(newAdmin);
 				}).orElseThrow();
 		return updateAdmin;
-	}
+	}*/
 	public void deleteAdminById(int id) throws Exception{
 		adminRepository.deleteById(id);
 	}

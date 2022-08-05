@@ -2,7 +2,7 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.model.ResponseObject;
-import hcmute.edu.tgdd.repository.CartDetailRepository;
+import hcmute.edu.tgdd.service.CartDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +13,12 @@ import java.util.Optional;
 @RequestMapping(path = "api/CartDetail")
 public class CartDetailController {
 	@Autowired
-	private CartDetailRepository repository;
+	private CartDetailServiceImpl cartDetailService;
 
 	// get all CartDetail
 	@GetMapping("")
 	ResponseObject getAllCartDetail() {
-		List<CartDetail> foundListCartDetail = repository.findAll();
+		List<CartDetail> foundListCartDetail = cartDetailService.getAllCartDetail();
 		if (foundListCartDetail.size() > 0) {
 			return new ResponseObject("200 OK", "Get all Cart Detail succesfully", foundListCartDetail);
 		}
@@ -28,41 +28,32 @@ public class CartDetailController {
 	// find CartDetail by id
 	@GetMapping("/{id}")
 	ResponseObject findById(@PathVariable Integer id) {
-		Optional<CartDetail> foundCartDetail = repository.findById(id);
+		Optional<CartDetail> foundCartDetail = cartDetailService.findById(id);
 		return foundCartDetail.isPresent() ?
-				new ResponseObject("200 OK", "Find CartDetail by id succesfully", foundCartDetail)
+				new ResponseObject("200 OK", "Find Cart Detail by id succesfully", foundCartDetail)
 				:
-				new ResponseObject("404 Not Found", "Cannot find CartDetail with id = " + id, "");
+				new ResponseObject("404 Not Found", "Cannot find Cart Detail with id = " + id, "");
 	}
 
 	// insert new CartDetail
 	@PostMapping("/insert")
 	ResponseObject insertCartDetail(@RequestBody CartDetail newCartDetail) {
-		return new ResponseObject("200 OK", "Insert CartDetail successfully", repository.save(newCartDetail));
+		return new ResponseObject("200 OK", "Insert Cart Detail successfully", cartDetailService.insertCartDetail(newCartDetail));
 	}
 
 	// update CartDetail if found, otherwise insert
 	@PutMapping("/{id}")
 	ResponseObject updateCartDetail(@RequestBody CartDetail newCartDetail, @PathVariable Integer id) {
-		CartDetail updatedCartDetail = repository.findById(id)
-				.map(CartDetail -> {
-					CartDetail.setProductId(newCartDetail.getProductId());
-					CartDetail.setQuantity(newCartDetail.getQuantity());
-					CartDetail.setCartId(newCartDetail.getCartId());
-					return repository.save(CartDetail);
-				}).orElseGet(() -> {
-					newCartDetail.setId(id);
-					return repository.save(newCartDetail);
-				});
-		return new ResponseObject("200 OK", "Update CartDetail successfully", updatedCartDetail);
+		CartDetail updatedCartDetail = cartDetailService.updateCartDetail(newCartDetail, id);
+		return new ResponseObject("200 OK", "Update Cart Detail successfully", updatedCartDetail);
 	}
 
 	// delete a CartDetail by id
 	@DeleteMapping("/{id}")
 	ResponseObject deleteCartDetail(@PathVariable Integer id) {
-		boolean exists = repository.existsById(id);
+		boolean exists = cartDetailService.existsById(id);
 		if (exists) {
-			repository.deleteById(id);
+			cartDetailService.deleteCartDetail(id);
 			return new ResponseObject("200 OK", "Delete CartDetail successfully", "");
 		}
 		return new ResponseObject("404 Not Found", "Cannot find CartDetail to delete", "");

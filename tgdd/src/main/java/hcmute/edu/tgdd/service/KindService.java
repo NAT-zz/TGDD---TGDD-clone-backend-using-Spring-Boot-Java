@@ -50,12 +50,12 @@ public class KindService {
 	public boolean kindExistedById(int id) {
 		return kindRepository.existsById(id);
 	}
-	public Kind updateKindById(Kind newKind, int id) throws Exception{
-		Kind updateKind = findKindById(id)
-				.map(kind -> {
-					kind.setName(newKind.getName());
-					return updateOrinsert(kind);
-				}).orElseThrow();
-		return updateKind;
-	}
+//	public Kind updateKindById(Kind newKind, int id) throws Exception{
+//		Kind updateKind = findKindById(id)
+//				.map(kind -> {
+//					kind.setName(newKind.getName());
+//					return updateOrinsert(kind);
+//				}).orElseThrow();
+//		return updateKind;
+//	}
 }

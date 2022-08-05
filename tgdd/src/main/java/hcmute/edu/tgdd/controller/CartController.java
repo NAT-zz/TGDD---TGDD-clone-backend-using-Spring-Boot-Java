@@ -2,25 +2,24 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.model.ResponseObject;
-import hcmute.edu.tgdd.repository.CartRepository;
+import hcmute.edu.tgdd.service.CartServiceImpl;
+import hcmute.edu.tgdd.utils.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(path = "api/Cart")
 public class CartController {
 	@Autowired
-	private CartRepository repository;
+	private CartServiceImpl cartService;
 
 	// get all Cart
 	@GetMapping("")
 	ResponseObject getAllCart() {
-		List<Cart> foundListCart = repository.findAll();
+		List<Cart> foundListCart = cartService.getAllCart();
 		if (foundListCart.size() > 0) {
 			return new ResponseObject("200 OK", "Get all Cart succesfully", foundListCart);
 		}
@@ -30,7 +29,7 @@ public class CartController {
 	// find Cart by id
 	@GetMapping("/{id}")
 	ResponseObject findById(@PathVariable Integer id) {
-		Optional<Cart> foundCart = repository.findById(id);
+		Optional<Cart> foundCart = cartService.findById(id);
 		return foundCart.isPresent() ?
 				new ResponseObject("200 OK", "Find Cart by id succesfully", foundCart)
 				:
@@ -40,43 +39,27 @@ public class CartController {
 	// insert new Cart
 	@PostMapping("/insert")
 	ResponseObject insertCart(@RequestBody Cart newCart) {
-		newCart.setStatusId(0);
-		Pattern pattern = Pattern.compile("^\\d{10}$");
-		Matcher matcher = pattern.matcher(newCart.getCustomerPhone());
-		if(!matcher.matches()) {
-			return new ResponseObject("400 Bad Request", "Invalid customer phone field", "");
+		if(Validate.isPhone(newCart.getCustomerPhone())) {
+			return new ResponseObject("200 OK", "Insert Cart successfully", cartService.insertCart(newCart));
 		}
-		return new ResponseObject("200 OK", "Insert Cart successfully", repository.save(newCart));
+		return new ResponseObject("400 Bad Request", "Invalid customer phone field", "");
 	}
 
 	// update Cart if found, otherwise insert
 	@PutMapping("/{id}")
 	ResponseObject updateCart(@RequestBody Cart newCart, @PathVariable Integer id) {
-		Pattern pattern = Pattern.compile("^\\d{10}$");
-		Matcher matcher = pattern.matcher(newCart.getCustomerPhone());
-		if(!matcher.matches()) {
-			return new ResponseObject("400 Bad Request", "Invalid customer phone field", "");
+		if(Validate.isPhone(newCart.getCustomerPhone())) {
+			Cart updatedCart = cartService.updateCart(newCart, id);
+			return new ResponseObject("200 OK", "Update Cart successfully", updatedCart);
 		}
-		Cart updatedCart = repository.findById(id)
-				.map(Cart -> {
-					Cart.setCustomerPhone(newCart.getCustomerPhone());
-					Cart.setRequest(newCart.getRequest());
-					Cart.setCoupon(newCart.getCoupon());
-					Cart.setStatusId(newCart.getStatusId());
-					return repository.save(Cart);
-				}).orElseGet(() -> {
-					newCart.setStatusId(0);
-					return repository.save(newCart);
-				});
-		return new ResponseObject("200 OK", "Update Cart successfully", updatedCart);
+		return new ResponseObject("400 Bad Request", "Invalid customer phone field", "");
 	}
 
 	// delete a Cart by id
 	@DeleteMapping("/{id}")
 	ResponseObject deleteCart(@PathVariable Integer id) {
-		boolean exists = repository.existsById(id);
-		if (exists) {
-			repository.deleteById(id);
+		if (cartService.existsById(id)) {
+			cartService.deleteCart(id);
 			return new ResponseObject("200 OK", "Delete Cart successfully", "");
 		}
 		return new ResponseObject("404 Not Found", "Cannot find Cart to delete", "");
