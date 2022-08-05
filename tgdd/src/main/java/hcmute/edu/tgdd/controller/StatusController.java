@@ -1,5 +1,6 @@
 package hcmute.edu.tgdd.controller;
 
+import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Status;
 import hcmute.edu.tgdd.model.ResponseObject;
 import hcmute.edu.tgdd.service.StatusService;
@@ -18,31 +19,33 @@ public class StatusController {
 
     @GetMapping("")
         //    List<Status> getAllStatus() { return statusService.getAllStatus(); }
-    ResponseObject getAllStatus()
+    DataResponse getAllStatus()
     {
         List<Status> listStatus = statusService.getAllStatus();
-        return new ResponseObject("0k","Get all status successfully",listStatus);
+        //return new ResponseObject("0k","Get all status successfully",listStatus);
+        return new DataResponse(listStatus);
     }
 
     @GetMapping("/{id}")
-    ResponseObject findById(@PathVariable Integer id){
+    DataResponse findById(@PathVariable Integer id) {
         Optional<Status> foundStatus = statusService.findById(id);
-        return foundStatus.isPresent() ?
-                new ResponseObject("Ok","Query status successfully",foundStatus):
-                new ResponseObject("Failed","Cannot find status with id = "+id,"");
+        if (foundStatus.isPresent())
+            return new DataResponse(foundStatus);
+        else
+            throw new RuntimeException("Cannot find status with id = " + id);
 
     }
     @PostMapping("/insert")
-    ResponseObject insertStatus(@RequestBody Status status){
+    DataResponse insertStatus(@RequestBody Status status){
         List<Status> listStatus = statusService.findByDescription(status.getDescription().trim());
         if(listStatus.size() > 0){
-            return new ResponseObject("Failed","Status description already taken ","");
+            throw new RuntimeException("Status description already taken");
         }
-        return new ResponseObject("Ok","Insert status successfully",statusService.save(status));
+        return new DataResponse(statusService.save(status));
     }
 
     @PutMapping("/{id}")
-    ResponseObject updateStatus(@RequestBody Status newStatus, @PathVariable Integer id){
+    DataResponse updateStatus(@RequestBody Status newStatus, @PathVariable Integer id){
         Status updateStatus = statusService.findById(id)
                 .map(status -> {
                     status.setDescription(newStatus.getDescription());
@@ -51,16 +54,16 @@ public class StatusController {
                     newStatus.setId(id);
                     return statusService.save(newStatus);
                 });
-        return new ResponseObject("Ok","Update status successfully",updateStatus);
+        return new DataResponse(updateStatus);
     }
     @DeleteMapping("/{id}")
-    ResponseObject deleteStatus(@PathVariable Integer id){
+    DataResponse deleteStatus(@PathVariable Integer id){
         boolean exists = statusService.existsById(id);
         if (exists) {
             statusService.deleteById(id);
-            return new ResponseObject("Ok","Delete Status successfully","");
+            return new DataResponse("");
 
         }
-        return new ResponseObject("Failed","Cannot find status to delete","");
+        throw  new RuntimeException("Cannot find status to delete");
     }
 }
