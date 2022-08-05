@@ -1,10 +1,14 @@
 package hcmute.edu.tgdd;
 
+import hcmute.edu.tgdd.model.Admin;
 import hcmute.edu.tgdd.model.Company;
 import hcmute.edu.tgdd.model.Customer;
+import hcmute.edu.tgdd.model.Kind;
 import hcmute.edu.tgdd.model.Nation;
+import hcmute.edu.tgdd.repository.AdminRepository;
 import hcmute.edu.tgdd.repository.CompanyRepository;
 import hcmute.edu.tgdd.repository.CustomerRepository;
+import hcmute.edu.tgdd.repository.KindRepository;
 import hcmute.edu.tgdd.repository.NationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,16 +21,18 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SampleData {
-//  private static final Logger logger = LoggerFactory.getLogger(SampleData.class);
-//
-//  @Bean
-//  CommandLineRunner initDatabase(
-//      CompanyRepository companyRepository,
-//      NationRepository nationRepository,
-//      CustomerRepository customerRepository) {
-//    return new CommandLineRunner() {
-//      @Override
-//      public void run(String... args) throws Exception {
+  private static final Logger logger = LoggerFactory.getLogger(SampleData.class);
+
+  @Bean
+  CommandLineRunner initDatabase(
+      CompanyRepository companyRepository,
+      NationRepository nationRepository,
+      CustomerRepository customerRepository,
+      AdminRepository adminRepository,
+      KindRepository kindRepository) {
+    return new CommandLineRunner() {
+      @Override
+      public void run(String... args) throws Exception {
 //        Company productA = new Company("SmartPhone");
 //        Company productB = new Company("TV");
 //        logger.info("insert data: " + companyRepository.save(productA));
@@ -41,7 +47,17 @@ public class SampleData {
 //        Customer cuB = new Customer("7891023", "B", "B", false);
 //        logger.info("insert data: " + customerRepository.save(cuA));
 //        logger.info("insert data: " + customerRepository.save(cuB));
-//      }
-//    };
-//  }
+//        
+//        Admin adA = new Admin("admin a", "123", "nguyen van a", "012345", "HCM", "adminA@gmail.com");
+//        Admin adB = new Admin("admin b", "1234", "nguyen van b", "012354", "HN", "adminB@gmail.com");
+//        logger.info("insert data: " + adminRepository.save(adA));
+//        logger.info("insert data: " + adminRepository.save(adB));
+    	  
+//    	  Kind kindA = new Kind("kind 01");
+//    	  Kind kindB = new Kind("kind 02");
+//    	  logger.info("insert data: " + kindRepository.save(kindA));
+//    	  logger.info("insert data: " + kindRepository.save(kindB));
+      }
+    };
+  }
 }
