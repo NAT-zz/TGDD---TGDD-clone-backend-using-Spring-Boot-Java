@@ -1,13 +1,12 @@
 package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Customer;
-import hcmute.edu.tgdd.model.ResponseObjectHttpStatus;
+import hcmute.edu.tgdd.model.ResponseObject;
 import hcmute.edu.tgdd.repository.CustomerRepository;
+import hcmute.edu.tgdd.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,80 +17,88 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/Customer")
 public class CustomerController {
-    @Autowired private CustomerRepository customerRepository;
+  @Autowired private CustomerService customerService;
 
-    @GetMapping("/CustomerList")
-    List<Customer> getCustomer() {
-        return customerRepository.findAll();
+  @GetMapping("")
+  List<Customer> getCustomer() {
+    return customerService.getAllCustomers();
+  } // adjust here
+
+  @GetMapping("/{phone}")
+  ResponseObject findById(@PathVariable String phone) {
+    List<Customer> foundCustomer = customerService.findByPhone(phone.trim());
+    if (foundCustomer.size() > 0) {
+      return new ResponseObject(
+          HttpStatus.OK.toString(), "Query customer successfully", foundCustomer);
+    } else {
+      return new ResponseObject(
+          HttpStatus.NOT_FOUND.toString(), "Cannot find product phone with phone = " + phone, "");
+    }
+  }
+
+  @PostMapping("/insert")
+  ResponseObject insertCustomer(@RequestBody Customer customer) {
+    // Check if phone number is null
+    if (customer.getPhone() == null) {
+      return new ResponseObject(
+          HttpStatus.NOT_IMPLEMENTED.toString(), "Please enter your phone number", "");
     }
 
-    @GetMapping("/{phone}")
-    ResponseObjectHttpStatus findById(@PathVariable String phone) {
-        Optional<Customer> foundCustomer = customerRepository.findById(phone.trim());
-        if (foundCustomer.isPresent()) {
-            return new ResponseObjectHttpStatus(HttpStatus.OK, "Query customer successfully", foundCustomer);
-        } else {
-            return new ResponseObjectHttpStatus(HttpStatus.NOT_FOUND, "Cannot find product phone with phone = " + phone, "");
-        }
+    // Check phone exists or not
+    List<Customer> check = customerService.findByPhone(customer.getPhone().trim()); // adjust here
+    if (check.size() > 0) {
+      return new ResponseObject(
+          HttpStatus.NOT_IMPLEMENTED.toString(), "Customer has already exist", "");
     }
 
-    @PostMapping("/insert")
-    ResponseObjectHttpStatus insertCustomer(@RequestBody Customer customer) {
-        // Check if phone number is null
-        if(customer.getPhone() == null){
-            return new ResponseObjectHttpStatus(HttpStatus.NOT_IMPLEMENTED, "Please enter your phone number", "");
-        }
+    // Check length of phone number (max = 10)
+    if (customer.getPhone().length() > 10)
+      return new ResponseObject(
+          HttpStatus.NOT_IMPLEMENTED.toString(), "Phone number is too long (max length = 10)", "");
 
-        // Check phone exists or not
-        List<Customer> check = customerRepository.findByPhone(customer.getPhone().trim());
-        if (check.size() > 0) {
-            return new ResponseObjectHttpStatus(HttpStatus.NOT_IMPLEMENTED, "Customer has already exist", "");
-        }
+    // Add data
+    return new ResponseObject(
+        HttpStatus.OK.toString(), "Insert customer successfully", customerService.save(customer));
+  }
 
-        // Check length of phone number (max = 10)
-        if(customer.getPhone().length() > 10)
-            return new ResponseObjectHttpStatus(HttpStatus.NOT_IMPLEMENTED, "Phone number is too long (max length = 10)", "");
-
-        // Add data
-        return new ResponseObjectHttpStatus(
-                HttpStatus.OK, "Insert customer successfully", customerRepository.save(customer));
+  @PutMapping("/{phone}")
+  ResponseObject updateCustomer(@RequestBody Customer newCustomer, @PathVariable String phone) {
+    // Check phone exists or not
+    // Optional<Customer> foundCustomers = customerRepository.findById(phone);
+    List<Customer> foundCustomer = customerService.findByPhone(phone.trim()); // adjust here
+    if (foundCustomer.size() == 0) {
+      return new ResponseObject(HttpStatus.NOT_FOUND.toString(), "Customer does not exist", "");
     }
 
-    @PutMapping("/update/{phone}")
-    ResponseObjectHttpStatus updateCustomer(@RequestBody Customer newCustomer, @PathVariable String phone) {
-        // Check phone exists or not
-        Optional<Customer> foundCustomers = customerRepository.findById(phone);
-        if (!foundCustomers.isPresent()) {
-            return new ResponseObjectHttpStatus(HttpStatus.NOT_FOUND, "Customer does not exist", "");
-        }
+    // Execute update customer name
+    Customer updatedCustomer =
+        customerService
+            .findById(phone)
+            .map(
+                customer -> {
+                  // customer.setPhone(newCustomer.getPhone());
+                  customer.setFullName(newCustomer.getFullName());
+                  customer.setAddress(newCustomer.getAddress());
+                  customer.setGender(newCustomer.isGender());
+                  return customerService.save(customer);
+                })
+            .orElseGet(
+                () -> {
+                  newCustomer.setPhone(phone);
+                  return customerService.save(newCustomer);
+                });
+    return new ResponseObject(
+        HttpStatus.OK.toString(), "Update customer successfully", updatedCustomer);
+  }
 
-        // Execute update customer name
-        Customer updatedCustomer =
-                customerRepository
-                        .findById(phone)
-                        .map(
-                                customer -> {
-                                    //customer.setPhone(newCustomer.getPhone());
-                                    customer.setFullName(newCustomer.getFullName());
-                                    customer.setAddress(newCustomer.getAddress());
-                                    customer.setGender(newCustomer.isGender());
-                                    return customerRepository.save(customer);
-                                })
-                        .orElseGet(
-                                () -> {
-                                    newCustomer.setPhone(phone);
-                                    return customerRepository.save(newCustomer);
-                                });
-        return new ResponseObjectHttpStatus(HttpStatus.OK, "Update customer successfully", updatedCustomer);
+  @DeleteMapping("/{phone}")
+  ResponseObject deleteCustomer(@PathVariable String phone) {
+    boolean exists = customerService.existsByPhone(phone);
+    if (exists) { // Check phone exists or not
+      customerService.deleteByPhone(phone);
+      return new ResponseObject(HttpStatus.OK.toString(), "Delete customer successfully", "");
     }
-
-    @DeleteMapping("/delete/{phone}")
-    ResponseObjectHttpStatus deleteCustomer(@PathVariable String phone) {
-        boolean exists = customerRepository.existsById(phone);
-        if (exists) { // Check phone exists or not
-            customerRepository.deleteById(phone);
-            return new ResponseObjectHttpStatus(HttpStatus.OK, "Delete customer successfully", "");
-        }
-        return new ResponseObjectHttpStatus(HttpStatus.NOT_FOUND, "Cannot find customer to delete", "");
-    }
+    return new ResponseObject(
+        HttpStatus.NOT_FOUND.toString(), "Cannot find customer to delete", "");
+  }
 }

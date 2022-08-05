@@ -1,8 +1,9 @@
 package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Company;
-import hcmute.edu.tgdd.model.ResponseObjectHttpStatus;
+import hcmute.edu.tgdd.model.ResponseObject;
 import hcmute.edu.tgdd.repository.CompanyRepository;
+import hcmute.edu.tgdd.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,74 +14,78 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/Company")
 public class CompanyController {
-  @Autowired private CompanyRepository companyRepository;
+  @Autowired private CompanyService companyService;
 
-  @GetMapping("/CompanyList")
+  @GetMapping("")
   List<Company> getCompany() {
-    return companyRepository.findAll();
+    return companyService.getAllCompanies();
   }
 
   @GetMapping("/{id}")
-  ResponseObjectHttpStatus findById(@PathVariable int id) {
-    Optional<Company> foundCompany = companyRepository.findById(id);
+  ResponseObject findById(@PathVariable int id) {
+    Optional<Company> foundCompany = companyService.findById(id);
     if (foundCompany.isPresent()) {
-      return new ResponseObjectHttpStatus(HttpStatus.OK, "Query company successfully", foundCompany);
+      return new ResponseObject(
+          HttpStatus.OK.toString(), "Query company successfully", foundCompany);
     } else {
-      return new ResponseObjectHttpStatus(HttpStatus.NOT_FOUND, "Cannot find product id with id = " + id, "");
+      return new ResponseObject(
+          HttpStatus.NOT_FOUND.toString(), "Cannot find product id with id = " + id, "");
     }
   }
 
   @PostMapping("/insert")
-  ResponseObjectHttpStatus insertCompany(@RequestBody Company company) {
+  ResponseObject insertCompany(@RequestBody Company company) {
     // Check id exists or not
     // These codes are not working
-    /* Optional<Company> check = companyRepository.findById(company.getId());
+    /* Optional<Company> check = companyService.findById(company.getId());
     if (!check.isPresent()) {
       return new ResponseObject(HttpStatus.NOT_IMPLEMENTED, "Company has already existed", "");
     }*/
 
     // Add data
-    List<Company> foundCompanys = companyRepository.findByName(company.getName().trim());
-    if (foundCompanys.size() > 0) { // Check if the company name is the same
-      return new ResponseObjectHttpStatus(HttpStatus.NOT_IMPLEMENTED, "Company name already taken", "");
+    List<Company> foundCompanies = companyService.findByName(company.getName().trim());
+    if (foundCompanies.size() > 0) { // Check if the company name is the same
+      return new ResponseObject(
+          HttpStatus.NOT_IMPLEMENTED.toString(), "Company name already taken", "");
     }
-    return new ResponseObjectHttpStatus(
-        HttpStatus.OK, "Insert company successfully", companyRepository.save(company));
+    return new ResponseObject(
+        HttpStatus.OK.toString(), "Insert company successfully", companyService.save(company));
   }
 
-  @PutMapping("/update/{id}")
+  @PutMapping("/{id}")
   // Update name of Company
-  ResponseObjectHttpStatus updateCompany(@RequestBody Company newCompany, @PathVariable int id) {
+  ResponseObject updateCompany(@RequestBody Company newCompany, @PathVariable int id) {
     // Check id exists or not
-    Optional<Company> foundCompanys = companyRepository.findById(id);
-    if (!foundCompanys.isPresent()) {
-      return new ResponseObjectHttpStatus(HttpStatus.NOT_FOUND, "Company does not exist", "");
+    Optional<Company> foundCompanies = companyService.findById(id);
+    if (!foundCompanies.isPresent()) {
+      return new ResponseObject(HttpStatus.NOT_FOUND.toString(), "Company does not exist", "");
     }
 
     // Execute update company name
     Company updatedCompany =
-        companyRepository
+        companyService
             .findById(id)
             .map(
                 company -> {
                   company.setName(newCompany.getName());
-                  return companyRepository.save(company);
+                  return companyService.save(company);
                 })
             .orElseGet(
                 () -> {
                   newCompany.setId(id);
-                  return companyRepository.save(newCompany);
+                  return companyService.save(newCompany);
                 });
-    return new ResponseObjectHttpStatus(HttpStatus.OK, "Update company successfully", updatedCompany);
+    return new ResponseObject(
+        HttpStatus.OK.toString(), "Update company successfully", updatedCompany);
   }
 
-  @DeleteMapping("/delete/{id}")
-  ResponseObjectHttpStatus deleteCompany(@PathVariable int id) {
-    boolean exists = companyRepository.existsById(id);
+  @DeleteMapping("/{id}")
+  ResponseObject deleteCompany(@PathVariable int id) {
+    boolean exists = companyService.existsById(id);
     if (exists) { // Check id exists or not
-      companyRepository.deleteById(id);
-      return new ResponseObjectHttpStatus(HttpStatus.OK, "Delete company successfully", "");
+      companyService.deleteById(id);
+      return new ResponseObject(HttpStatus.OK.toString(), "Delete company successfully", "");
     }
-    return new ResponseObjectHttpStatus(HttpStatus.NOT_FOUND, "Cannot find company to delete", "");
+    return new ResponseObject(HttpStatus.NOT_FOUND.toString(), "Cannot find company to delete", "");
   }
 }
