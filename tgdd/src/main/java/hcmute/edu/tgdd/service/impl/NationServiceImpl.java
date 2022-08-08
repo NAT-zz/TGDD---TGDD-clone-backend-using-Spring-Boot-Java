@@ -4,10 +4,12 @@ import hcmute.edu.tgdd.model.Nation;
 import hcmute.edu.tgdd.repository.NationRepository;
 import hcmute.edu.tgdd.service.NationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class NationServiceImpl implements NationService {
     @Autowired
     private NationRepository nationRepository;

@@ -8,6 +8,7 @@ import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -94,5 +95,76 @@ public class ProductController {
         return new DataResponse(smartWatchDTOS);
     }
 
+    @GetMapping("/company/{id}")
+    DataResponse filterByCompany(@PathVariable Integer id){
+        List<Product> products = productService.filterByCompany(id);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find company with id " + id);
+    }
+
+    @GetMapping("/nation/{id}")
+    DataResponse filterByNation(@PathVariable Integer id){
+        List<Product> products = productService.filterByNation(id);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find nation with id " + id);
+    }
+
+    @GetMapping("/kind/{id}")
+    DataResponse filterByKind(@PathVariable Integer id){
+        List<Product> products = productService.filterByKind(id);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find kind with id " + id);
+    }
+
+    @GetMapping("/os/{os}")
+    DataResponse filterByOS(@PathVariable String os){
+        List<Product> products = productService.filterByOS(os);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find os with " + os);
+    }
+
+    @GetMapping("/ram/{ram}")
+    DataResponse filterByRAM(@PathVariable String ram){
+        List<Product> products = productService.filterByRAM(ram);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find ram with " + ram);
+    }
+
+    @GetMapping("/screen/{screen}")
+    DataResponse filterByScreen(@PathVariable String screen){
+        List<Product> products = productService.filterByScreen(screen);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find screen with  " + screen);
+    }
+
+    @GetMapping("/memory/{memory}")
+    DataResponse filterByMemory(@PathVariable String memory){
+        List<Product> products = productService.filterByMemory(memory);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find memory with " + memory);
+    }
+
+    @GetMapping("/battery/{battery}")
+    DataResponse filterByBattery(@PathVariable String battery){
+        List<Product> products = productService.filterByBattery(battery);
+        if(products.size() > 0)
+            return new DataResponse(products);
+        else
+            throw  new RuntimeException("Can not find battery with  " + battery);
+    }
 
 }

@@ -22,105 +22,153 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private ProductRepository productRepository;
+  @Autowired private ModelMapper modelMapper;
+  @Autowired private ProductRepository productRepository;
+
+  @Override
+  public List<Product> getAllProduct(Integer pageNo, Integer pageSize, String sortBy) {
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+    Page<Product> pagedResult = productRepository.findAll(paging);
+    return pagedResult.getContent();
+  }
+
+  @Override
+  public Optional<Product> findById(Integer id) {
+    return productRepository.findById(id);
+  }
+
+  @Override
+  public List<Product> findByName(String name) {
+    return productRepository.findByName(name);
+  }
+
+  @Override
+  public Product save(Product product) {
+    return productRepository.save(product);
+  }
+
+  @Override
+  public boolean existsById(Integer id) {
+    return productRepository.existsById(id);
+  }
+
+  @Override
+  public void deleteById(Integer id) {
+    productRepository.deleteById(id);
+  }
+
+  public Product updateProduct(Product newProduct, int id) {
+    return productRepository
+        .findById(id)
+        .map(
+            product -> {
+              product.setName(newProduct.getName());
+              product.setCompanyId(newProduct.getCompanyId());
+              product.setNationId(newProduct.getNationId());
+              product.setPrice(newProduct.getPrice());
+              product.setQuantity(newProduct.getQuantity());
+              product.setDiscount(newProduct.getDiscount());
+              product.setImages(newProduct.getImages());
+              product.setVideos(newProduct.getVideos());
+              product.setDescription(newProduct.getDescription());
+              product.setKindId(newProduct.getKindId());
+              product.setOs(newProduct.getOs());
+              product.setRam(newProduct.getRam());
+              product.setScreen(newProduct.getScreen());
+              product.setMemory(newProduct.getMemory());
+              product.setBattery(newProduct.getBattery());
+              product.setChip(newProduct.getChip());
+              product.setFrontCam(newProduct.getFrontCam());
+              product.setBackCam(newProduct.getBackCam());
+              product.setSim(newProduct.getSim());
+              product.setSizeWeight(newProduct.getSizeWeight());
+              product.setFeature(newProduct.getFeature());
+              product.setScreenCard(newProduct.getScreenCard());
+              product.setPort(newProduct.getPort());
+              product.setDesign(newProduct.getDesign());
+              product.setYear(newProduct.getYear());
+
+              return productRepository.save(product);
+            })
+        .orElseGet(
+            () -> {
+              return productRepository.save(newProduct);
+            });
+  }
+
+  @Override
+  public List<LaptopDTO> getAllLaptop(
+      Integer pageNo, Integer pageSize, String sortBy, Integer kindId) {
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+    return productRepository.findAllByKindId(kindId, paging).stream()
+        .map(product -> modelMapper.map(product, LaptopDTO.class))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<PhoneDTO> getAllPhone(
+      Integer pageNo, Integer pageSize, String sortBy, Integer kindId) {
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+    return productRepository.findAllByKindId(kindId, paging).stream()
+        .map(product -> modelMapper.map(product, PhoneDTO.class))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<TabletDTO> getAllTablet(
+      Integer pageNo, Integer pageSize, String sortBy, Integer kindId) {
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+    return productRepository.findAllByKindId(kindId, paging).stream()
+        .map(product -> modelMapper.map(product, TabletDTO.class))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<SmartWatchDTO> getAllSmartWatch(
+      Integer pageNo, Integer pageSize, String sortBy, Integer kindId) {
+    Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+    return productRepository.findAllByKindId(kindId, paging).stream()
+        .map(product -> modelMapper.map(product, SmartWatchDTO.class))
+        .collect(Collectors.toList());
+  }
 
     @Override
-    public List<Product> getAllProduct(Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        Page<Product> pagedResult = productRepository.findAll(paging);
-        return pagedResult.getContent();
+    public List<Product> filterByCompany(int companyId) {
+        return productRepository.findByCompanyId(companyId);
     }
 
     @Override
-    public Optional<Product> findById(Integer id){
-        return productRepository.findById(id);
+    public List<Product> filterByNation(int nationId) {
+        return productRepository.findByNationId(nationId);
     }
 
     @Override
-    public List<Product> findByName(String name)
-    {
-        return productRepository.findByName(name);
+    public List<Product> filterByKind(int kindId) {
+        return productRepository.findByKindId(kindId);
     }
 
     @Override
-    public Product save(Product product){
-        return productRepository.save(product);
+    public List<Product> filterByOS(String os) {
+        return  productRepository.findByOs(os);
     }
 
     @Override
-    public boolean existsById(Integer id){
-        return productRepository.existsById(id);
+    public List<Product> filterByRAM(String ram) {
+        return  productRepository.findByRam(ram);
     }
 
     @Override
-    public void deleteById(Integer id){
-        productRepository.deleteById(id);
-    }
-
-    public Product updateProduct(Product newProduct,int id){
-        return productRepository.findById(id)
-                .map(product -> {
-                    product.setName(newProduct.getName());
-                    product.setCompanyId(newProduct.getCompanyId());
-                    product.setNationId(newProduct.getNationId());
-                    product.setPrice(newProduct.getPrice());
-                    product.setQuantity(newProduct.getQuantity());
-                    product.setDiscount(newProduct.getDiscount());
-                    product.setImages(newProduct.getImages());
-                    product.setVideos(newProduct.getVideos());
-                    product.setDescription(newProduct.getDescription());
-                    product.setKindId(newProduct.getKindId());
-                    product.setOs(newProduct.getOs());
-                    product.setRam(newProduct.getRam());
-                    product.setScreen(newProduct.getScreen());
-                    product.setMemory(newProduct.getMemory());
-                    product.setBattery(newProduct.getBattery());
-                    product.setChip(newProduct.getChip());
-                    product.setFrontCam(newProduct.getFrontCam());
-                    product.setBackCam(newProduct.getBackCam());
-                    product.setSim(newProduct.getSim());
-                    product.setSizeWeight(newProduct.getSizeWeight());
-                    product.setFeature(newProduct.getFeature());
-                    product.setScreenCard(newProduct.getScreenCard());
-                    product.setPort(newProduct.getPort());
-                    product.setDesign(newProduct.getDesign());
-                    product.setYear(newProduct.getYear());
-
-                    return productRepository.save(product);
-                }).orElseGet(() -> {
-                    return productRepository.save(newProduct);
-                });
+    public List<Product> filterByScreen(String screen) {
+        return  productRepository.findByScreen(screen);
     }
 
     @Override
-    public List<LaptopDTO> getAllLaptop(Integer pageNo, Integer pageSize, String sortBy,Integer kindId){
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        return  productRepository.findAllByKindId(kindId,paging).stream().map(product -> modelMapper.map(product, LaptopDTO.class))
-                .collect(Collectors.toList());
+    public List<Product> filterByMemory(String memory) {
+        return  productRepository.findByMemory(memory);
     }
 
     @Override
-    public List<PhoneDTO> getAllPhone(Integer pageNo, Integer pageSize, String sortBy, Integer kindId) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        return  productRepository.findAllByKindId(kindId,paging).stream().map(product -> modelMapper.map(product, PhoneDTO.class))
-                .collect(Collectors.toList());
+    public List<Product> filterByBattery(String battery) {
+        return  productRepository.findByBattery(battery);
     }
-
-    @Override
-    public List<TabletDTO> getAllTablet(Integer pageNo, Integer pageSize, String sortBy, Integer kindId) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        return  productRepository.findAllByKindId(kindId,paging).stream().map(product -> modelMapper.map(product, TabletDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<SmartWatchDTO> getAllSmartWatch(Integer pageNo, Integer pageSize, String sortBy, Integer kindId) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        return  productRepository.findAllByKindId(kindId,paging).stream().map(product -> modelMapper.map(product, SmartWatchDTO.class))
-                .collect(Collectors.toList());
-    }
-
 }
