@@ -14,9 +14,6 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public ProductService() {
-    }
-
     public ProductRepository getProductRepository() {
         return productRepository;
     }

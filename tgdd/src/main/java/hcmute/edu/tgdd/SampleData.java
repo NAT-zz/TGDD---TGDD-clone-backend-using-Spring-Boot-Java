@@ -29,7 +29,7 @@ public class SampleData {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
-        Company productA = new Company("SmartPhone");
+      /*  Company productA = new Company("SmartPhone");
         Company productB = new Company("TV");
         logger.info("insert data: " + companyRepository.save(productA));
         logger.info("insert data: " + companyRepository.save(productB));
@@ -75,8 +75,7 @@ public class SampleData {
         logger.info("insert data: " + statusRepository.save(status1));
         logger.info("insert data: " + statusRepository.save(status2));
         logger.info("insert data: " + statusRepository.save(status3));
-        logger.info("insert data: " + statusRepository.save(status4));
-
+        logger.info("insert data: " + statusRepository.save(status4));*/
       }
     };
   }
