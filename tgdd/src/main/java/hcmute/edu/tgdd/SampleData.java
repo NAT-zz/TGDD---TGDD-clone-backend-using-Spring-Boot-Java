@@ -29,7 +29,7 @@ public class SampleData {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
-      /*  Company productA = new Company("SmartPhone");
+        Company productA = new Company("SmartPhone");
         Company productB = new Company("TV");
         logger.info("insert data: " + companyRepository.save(productA));
         logger.info("insert data: " + companyRepository.save(productB));
@@ -63,8 +63,9 @@ public class SampleData {
         CartDetail cartDetail2 = new CartDetail(2, 2, 2);
         logger.info("insert data: " + cartDetailRepository.save(cartDetail1));
         logger.info("insert data: " + cartDetailRepository.save(cartDetail2));
-        Product product1 = new Product("Iphone 13",1,1,1200,34,10,"iphone_13.png","iphone_13.mp4","Äáº¯t",1);
-        Product product2 = new Product("Iphone 14",2,1,1200,34,10,"iphone_14.png","iphone_14.mp4","Äáº¯t",1);
+
+        Product product1 = new Product("Samsung Galaxy S22 Ultra",1,1,25_990_000,34,16,"samsung_galaxy_s22_ultra.png","samsung_galaxy_s22_ultra.mp4","mo ta",1, "Android 12", "8 GB", "Dynamic AMOLED 2X6.8 inch, Quad HD+ (2K+)", "128 GB", "5000 mAh, 45 W", "Snapdragon 8 Gen 1", "40 MP", "Main 108 MP & Secondary 12 MP, 10 MP, 10 MP", "2 Nano SIM or 1 Nano SIM + 1 eSIM, support 5G", null, null, null, null, null, null);
+        Product product2 = new Product("Laptop Asus TUF Gaming FX506LHB",1,1,16_490_000,30,17,"laptop_asus_tuf_gaming_fx506lhb.png","laptop_asus_tuf_gaming_fx506lhb.mp4","mo ta 2",2, "Windows 11 Home SL", "8 GB", "15.6 inch, Full HD (1920 x 1080), 144Hz", "512 GB SSD", null, "i5, 10300H, 2.5GHz", null, null, null, "359 mm long - 256 mm wide - 24.9 mm thick - 2.3 kg", "Has keyboard light", "GTX 1650 4GB", "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC, 2 x USB 3.2, HDMI, Headphone jack 3.5 mm, LAN (RJ45), USB 2.0", "Plastic cover", "2021");
         logger.info("insert data: " + productRepository.save(product1));
         logger.info("insert data: " + productRepository.save(product2));
 
@@ -75,7 +76,7 @@ public class SampleData {
         logger.info("insert data: " + statusRepository.save(status1));
         logger.info("insert data: " + statusRepository.save(status2));
         logger.info("insert data: " + statusRepository.save(status3));
-        logger.info("insert data: " + statusRepository.save(status4));*/
+        logger.info("insert data: " + statusRepository.save(status4));
       }
     };
   }

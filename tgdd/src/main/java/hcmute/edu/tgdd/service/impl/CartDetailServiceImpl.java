@@ -1,7 +1,8 @@
-package hcmute.edu.tgdd.service;
+package hcmute.edu.tgdd.service.impl;
 
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.repository.CartDetailRepository;
+import hcmute.edu.tgdd.service.CartDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CartDetailServiceImpl implements CartDetailService{
+public class CartDetailServiceImpl implements CartDetailService {
 	@Autowired
 	private CartDetailRepository cartDetailRepository;
 

@@ -2,7 +2,7 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.model.DataResponse;
-import hcmute.edu.tgdd.service.CartDetailServiceImpl;
+import hcmute.edu.tgdd.service.impl.CartDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
