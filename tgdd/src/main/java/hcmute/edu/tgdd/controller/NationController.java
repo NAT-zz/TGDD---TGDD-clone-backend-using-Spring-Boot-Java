@@ -2,8 +2,7 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Nation;
 import hcmute.edu.tgdd.model.ResponseObject;
-import hcmute.edu.tgdd.repository.NationRepository;
-import hcmute.edu.tgdd.service.NationService;
+import hcmute.edu.tgdd.service.impl.NationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/Nation")
 public class NationController {
-  @Autowired private NationService nationService;
+  @Autowired private NationServiceImpl nationService;
 
   @GetMapping("")
   List<Nation> getNation() {

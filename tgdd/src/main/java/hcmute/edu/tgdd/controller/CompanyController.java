@@ -2,8 +2,7 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Company;
 import hcmute.edu.tgdd.model.ResponseObject;
-import hcmute.edu.tgdd.repository.CompanyRepository;
-import hcmute.edu.tgdd.service.CompanyService;
+import hcmute.edu.tgdd.service.impl.CompanyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/Company")
 public class CompanyController {
-  @Autowired private CompanyService companyService;
+  @Autowired private CompanyServiceImpl companyService;
 
   @GetMapping("")
   List<Company> getCompany() {
