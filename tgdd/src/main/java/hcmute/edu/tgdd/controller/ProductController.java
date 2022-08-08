@@ -1,5 +1,9 @@
 package hcmute.edu.tgdd.controller;
 
+import hcmute.edu.tgdd.dto.LaptopDTO;
+import hcmute.edu.tgdd.dto.PhoneDTO;
+import hcmute.edu.tgdd.dto.SmartWatchDTO;
+import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.service.impl.ProductServiceImpl;
@@ -43,38 +47,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     DataResponse updateProduct(@RequestBody Product newProduct, @PathVariable Integer id){
-        Product updateProduct = productService.findById(id)
-                .map(product -> {
-                    product.setName(newProduct.getName());
-                    product.setCompanyId(newProduct.getCompanyId());
-                    product.setNationId(newProduct.getNationId());
-                    product.setPrice(newProduct.getPrice());
-                    product.setQuantity(newProduct.getQuantity());
-                    product.setDiscount(newProduct.getDiscount());
-                    product.setImages(newProduct.getImages());
-                    product.setVideos(newProduct.getVideos());
-                    product.setDescription(newProduct.getDescription());
-                    product.setKindId(newProduct.getKindId());
-                    product.setOs(newProduct.getOs());
-                    product.setRam(newProduct.getRam());
-                    product.setScreen(newProduct.getScreen());
-                    product.setMemory(newProduct.getMemory());
-                    product.setBattery(newProduct.getBattery());
-                    product.setChip(newProduct.getChip());
-                    product.setFrontCam(newProduct.getFrontCam());
-                    product.setBackCam(newProduct.getBackCam());
-                    product.setSim(newProduct.getSim());
-                    product.setSizeWeight(newProduct.getSizeWeight());
-                    product.setFeature(newProduct.getFeature());
-                    product.setScreenCard(newProduct.getScreenCard());
-                    product.setPort(newProduct.getPort());
-                    product.setDesign(newProduct.getDesign());
-                    product.setYear(newProduct.getYear());
-
-                    return productService.save(product);
-                }).orElseGet(() -> {
-                    return productService.save(newProduct);
-                });
+        Product updateProduct = productService.updateProduct(newProduct,id);
         return new DataResponse(updateProduct);
     }
     @DeleteMapping("/{id}")
@@ -87,5 +60,39 @@ public class ProductController {
         }
         throw new RuntimeException("Cannot find product with id = " + id + " to delete");
     }
+
+    @GetMapping("/laptop")
+    DataResponse getAllLaptop(@RequestParam(defaultValue = "0") Integer pageNo,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "id") String sortBy,
+                              @RequestParam(defaultValue = "2") String kindId){
+        List<LaptopDTO> laptopDTOs = productService.getAllLaptop(pageNo,pageSize,sortBy, Integer.valueOf(kindId));
+        return new DataResponse(laptopDTOs);
+    }
+    @GetMapping("/phone")
+    DataResponse getAllPhone(@RequestParam(defaultValue = "0") Integer pageNo,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "id") String sortBy,
+                              @RequestParam(defaultValue = "1") String kindId){
+        List<PhoneDTO> phoneDTOS = productService.getAllPhone(pageNo,pageSize,sortBy, Integer.valueOf(kindId));
+        return new DataResponse(phoneDTOS);
+    }
+    @GetMapping("/tablet")
+    DataResponse getAllTablet(@RequestParam(defaultValue = "0") Integer pageNo,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "id") String sortBy,
+                              @RequestParam(defaultValue = "3") String kindId){
+        List<TabletDTO> tabletDTOS = productService.getAllTablet(pageNo,pageSize,sortBy, Integer.valueOf(kindId));
+        return new DataResponse(tabletDTOS);
+    }
+    @GetMapping("/smartwatch")
+    DataResponse getAllSmartWatch(@RequestParam(defaultValue = "0") Integer pageNo,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "id") String sortBy,
+                              @RequestParam(defaultValue = "4") String kindId){
+        List<SmartWatchDTO> smartWatchDTOS = productService.getAllSmartWatch(pageNo,pageSize,sortBy, Integer.valueOf(kindId));
+        return new DataResponse(smartWatchDTOS);
+    }
+
 
 }
