@@ -31,12 +31,12 @@ public class Product {
   private String screenCard;
   private String port;
   private String design;
-  private String year;
+  private int year;
 
   public Product() {
   }
 
-  public Product(String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String os, String ram, String screen, String memory, String battery, String chip, String frontCam, String backCam, String sim, String sizeWeight, String feature, String screenCard, String port, String design, String year) {
+  public Product(String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String os, String ram, String screen, String memory, String battery, String chip, String frontCam, String backCam, String sim, String sizeWeight, String feature, String screenCard, String port, String design, int year) {
     this.name = name;
     this.companyId = companyId;
     this.nationId = nationId;
@@ -264,11 +264,11 @@ public class Product {
     this.design = design;
   }
 
-  public String getYear() {
+  public int getYear() {
     return year;
   }
 
-  public void setYear(String year) {
+  public void setYear(int year) {
     this.year = year;
   }
 

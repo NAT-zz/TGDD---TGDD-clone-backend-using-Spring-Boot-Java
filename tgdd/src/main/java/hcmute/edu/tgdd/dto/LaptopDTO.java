@@ -2,17 +2,55 @@ package hcmute.edu.tgdd.dto;
 
 public class LaptopDTO {
   private int id;
-  private String cpu;
-  private int ram;
-  private String hardDrive;
+  private String name;
+  private int companyId;
+  private int nationId;
+  private double price;
+  private int quantity;
+  private int discount;
+  private String images;
+  private String videos;
+  private String description;
+  private int kindId;
+  private String chip;
+  private String ram;
+  private String memory;
   private String screen;
   private String screenCard;
   private String port;
-  private String special;
+  private String feature;
   private String os;
   private String design;
-  private double sizeWeight;
+  private String sizeWeight;
   private int year;
+
+  public LaptopDTO() {
+  }
+
+  public LaptopDTO(int id, String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String chip, String ram, String memory, String screen, String screenCard, String port, String feature, String os, String design, String sizeWeight, int year) {
+    this.id = id;
+    this.name = name;
+    this.companyId = companyId;
+    this.nationId = nationId;
+    this.price = price;
+    this.quantity = quantity;
+    this.discount = discount;
+    this.images = images;
+    this.videos = videos;
+    this.description = description;
+    this.kindId = kindId;
+    this.chip = chip;
+    this.ram = ram;
+    this.memory = memory;
+    this.screen = screen;
+    this.screenCard = screenCard;
+    this.port = port;
+    this.feature = feature;
+    this.os = os;
+    this.design = design;
+    this.sizeWeight = sizeWeight;
+    this.year = year;
+  }
 
   public int getId() {
     return id;
@@ -22,28 +60,108 @@ public class LaptopDTO {
     this.id = id;
   }
 
-  public String getCpu() {
-    return cpu;
+  public String getName() {
+    return name;
   }
 
-  public void setCpu(String cpu) {
-    this.cpu = cpu;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public int getRam() {
+  public int getCompanyId() {
+    return companyId;
+  }
+
+  public void setCompanyId(int companyId) {
+    this.companyId = companyId;
+  }
+
+  public int getNationId() {
+    return nationId;
+  }
+
+  public void setNationId(int nationId) {
+    this.nationId = nationId;
+  }
+
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  public int getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
+
+  public int getDiscount() {
+    return discount;
+  }
+
+  public void setDiscount(int discount) {
+    this.discount = discount;
+  }
+
+  public String getImages() {
+    return images;
+  }
+
+  public void setImages(String images) {
+    this.images = images;
+  }
+
+  public String getVideos() {
+    return videos;
+  }
+
+  public void setVideos(String videos) {
+    this.videos = videos;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public int getKindId() {
+    return kindId;
+  }
+
+  public void setKindId(int kindId) {
+    this.kindId = kindId;
+  }
+
+  public String getChip() {
+    return chip;
+  }
+
+  public void setChip(String chip) {
+    this.chip = chip;
+  }
+
+  public String getRam() {
     return ram;
   }
 
-  public void setRam(int ram) {
+  public void setRam(String ram) {
     this.ram = ram;
   }
 
-  public String getHardDrive() {
-    return hardDrive;
+  public String getMemory() {
+    return memory;
   }
 
-  public void setHardDrive(String hardDrive) {
-    this.hardDrive = hardDrive;
+  public void setMemory(String memory) {
+    this.memory = memory;
   }
 
   public String getScreen() {
@@ -70,12 +188,12 @@ public class LaptopDTO {
     this.port = port;
   }
 
-  public String getSpecial() {
-    return special;
+  public String getFeature() {
+    return feature;
   }
 
-  public void setSpecial(String special) {
-    this.special = special;
+  public void setFeature(String feature) {
+    this.feature = feature;
   }
 
   public String getOs() {
@@ -94,11 +212,11 @@ public class LaptopDTO {
     this.design = design;
   }
 
-  public double getSizeWeight() {
+  public String getSizeWeight() {
     return sizeWeight;
   }
 
-  public void setSizeWeight(double sizeWeight) {
+  public void setSizeWeight(String sizeWeight) {
     this.sizeWeight = sizeWeight;
   }
 
@@ -110,70 +228,31 @@ public class LaptopDTO {
     this.year = year;
   }
 
-  public LaptopDTO() {}
-
-  public LaptopDTO(
-      int id,
-      String cpu,
-      int ram,
-      String hardDrive,
-      String screen,
-      String screenCard,
-      String port,
-      String special,
-      String os,
-      String design,
-      double sizeWeight,
-      int year) {
-    this.id = id;
-    this.cpu = cpu;
-    this.ram = ram;
-    this.hardDrive = hardDrive;
-    this.screen = screen;
-    this.screenCard = screenCard;
-    this.port = port;
-    this.special = special;
-    this.os = os;
-    this.design = design;
-    this.sizeWeight = sizeWeight;
-    this.year = year;
-  }
-
   @Override
   public String toString() {
-    return "LaptopDTO{"
-        + "id="
-        + id
-        + ", cpu='"
-        + cpu
-        + '\''
-        + ", ram="
-        + ram
-        + ", hardDrive='"
-        + hardDrive
-        + '\''
-        + ", screen='"
-        + screen
-        + '\''
-        + ", screenCard='"
-        + screenCard
-        + '\''
-        + ", port='"
-        + port
-        + '\''
-        + ", special='"
-        + special
-        + '\''
-        + ", os='"
-        + os
-        + '\''
-        + ", design='"
-        + design
-        + '\''
-        + ", sizeWeight="
-        + sizeWeight
-        + ", year="
-        + year
-        + '}';
+    return "LaptopDTO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", companyId=" + companyId +
+            ", nationId=" + nationId +
+            ", price=" + price +
+            ", quantity=" + quantity +
+            ", discount=" + discount +
+            ", images='" + images + '\'' +
+            ", videos='" + videos + '\'' +
+            ", description='" + description + '\'' +
+            ", kindId=" + kindId +
+            ", chip='" + chip + '\'' +
+            ", ram='" + ram + '\'' +
+            ", memory='" + memory + '\'' +
+            ", screen='" + screen + '\'' +
+            ", screenCard='" + screenCard + '\'' +
+            ", port='" + port + '\'' +
+            ", feature='" + feature + '\'' +
+            ", os='" + os + '\'' +
+            ", design='" + design + '\'' +
+            ", sizeWeight=" + sizeWeight +
+            ", year=" + year +
+            '}';
   }
 }
