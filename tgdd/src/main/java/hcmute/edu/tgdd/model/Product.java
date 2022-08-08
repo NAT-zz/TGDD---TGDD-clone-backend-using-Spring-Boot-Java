@@ -7,7 +7,7 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-
+  private String name;
   private int companyId;
   private int nationId;
   private double price;
@@ -36,7 +36,8 @@ public class Product {
   public Product() {
   }
 
-  public Product( String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String os, String ram, String screen, String memory, String battery, String chip, String frontCam, String backCam, String sim, String sizeWeight, String feature, String screenCard, String port, String design, String year) {
+  public Product(String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String os, String ram, String screen, String memory, String battery, String chip, String frontCam, String backCam, String sim, String sizeWeight, String feature, String screenCard, String port, String design, String year) {
+    this.name = name;
     this.companyId = companyId;
     this.nationId = nationId;
     this.price = price;
@@ -69,6 +70,14 @@ public class Product {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public int getCompanyId() {
@@ -267,6 +276,7 @@ public class Product {
   public String toString() {
     return "Product{" +
             "id=" + id +
+            ", name='" + name + '\'' +
             ", companyId=" + companyId +
             ", nationId=" + nationId +
             ", price=" + price +
