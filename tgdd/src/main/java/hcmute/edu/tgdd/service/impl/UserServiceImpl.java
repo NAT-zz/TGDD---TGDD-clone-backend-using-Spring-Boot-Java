@@ -1,5 +1,6 @@
 package hcmute.edu.tgdd.service.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService{
 		return userRepository.save(user);
 	}
 	@Override
-	public User updateUserByPhone(User newUser, String phone) {
+	public User updateUserByPhone(User newUser, String phone){
 		User updatedUser = findUserByPhone(phone)
 				.map(thisUser -> {
 					thisUser.setFullname(newUser.getFullname());
@@ -36,7 +37,8 @@ public class UserServiceImpl implements UserService{
 					thisUser.setPassword(newUser.getPassword());
 					thisUser.setRole(newUser.getRole());
 					thisUser.setAddress(newUser.getAddress());
-
+					thisUser.setGender(newUser.isGender());
+					
 					return insertNewUser(thisUser);
 				}).orElseThrow();
 		return updatedUser;
@@ -44,5 +46,9 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void deleteUserByPhone(String phone) {
 		userRepository.deleteById(phone);
+	}
+	@Override
+	public boolean userExistedByPhone(String phone) {
+		return userRepository.existsById(phone);
 	}
 }
