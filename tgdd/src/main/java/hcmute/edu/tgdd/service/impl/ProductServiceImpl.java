@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -132,43 +134,163 @@ public class ProductServiceImpl implements ProductService {
         .collect(Collectors.toList());
   }
 
+  /*
+
     @Override
     public List<Product> filterByCompany(int companyId) {
-        return productRepository.findByCompanyId(companyId);
+      return productRepository.findByCompanyId(companyId);
     }
 
     @Override
     public List<Product> filterByNation(int nationId) {
-        return productRepository.findByNationId(nationId);
+      return productRepository.findByNationId(nationId);
     }
 
     @Override
     public List<Product> filterByKind(int kindId) {
-        return productRepository.findByKindId(kindId);
+      return productRepository.findByKindId(kindId);
     }
 
     @Override
     public List<Product> filterByOS(String os) {
-        return  productRepository.findByOs(os);
+      return productRepository.findByOs(os);
     }
 
     @Override
     public List<Product> filterByRAM(String ram) {
-        return  productRepository.findByRam(ram);
+      return productRepository.findByRam(ram);
     }
 
     @Override
     public List<Product> filterByScreen(String screen) {
-        return  productRepository.findByScreen(screen);
+      return productRepository.findByScreen(screen);
     }
 
     @Override
     public List<Product> filterByMemory(String memory) {
-        return  productRepository.findByMemory(memory);
+      return productRepository.findByMemory(memory);
     }
 
     @Override
     public List<Product> filterByBattery(String battery) {
-        return  productRepository.findByBattery(battery);
+      return productRepository.findByBattery(battery);
     }
+  */
+
+  @Override
+  public List<Product> filterByAllProducts(
+      Integer pageNo,
+      Integer pageSize,
+      int companyId,
+      int nationId,
+      int kindId,
+      String os,
+      String ram,
+      String screen,
+      String memory,
+      String battery) {
+
+    List<Product> productList = productRepository.findAll();
+    if (companyId != 0) removeNotInCondition(productList, "company", companyId);
+    if (nationId != 0) removeNotInCondition(productList, "nation", nationId);
+    if (kindId != 0) removeNotInCondition(productList, "kind", kindId);
+    if (!os.equals("null")) removeNotInCondition(productList, "os", os);
+    if (!ram.equals("null")) removeNotInCondition(productList, "ram", ram);
+    if (!screen.equals("null")) removeNotInCondition(productList, "screen", screen);
+    if (!memory.equals("null")) removeNotInCondition(productList, "memory", memory);
+    if (!battery.equals("null")) removeNotInCondition(productList, "battery", battery);
+
+    System.out.println(productList.size());
+    return productList;
+  }
+
+  private void removeNotInCondition(List<Product> productList, String sortBy, int id) {
+    int length = productList.size();
+    for (int i = 0; i < length; i++) {
+      Product p = productList.get(i);
+      switch (sortBy) {
+        case "company":
+          {
+            if (p.getCompanyId() != id) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+        case "nation":
+          {
+            if (p.getNationId() != id) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+        case "kind":
+          {
+            if (p.getKindId() != id) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+      }
+    }
+  }
+
+  private void removeNotInCondition(List<Product> productList, String sortBy, String content) {
+    int length = productList.size();
+    for (int i = 0; i < length; i++) {
+      Product p = productList.get(i);
+      switch (sortBy) {
+        case "os":
+          {
+            if (!p.getOs().equals(content)) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+        case "ram":
+          {
+            if (!p.getRam().equals(content)) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+        case "screen":
+          {
+            if (!p.getScreen().equals(content)) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+        case "memory":
+          {
+            if (!p.getMemory().equals(content)) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+        case "battery":
+          {
+            if (!p.getBattery().equals(content)) {
+              productList.remove(p);
+              i = -1;
+              length = productList.size();
+            }
+            break;
+          }
+      }
+    }
+  }
 }

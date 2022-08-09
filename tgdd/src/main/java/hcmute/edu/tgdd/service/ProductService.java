@@ -33,13 +33,31 @@ public interface ProductService {
   List<SmartWatchDTO> getAllSmartWatch(
       Integer pageNo, Integer pageSize, String sortBy, Integer kindId);
 
-  List<Product> filterByCompany(int companyId);
+  /* List<Product> filterByCompany(int companyId);
+
   List<Product> filterByNation(int nationId);
+
   List<Product> filterByKind(int kindId);
 
   List<Product> filterByOS(String os);
+
   List<Product> filterByRAM(String ram);
+
   List<Product> filterByScreen(String screen);
+
   List<Product> filterByMemory(String memory);
-  List<Product> filterByBattery(String battery);
+
+  List<Product> filterByBattery(String battery);*/
+
+  List<Product> filterByAllProducts(
+      Integer pageNo,
+      Integer pageSize,
+      int companyId,
+      int nationId,
+      int kindId,
+      String os,
+      String ram,
+      String screen,
+      String memory,
+      String battery);
 }
