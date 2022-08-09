@@ -1,13 +1,11 @@
 package hcmute.edu.tgdd.service;
 
-import hcmute.edu.tgdd.model.Customer;
-import hcmute.edu.tgdd.model.Nation;
-import hcmute.edu.tgdd.repository.NationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import hcmute.edu.tgdd.model.Nation;
 
 @Service
 public interface NationService {

@@ -1,6 +1,7 @@
 package hcmute.edu.tgdd;
 
 import hcmute.edu.tgdd.model.*;
+import hcmute.edu.tgdd.model.User.Role;
 import hcmute.edu.tgdd.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +20,8 @@ public class SampleData {
   CommandLineRunner initDatabase(
           CompanyRepository companyRepository,
           NationRepository nationRepository,
-          CustomerRepository customerRepository,
-          AdminRepository adminRepository,
+          UserRepository userRepository,
+          UserRepository adminRepository,
           KindRepository kindRepository,
           CartRepository cartRepository,
           CartDetailRepository cartDetailRepository,
@@ -39,16 +40,11 @@ public class SampleData {
         logger.info("insert data: " + nationRepository.save(naA));
         logger.info("insert data: " + nationRepository.save(naB));
 
-        Customer cuA = new Customer("0123456", "A", "A", true);
-        Customer cuB = new Customer("7891023", "B", "B", false);
-        logger.info("insert data: " + customerRepository.save(cuA));
-        logger.info("insert data: " + customerRepository.save(cuB));
-
-        Admin adA = new Admin("admin a", "123", "nguyen van a", "012345", "HCM", "adminA@gmail.com");
-        Admin adB = new Admin("admin b", "1234", "nguyen van b", "012354", "HN", "adminB@gmail.com");
-        logger.info("insert data: " + adminRepository.save(adA));
-        logger.info("insert data: " + adminRepository.save(adB));
-
+        User cuA = new User("0333912381", "123", "Nguyen Tran Tuan", "HCM", "tuantran@gmail.com", true, Role.ROLE_CUSTOMER);
+        User cuB = new User("0333912382", "123", "Nguyen Anh Tuan", "HCM", "tuan@gmail.com", true, Role.ROLE_ADMIN);
+        logger.info("insert data: " + userRepository.save(cuA));
+        logger.info("insert data: " + userRepository.save(cuB));
+        
         Kind kindB = new Kind("Laptop");
         Kind kindA = new Kind("Phone");
         Kind kindC = new Kind("Tablet");

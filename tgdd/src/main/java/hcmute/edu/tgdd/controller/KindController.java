@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Kind;
-import hcmute.edu.tgdd.model.ResponseObject;
 import hcmute.edu.tgdd.service.KindService;
 
 @RestController
@@ -26,65 +26,65 @@ public class KindController {
 	private KindService kindService;
 	
 	// insert new kind
-	@PostMapping("/insertKind")
-	public ResponseEntity<ResponseObject> insertKind(@RequestBody Kind newKind){
+	@PostMapping("/insert")
+	public ResponseEntity<DataResponse> insertKind(@RequestBody Kind newKind){
 		try {
 			Kind insertedKind = kindService.insertKind(newKind);
 			return ResponseEntity.ok().body(
-					new ResponseObject("200 Ok", "New kind added", insertedKind));
+					new DataResponse(insertedKind));
 		}
 		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-					new ResponseObject("501 Not Implemented", "Something went wrong or kind existed", ""));
+					new DataResponse("400", "Something went wrong or kind existed", 400));
 					
 		}
 	}
 	
 	// get all kind
 	@GetMapping("/getAllKind")
-	public ResponseEntity<ResponseObject> getAll() {
+	public ResponseEntity<DataResponse> getAll() {
 		List<Kind> listAllKind = kindService.getAllKind();
 		return listAllKind.isEmpty() ?
 				ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-						new ResponseObject("404 Not Found", "No kind found", "")) :
+						new DataResponse("400", "No kind found", 400)) :
 				ResponseEntity.ok().body(
-						new ResponseObject("200 Ok", "Success", listAllKind));		
+						new DataResponse(listAllKind));		
 	}
 	// find by id
 	@GetMapping("/{id}")
-	public ResponseEntity<ResponseObject> findById(@PathVariable int id) {
+	public ResponseEntity<DataResponse> findById(@PathVariable int id) {
 		Optional<Kind> foundKind = kindService.findKindById(id);
 		return foundKind.isPresent() ? 
-			ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200 Ok", "Kind found", foundKind)) :
-			ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("404 Not Found", "Kind not found with id = " + id, ""));
+			ResponseEntity.status(HttpStatus.OK).body(new DataResponse(foundKind)) :
+			ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataResponse("404", "Kind not found with id = " + id, 400));
 	}
 	//update only
 	@PutMapping("/{id}")
-	public ResponseObject updateKind(@RequestBody Kind newKind, @PathVariable int id){
+	public DataResponse updateKind(@RequestBody Kind newKind, @PathVariable int id){
 		Kind updateKind = null;
 		try
 		{
 			//updateKind = kindService.updateKindById(newKind, id);
 		}catch (Exception e) {
-			return new ResponseObject("404 Not Found", "Kind not found or duplicate data", "");
+			return new DataResponse("404", "Kind not found or duplicate data", 400);
 		}
-		return new ResponseObject("200 Ok", "Kind updated", updateKind);
+		return new DataResponse(updateKind);
 	}
 	//delete
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ResponseObject> deleteKind(@PathVariable int id) {
+	public ResponseEntity<DataResponse> deleteKind(@PathVariable int id) {
 		if (kindService.kindExistedById(id)) {
 			try {
 				kindService.deleteKindById(id);
 			}
 			catch (Exception e) {
 				return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-						new ResponseObject("501 Not Implemented", "Something went wrong", ""));
+						new DataResponse("500", "Something went wrong", 500));
 			}
 			return ResponseEntity.ok().body(
-					new ResponseObject("200 Ok", "Kind deleted", ""));
+					new DataResponse("200 Ok", "Kind deleted", 200));
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-				new ResponseObject("404 Not Found", "Kind not found", ""));
+				new DataResponse("400", "Kind not found", 400));
 	}
 }
