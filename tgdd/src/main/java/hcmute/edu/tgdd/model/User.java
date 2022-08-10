@@ -12,9 +12,8 @@ public class User {
 	@Id
 	private String phone;
 	private String password;
-	@Column(nullable = false, unique = true, length = 15)
+	@Column(nullable = false, length = 50)
 	private String fullname;
-	@Column(nullable = false, unique = true)
 	private String address;
 	@Column(nullable = false, unique = true)
 	private String email;
@@ -42,11 +41,11 @@ public class User {
 		this.role = role;
 	}
 
-	public String getPhone() {
+	public String getPhone(){
 		return phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(String phone){
 		if (Validate.isWhatever(Type.PHONE, phone))
 			this.phone = phone;
 		else
@@ -81,7 +80,7 @@ public class User {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(String email){
 		if(Validate.isWhatever(Type.EMAIl, email))
 			this.email = email;
 		else

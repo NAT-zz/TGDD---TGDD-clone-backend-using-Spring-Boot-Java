@@ -13,5 +13,6 @@ public interface UserService {
 	User updateUserByPhone(User newUser, String phone);
 	
 	void deleteUserByPhone(String phone);
+	boolean userExistedByPhone(String phone);
 }
 	
