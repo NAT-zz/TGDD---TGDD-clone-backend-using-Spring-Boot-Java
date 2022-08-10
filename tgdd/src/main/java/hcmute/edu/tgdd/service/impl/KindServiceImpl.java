@@ -41,6 +41,5 @@ public class KindServiceImpl implements KindService{
 					return updateOrInsert(kind);
 				}).orElseThrow();
 		return updateKind;
-		return null;
 	}
 }

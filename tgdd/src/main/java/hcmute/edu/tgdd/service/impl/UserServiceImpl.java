@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService{
 					return insertNewUser(thisUser);
 				}).orElseThrow();
 		return updatedUser;
-		return null;
 	}
 	@Override
 	public void deleteUserByPhone(String phone) {

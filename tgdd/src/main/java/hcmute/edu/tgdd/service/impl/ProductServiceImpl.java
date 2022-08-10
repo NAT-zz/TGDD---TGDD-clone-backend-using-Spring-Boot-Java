@@ -15,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -192,9 +189,14 @@ public class ProductServiceImpl implements ProductService {
       Integer minPrice,
       Integer maxPrice) {
 
-    Pageable paging = PageRequest.of(pageNo, pageSize);
-
+    //Pageable paging = PageRequest.of(pageNo, pageSize);
     List<Product> productList = productRepository.findAll();
+
+    int fromIndex = (pageNo) * pageSize;
+    if(productList.isEmpty() || productList.size() <= fromIndex){
+      return Collections.emptyList();
+    }
+    
     if (companyId != 0) removeNotInCondition(productList, "company", companyId);
     if (nationId != 0) removeNotInCondition(productList, "nation", nationId);
     if (kindId != 0) removeNotInCondition(productList, "kind", kindId);
@@ -206,8 +208,7 @@ public class ProductServiceImpl implements ProductService {
     if (minPrice != 0) removeNotInCondition(productList, "minPrice", minPrice);
     if (maxPrice != 0) removeNotInCondition(productList, "maxPrice", maxPrice);
 
-    System.out.println(productList.size());
-    return productList;
+    return productList.subList(fromIndex, Math.min(fromIndex + pageSize, productList.size()));
   }
 
   private void removeNotInCondition(List<Product> productList, String sortBy, int content) {
