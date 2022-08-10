@@ -188,7 +188,11 @@ public class ProductServiceImpl implements ProductService {
       String ram,
       String screen,
       String memory,
-      String battery) {
+      String battery,
+      Integer minPrice,
+      Integer maxPrice) {
+
+    Pageable paging = PageRequest.of(pageNo, pageSize);
 
     List<Product> productList = productRepository.findAll();
     if (companyId != 0) removeNotInCondition(productList, "company", companyId);
@@ -199,19 +203,21 @@ public class ProductServiceImpl implements ProductService {
     if (!screen.equals("null")) removeNotInCondition(productList, "screen", screen);
     if (!memory.equals("null")) removeNotInCondition(productList, "memory", memory);
     if (!battery.equals("null")) removeNotInCondition(productList, "battery", battery);
+    if (minPrice != 0) removeNotInCondition(productList, "minPrice", minPrice);
+    if (maxPrice != 0) removeNotInCondition(productList, "maxPrice", maxPrice);
 
     System.out.println(productList.size());
     return productList;
   }
 
-  private void removeNotInCondition(List<Product> productList, String sortBy, int id) {
+  private void removeNotInCondition(List<Product> productList, String sortBy, int content) {
     int length = productList.size();
     for (int i = 0; i < length; i++) {
       Product p = productList.get(i);
       switch (sortBy) {
         case "company":
           {
-            if (p.getCompanyId() != id) {
+            if (p.getCompanyId() != content) {
               productList.remove(p);
               i = -1;
               length = productList.size();
@@ -220,7 +226,7 @@ public class ProductServiceImpl implements ProductService {
           }
         case "nation":
           {
-            if (p.getNationId() != id) {
+            if (p.getNationId() != content) {
               productList.remove(p);
               i = -1;
               length = productList.size();
@@ -229,13 +235,31 @@ public class ProductServiceImpl implements ProductService {
           }
         case "kind":
           {
-            if (p.getKindId() != id) {
+            if (p.getKindId() != content) {
               productList.remove(p);
               i = -1;
               length = productList.size();
             }
             break;
           }
+        case "minPrice":
+        {
+          if (p.getPrice() < content) {
+            productList.remove(p);
+            i = -1;
+            length = productList.size();
+          }
+          break;
+        }
+        case "maxPrice":
+        {
+          if (p.getPrice() > content) {
+            productList.remove(p);
+            i = -1;
+            length = productList.size();
+          }
+          break;
+        }
       }
     }
   }

@@ -37,9 +37,10 @@ public class KindServiceImpl implements KindService{
 		Kind updateKind = findKindById(id)
 				.map(kind -> {
 					kind.setName(newKind.getName());
-					
+
 					return updateOrInsert(kind);
 				}).orElseThrow();
 		return updateKind;
+		return null;
 	}
 }
