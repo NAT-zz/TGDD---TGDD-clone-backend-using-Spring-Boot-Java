@@ -220,7 +220,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (p.getCompanyId() != content) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -229,7 +229,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (p.getNationId() != content) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -238,7 +238,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (p.getKindId() != content) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -247,7 +247,7 @@ public class ProductServiceImpl implements ProductService {
         {
           if (p.getPrice() < content) {
             productList.remove(p);
-            i = -1;
+            i -= 1;
             length = productList.size();
           }
           break;
@@ -256,7 +256,7 @@ public class ProductServiceImpl implements ProductService {
         {
           if (p.getPrice() > content) {
             productList.remove(p);
-            i = -1;
+            i -= 1;
             length = productList.size();
           }
           break;
@@ -274,7 +274,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getOs().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -283,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getRam().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -292,7 +292,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getScreen().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -301,7 +301,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getMemory().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -310,7 +310,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getBattery().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
