@@ -105,8 +105,9 @@ public class ProductController {
   }
 
   @GetMapping("/filter")
-  DataResponse filterByAllProducts(@RequestParam(defaultValue = "0") Integer pageNo,
-          @RequestParam(defaultValue = "10") Integer pageSize,
+  DataResponse filterByAllProducts(
+      @RequestParam(defaultValue = "0") Integer pageNo,
+      @RequestParam(defaultValue = "10") Integer pageSize,
       @RequestParam(defaultValue = "0") Integer companyId,
       @RequestParam(defaultValue = "0") Integer nationId,
       @RequestParam(defaultValue = "0") Integer kindId,
@@ -114,10 +115,13 @@ public class ProductController {
       @RequestParam(defaultValue = "null") String ram,
       @RequestParam(defaultValue = "null") String screen,
       @RequestParam(defaultValue = "null") String memory,
-      @RequestParam(defaultValue = "null") String battery) {
+      @RequestParam(defaultValue = "null") String battery,
+      @RequestParam(defaultValue = "0") Integer minPrice,
+      @RequestParam(defaultValue = "2147483647") Integer maxPrice) {
 
-    List<Product> listProduct = productService.filterByAllProducts(pageNo, pageSize, companyId, nationId, kindId, os, ram, screen, memory, battery);
+    List<Product> listProduct =
+        productService.filterByAllProducts(
+            pageNo, pageSize, companyId, nationId, kindId, os, ram, screen, memory, battery, minPrice, maxPrice);
     return new DataResponse(listProduct);
-
   }
 }

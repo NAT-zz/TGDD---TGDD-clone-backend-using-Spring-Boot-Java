@@ -15,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -188,9 +185,18 @@ public class ProductServiceImpl implements ProductService {
       String ram,
       String screen,
       String memory,
-      String battery) {
+      String battery,
+      Integer minPrice,
+      Integer maxPrice) {
 
+    //Pageable paging = PageRequest.of(pageNo, pageSize);
     List<Product> productList = productRepository.findAll();
+
+    int fromIndex = (pageNo) * pageSize;
+    if(productList.isEmpty() || productList.size() <= fromIndex){
+      return Collections.emptyList();
+    }
+    
     if (companyId != 0) removeNotInCondition(productList, "company", companyId);
     if (nationId != 0) removeNotInCondition(productList, "nation", nationId);
     if (kindId != 0) removeNotInCondition(productList, "kind", kindId);
@@ -199,43 +205,62 @@ public class ProductServiceImpl implements ProductService {
     if (!screen.equals("null")) removeNotInCondition(productList, "screen", screen);
     if (!memory.equals("null")) removeNotInCondition(productList, "memory", memory);
     if (!battery.equals("null")) removeNotInCondition(productList, "battery", battery);
+    if (minPrice != 0) removeNotInCondition(productList, "minPrice", minPrice);
+    if (maxPrice != 0) removeNotInCondition(productList, "maxPrice", maxPrice);
 
-    System.out.println(productList.size());
-    return productList;
+    return productList.subList(fromIndex, Math.min(fromIndex + pageSize, productList.size()));
   }
 
-  private void removeNotInCondition(List<Product> productList, String sortBy, int id) {
+  private void removeNotInCondition(List<Product> productList, String sortBy, int content) {
     int length = productList.size();
     for (int i = 0; i < length; i++) {
       Product p = productList.get(i);
       switch (sortBy) {
         case "company":
           {
-            if (p.getCompanyId() != id) {
+            if (p.getCompanyId() != content) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
           }
         case "nation":
           {
-            if (p.getNationId() != id) {
+            if (p.getNationId() != content) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
           }
         case "kind":
           {
-            if (p.getKindId() != id) {
+            if (p.getKindId() != content) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
           }
+        case "minPrice":
+        {
+          if (p.getPrice() < content) {
+            productList.remove(p);
+            i -= 1;
+            length = productList.size();
+          }
+          break;
+        }
+        case "maxPrice":
+        {
+          if (p.getPrice() > content) {
+            productList.remove(p);
+            i -= 1;
+            length = productList.size();
+          }
+          break;
+        }
       }
     }
   }
@@ -249,7 +274,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getOs().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -258,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getRam().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -267,7 +292,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getScreen().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -276,7 +301,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getMemory().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;
@@ -285,7 +310,7 @@ public class ProductServiceImpl implements ProductService {
           {
             if (!p.getBattery().equals(content)) {
               productList.remove(p);
-              i = -1;
+              i -= 1;
               length = productList.size();
             }
             break;

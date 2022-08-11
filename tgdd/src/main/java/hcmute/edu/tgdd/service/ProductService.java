@@ -59,5 +59,7 @@ public interface ProductService {
       String ram,
       String screen,
       String memory,
-      String battery);
+      String battery,
+      Integer minPrice,
+      Integer maxPrice);
 }

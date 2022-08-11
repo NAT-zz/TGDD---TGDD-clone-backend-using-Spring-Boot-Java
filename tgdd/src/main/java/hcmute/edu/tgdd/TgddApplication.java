@@ -20,4 +20,5 @@ public class TgddApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TgddApplication.class, args);
 	}
+
 }
