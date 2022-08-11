@@ -1,8 +1,15 @@
 package hcmute.edu.tgdd.controller;
 
-import java.sql.SQLException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -15,6 +22,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.User;
@@ -76,5 +91,36 @@ public DataResponse findById(@PathVariable String phone) throws Exception{
 			return new DataResponse("200", "User deleted", 200);
 		}
 		else throw new RuntimeException("User not found with phone: " + phone);
+	}
+	//get new token from refresh token
+	@GetMapping("/token/refresh")
+	public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws StreamWriteException, DatabindException, IOException {
+		String authorizationHeader = request.getHeader("Authorization");
+		if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")) {
+				String refreshToken = authorizationHeader.substring("Bearer ".length());
+				Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+				
+				JWTVerifier verifier = JWT.require(algorithm).build();
+				DecodedJWT decodedJWT = verifier.verify(refreshToken);
+				String username = decodedJWT.getSubject();
+				User user = userService.findByPhone(username);
+				
+				String accessToken = JWT.create()
+						.withSubject(user.getPhone())
+						.withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 1000))
+						.withIssuer(request.getRequestURL().toString())
+						.withClaim("roles", Arrays.asList(new String[]{user.getRole().toString()}))
+						.sign(algorithm);
+				
+				Map<String, String> tokens = new HashMap<>();
+				tokens.put("access_token", accessToken);
+				tokens.put("refresh_token", refreshToken);
+				
+				response.setContentType("application/json");
+				new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+		}
+		else {
+			throw new RuntimeException("Refresh token is missing");
+		}
 	}
 }
