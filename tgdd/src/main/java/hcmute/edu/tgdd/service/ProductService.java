@@ -4,7 +4,6 @@ import hcmute.edu.tgdd.dto.LaptopDTO;
 import hcmute.edu.tgdd.dto.PhoneDTO;
 import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
-import hcmute.edu.tgdd.model.Phone;
 import hcmute.edu.tgdd.model.Product;
 
 import java.util.List;

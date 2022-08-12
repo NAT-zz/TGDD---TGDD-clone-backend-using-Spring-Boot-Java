@@ -7,9 +7,11 @@ import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.service.impl.ProductServiceImpl;
+import hcmute.edu.tgdd.service.impl.StorageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +19,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/Product")
 public class ProductController {
-  @Autowired private ProductServiceImpl productService;
+  @Autowired
+  private ProductServiceImpl productService;
+  @Autowired
+  private StorageServiceImpl storageService;
 
   @GetMapping("")
   DataResponse getAllProduct(
@@ -42,6 +47,35 @@ public class ProductController {
       throw new RuntimeException("Product name already taken");
     }
     return new DataResponse(productService.save(product));
+  }
+
+  @PostMapping("/uploadImage")
+  DataResponse saveImage(
+      @RequestParam("id") Integer id,
+      @RequestParam("file") MultipartFile file) {
+    return new DataResponse(productService.findById(id)
+        .map(product -> {
+          if (!storageService.isImageFile(file)) {
+            throw new RuntimeException("The file is not an image");
+          }
+
+          String url = "";
+          if(product.getImages() != null) {
+            String[] strSplit = product.getImages().split(" ");
+            url = storageService.saveImage(file, product.getName() + "_" + strSplit.length);
+            product.setImages(product.getImages() + " " + url);
+          }
+          else {
+            url = storageService.saveImage(file, product.getName() + "_0");
+            product.setImages(url);
+          }
+
+          if (url.equals("")) {
+            throw new RuntimeException("Fail to upload image");
+          }
+
+          return productService.save(product);
+        }));
   }
 
   @PutMapping("/{id}")

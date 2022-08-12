@@ -13,6 +13,7 @@ public class Product {
   private double price;
   private int quantity;
   private int discount;
+  @Column(length = 2000)
   private String images;
   private String videos;
   private String description;
