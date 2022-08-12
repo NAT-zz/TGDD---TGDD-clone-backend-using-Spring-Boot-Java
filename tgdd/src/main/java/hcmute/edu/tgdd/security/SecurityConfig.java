@@ -1,7 +1,6 @@
 package hcmute.edu.tgdd.security;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,17 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -68,6 +63,8 @@ public class SecurityConfig{
         http.authorizeRequests().antMatchers("/api/login/**", "/api/user/token/refresh/**").permitAll();
         
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/getAllUsers").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/user/insert").hasAuthority(Role.ROLE_ADMIN.toString());
+        
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Product").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
         // http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/user/save/**").hasAuthority("ROLE_ADMIN");
 
@@ -87,28 +84,6 @@ public class SecurityConfig{
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.getOrBuild();
-    }
-    class CustomAccessDecisionManager implements AccessDecisionManager{
-
-		@Override
-		public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
-				throws AccessDeniedException, InsufficientAuthenticationException {
-			if (!authentication.isAuthenticated())
-				System.out.println("LAJSDKAJSDKASKDJ  LOLLLOL");
-		}
-
-		@Override
-		public boolean supports(ConfigAttribute attribute) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public boolean supports(Class<?> clazz) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-    	
     }
 }
 
