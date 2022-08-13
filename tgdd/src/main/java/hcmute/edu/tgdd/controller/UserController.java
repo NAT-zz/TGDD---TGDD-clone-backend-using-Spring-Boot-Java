@@ -1,12 +1,7 @@
 package hcmute.edu.tgdd.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,7 +63,7 @@ public DataResponse findById(@PathVariable String phone) throws Exception{
 	  if(!result.hasErrors())
 		  return new DataResponse(userService.insertNewUser(user));
 	  else
-		  throw new RuntimeException(result.getFieldError().toString());
+		  throw new RuntimeException(Objects.requireNonNull(result.getFieldError()).toString());
   }
 
 	//update only
@@ -76,7 +71,7 @@ public DataResponse findById(@PathVariable String phone) throws Exception{
 	public DataResponse updateUser(@RequestBody @Validated User newUser, BindingResult result, @PathVariable String phone) {
 		if(userService.userExistedByPhone(phone))
 		{
-			if(!result.hasErrors())	
+			if(!result.hasErrors())
 				return new DataResponse(userService.updateUserByPhone(newUser, phone));
 			return new DataResponse("400", "Data error", 200);
 		}
@@ -109,7 +104,7 @@ public DataResponse findById(@PathVariable String phone) throws Exception{
 						.withSubject(user.getPhone())
 						.withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 1000))
 						.withIssuer(request.getRequestURL().toString())
-						.withClaim("roles", Arrays.asList(new String[]{user.getRole().toString()}))
+						.withClaim("roles", Collections.singletonList(user.getRole().toString()))
 						.sign(algorithm);
 				
 				Map<String, String> tokens = new HashMap<>();

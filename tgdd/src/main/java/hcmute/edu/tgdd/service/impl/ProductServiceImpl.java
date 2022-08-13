@@ -4,6 +4,7 @@ import hcmute.edu.tgdd.dto.LaptopDTO;
 import hcmute.edu.tgdd.dto.PhoneDTO;
 import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
+import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.repository.ProductRepository;
 import hcmute.edu.tgdd.service.ProductService;
@@ -14,15 +15,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
   @Autowired private ModelMapper modelMapper;
   @Autowired private ProductRepository productRepository;
+  @Autowired private StorageServiceImpl storageService;
 
   @Override
   public List<Product> getAllProduct(Integer pageNo, Integer pageSize, String sortBy) {
@@ -47,6 +49,26 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public Optional<Image> uploadImage(Integer id, MultipartFile file) {
+    return findById(id)
+        .map(product -> {
+          if (!storageService.isImageFile(file)) {
+            throw new RuntimeException("The file is not an image");
+          }
+
+          List<Image> images = storageService.findImageByProductId(id);
+          String url = storageService.uploadImage(file, "tgdd_product/" + product.getName() + "_" + images.size());
+
+          if (url.equals("")) {
+            throw new RuntimeException("Fail to upload image");
+          }
+
+          Image image = new Image("tgdd_product/" + product.getName() + "_" + images.size(), url, id);
+          return storageService.saveImage(image);
+        });
+  }
+
+  @Override
   public boolean existsById(Integer id) {
     return productRepository.existsById(id);
   }
@@ -67,8 +89,6 @@ public class ProductServiceImpl implements ProductService {
               product.setPrice(newProduct.getPrice());
               product.setQuantity(newProduct.getQuantity());
               product.setDiscount(newProduct.getDiscount());
-              product.setImages(newProduct.getImages());
-              product.setVideos(newProduct.getVideos());
               product.setDescription(newProduct.getDescription());
               product.setKindId(newProduct.getKindId());
               product.setOs(newProduct.getOs());

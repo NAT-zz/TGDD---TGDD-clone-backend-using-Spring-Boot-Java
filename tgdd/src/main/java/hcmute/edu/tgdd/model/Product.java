@@ -7,16 +7,20 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+  @Column(nullable = false, length = 100)
   private String name;
+  @Column(nullable = false)
   private int companyId;
+  @Column(nullable = false)
   private int nationId;
+  @Column(nullable = false)
   private double price;
+  @Column(nullable = false)
   private int quantity;
   private int discount;
-  @Column(length = 2000)
-  private String images;
-  private String videos;
+  @Column(nullable = false, length = 5000)
   private String description;
+  @Column(nullable = false)
   private int kindId;
   private String os;
   private String ram;
@@ -37,15 +41,13 @@ public class Product {
   public Product() {
   }
 
-  public Product(String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String os, String ram, String screen, String memory, String battery, String chip, String frontCam, String backCam, String sim, String sizeWeight, String feature, String screenCard, String port, String design, int year) {
+  public Product(String name, int companyId, int nationId, double price, int quantity, int discount, String description, int kindId, String os, String ram, String screen, String memory, String battery, String chip, String frontCam, String backCam, String sim, String sizeWeight, String feature, String screenCard, String port, String design, int year) {
     this.name = name;
     this.companyId = companyId;
     this.nationId = nationId;
     this.price = price;
     this.quantity = quantity;
     this.discount = discount;
-    this.images = images;
-    this.videos = videos;
     this.description = description;
     this.kindId = kindId;
     this.os = os;
@@ -119,22 +121,6 @@ public class Product {
 
   public void setDiscount(int discount) {
     this.discount = discount;
-  }
-
-  public String getImages() {
-    return images;
-  }
-
-  public void setImages(String images) {
-    this.images = images;
-  }
-
-  public String getVideos() {
-    return videos;
-  }
-
-  public void setVideos(String videos) {
-    this.videos = videos;
   }
 
   public String getDescription() {
@@ -283,8 +269,6 @@ public class Product {
             ", price=" + price +
             ", quantity=" + quantity +
             ", discount=" + discount +
-            ", images='" + images + '\'' +
-            ", videos='" + videos + '\'' +
             ", description='" + description + '\'' +
             ", kindId=" + kindId +
             ", os='" + os + '\'' +

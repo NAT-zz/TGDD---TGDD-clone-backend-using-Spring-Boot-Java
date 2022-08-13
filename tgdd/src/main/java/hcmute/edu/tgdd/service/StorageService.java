@@ -1,12 +1,22 @@
 package hcmute.edu.tgdd.service;
 
 import com.cloudinary.Cloudinary;
+import hcmute.edu.tgdd.model.Image;
+import hcmute.edu.tgdd.model.Video;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface StorageService {
-  boolean isImageFile(MultipartFile file);
-  Cloudinary cloudinary();
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
-  // Up ảnh lên cloudinary
-  String saveImage(MultipartFile file, String fileName);
+public interface StorageService {
+  Cloudinary cloudinary();
+  Image saveImage(Image image);
+  List<Image> findImageByProductId(Integer id);
+  Optional<Image> findImageByFilePath(String filePath);
+  boolean isImageFile(MultipartFile file);
+  String uploadImage(MultipartFile file, String filePath);
+  boolean deleteImage(String filePath);
+  Video saveVideo(Video video);
+  List<Video> findVideoByProductId(Integer id);
 }

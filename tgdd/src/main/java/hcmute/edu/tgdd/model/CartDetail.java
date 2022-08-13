@@ -1,17 +1,17 @@
 package hcmute.edu.tgdd.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class CartDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(nullable = false)
 	private int productId;
+	@Column(nullable = false)
 	private int quantity;
+	@Column(nullable = false)
 	private int cartId;
 
 	public CartDetail() {

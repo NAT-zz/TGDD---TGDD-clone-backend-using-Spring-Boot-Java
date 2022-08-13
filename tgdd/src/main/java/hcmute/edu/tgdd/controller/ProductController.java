@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,33 +50,21 @@ public class ProductController {
     return new DataResponse(productService.save(product));
   }
 
+  @GetMapping("/findProductImage/{id}")
+  DataResponse findImageByProductId(@PathVariable Integer id) {
+    return new DataResponse(storageService.findImageByProductId(id));
+  }
+
   @PostMapping("/uploadImage")
   DataResponse saveImage(
       @RequestParam("id") Integer id,
       @RequestParam("file") MultipartFile file) {
-    return new DataResponse(productService.findById(id)
-        .map(product -> {
-          if (!storageService.isImageFile(file)) {
-            throw new RuntimeException("The file is not an image");
-          }
+    return new DataResponse(productService.uploadImage(id, file));
+  }
 
-          String url = "";
-          if(product.getImages() != null) {
-            String[] strSplit = product.getImages().split(" ");
-            url = storageService.saveImage(file, product.getName() + "_" + strSplit.length);
-            product.setImages(product.getImages() + " " + url);
-          }
-          else {
-            url = storageService.saveImage(file, product.getName() + "_0");
-            product.setImages(url);
-          }
-
-          if (url.equals("")) {
-            throw new RuntimeException("Fail to upload image");
-          }
-
-          return productService.save(product);
-        }));
+  @DeleteMapping("/deleteImage")
+  void deleteImage(@RequestParam("filePath") String filePath) {
+    storageService.deleteImage(filePath);
   }
 
   @PutMapping("/{id}")

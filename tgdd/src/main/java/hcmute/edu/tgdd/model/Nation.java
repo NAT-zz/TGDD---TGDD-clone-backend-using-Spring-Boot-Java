@@ -1,9 +1,6 @@
 package hcmute.edu.tgdd.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Nation {
@@ -11,6 +8,7 @@ public class Nation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
+  @Column(nullable = false, unique = true)
   private String name;
 
   public int getId() {
