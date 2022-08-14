@@ -22,8 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import hcmute.edu.tgdd.exception.handler.MyExceptionResonseHandler;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.User.Role;
 import hcmute.edu.tgdd.security.filter.CustomAuthenticationFilter;
@@ -73,10 +72,7 @@ public class SecurityConfig{
 			@Override
 			public void handle(HttpServletRequest request, HttpServletResponse response,
 					AccessDeniedException accessDeniedException) throws IOException, ServletException {
-				response.setHeader("Error", accessDeniedException.getMessage());
-		        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);					
-		        response.setContentType("application/json");
-				new ObjectMapper().writeValue(response.getOutputStream(),  new DataResponse("403", "Access is denied",200));
+				MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse("403", "Access is denied", 200), null);
 			}
 		});
         
