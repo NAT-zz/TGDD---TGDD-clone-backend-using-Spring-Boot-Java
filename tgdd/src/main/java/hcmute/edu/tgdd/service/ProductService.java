@@ -4,8 +4,9 @@ import hcmute.edu.tgdd.dto.LaptopDTO;
 import hcmute.edu.tgdd.dto.PhoneDTO;
 import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
-import hcmute.edu.tgdd.model.Phone;
+import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,8 @@ public interface ProductService {
   List<Product> findByName(String name);
 
   Product save(Product product);
+
+  Optional<Image> uploadImage(Integer id, MultipartFile file);
 
   boolean existsById(Integer id);
 

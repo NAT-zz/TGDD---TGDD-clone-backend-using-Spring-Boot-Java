@@ -8,11 +8,13 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 10)
     private String customerPhone;
     @Temporal(TemporalType.DATE)
     private final Date date = new Date();
     private String request;
     private String coupon;
+    @Column(nullable = false)
     private int statusId;
 
     public Cart() {

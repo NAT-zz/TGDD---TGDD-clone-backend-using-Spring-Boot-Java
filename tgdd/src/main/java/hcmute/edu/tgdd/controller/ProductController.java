@@ -7,17 +7,23 @@ import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.service.impl.ProductServiceImpl;
+import hcmute.edu.tgdd.service.impl.StorageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/Product")
 public class ProductController {
-  @Autowired private ProductServiceImpl productService;
+  @Autowired
+  private ProductServiceImpl productService;
+  @Autowired
+  private StorageServiceImpl storageService;
 
   @GetMapping("")
   DataResponse getAllProduct(
@@ -42,6 +48,23 @@ public class ProductController {
       throw new RuntimeException("Product name already taken");
     }
     return new DataResponse(productService.save(product));
+  }
+
+  @GetMapping("/findProductImage/{id}")
+  DataResponse findImageByProductId(@PathVariable Integer id) {
+    return new DataResponse(storageService.findImageByProductId(id));
+  }
+
+  @PostMapping("/uploadImage")
+  DataResponse saveImage(
+      @RequestParam("id") Integer id,
+      @RequestParam("file") MultipartFile file) {
+    return new DataResponse(productService.uploadImage(id, file));
+  }
+
+  @DeleteMapping("/deleteImage")
+  void deleteImage(@RequestParam("filePath") String filePath) {
+    storageService.deleteImage(filePath);
   }
 
   @PutMapping("/{id}")

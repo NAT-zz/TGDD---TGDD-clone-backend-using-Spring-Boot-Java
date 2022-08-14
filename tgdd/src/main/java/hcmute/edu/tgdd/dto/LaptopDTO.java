@@ -8,8 +8,6 @@ public class LaptopDTO {
   private double price;
   private int quantity;
   private int discount;
-  private String images;
-  private String videos;
   private String description;
   private int kindId;
   private String chip;
@@ -27,7 +25,7 @@ public class LaptopDTO {
   public LaptopDTO() {
   }
 
-  public LaptopDTO(int id, String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String chip, String ram, String memory, String screen, String screenCard, String port, String feature, String os, String design, String sizeWeight, int year) {
+  public LaptopDTO(int id, String name, int companyId, int nationId, double price, int quantity, int discount, String description, int kindId, String chip, String ram, String memory, String screen, String screenCard, String port, String feature, String os, String design, String sizeWeight, int year) {
     this.id = id;
     this.name = name;
     this.companyId = companyId;
@@ -35,8 +33,6 @@ public class LaptopDTO {
     this.price = price;
     this.quantity = quantity;
     this.discount = discount;
-    this.images = images;
-    this.videos = videos;
     this.description = description;
     this.kindId = kindId;
     this.chip = chip;
@@ -106,22 +102,6 @@ public class LaptopDTO {
 
   public void setDiscount(int discount) {
     this.discount = discount;
-  }
-
-  public String getImages() {
-    return images;
-  }
-
-  public void setImages(String images) {
-    this.images = images;
-  }
-
-  public String getVideos() {
-    return videos;
-  }
-
-  public void setVideos(String videos) {
-    this.videos = videos;
   }
 
   public String getDescription() {
@@ -238,8 +218,6 @@ public class LaptopDTO {
             ", price=" + price +
             ", quantity=" + quantity +
             ", discount=" + discount +
-            ", images='" + images + '\'' +
-            ", videos='" + videos + '\'' +
             ", description='" + description + '\'' +
             ", kindId=" + kindId +
             ", chip='" + chip + '\'' +

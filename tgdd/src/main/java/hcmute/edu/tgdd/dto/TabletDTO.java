@@ -8,8 +8,6 @@ public class TabletDTO {
 	private double price;
 	private int quantity;
 	private int discount;
-	private String images;
-	private String videos;
 	private String description;
 	private int kindId;
 	private String screen;
@@ -26,7 +24,7 @@ public class TabletDTO {
 	public TabletDTO() {
 	}
 
-	public TabletDTO(int id, String name, int companyId, int nationId, double price, int quantity, int discount, String images, String videos, String description, int kindId, String screen, String os, String chip, String ram, String memory, String network, String sim, String frontCam, String backCam, String battery) {
+	public TabletDTO(int id, String name, int companyId, int nationId, double price, int quantity, int discount, String description, int kindId, String screen, String os, String chip, String ram, String memory, String network, String sim, String frontCam, String backCam, String battery) {
 		this.id = id;
 		this.name = name;
 		this.companyId = companyId;
@@ -34,8 +32,6 @@ public class TabletDTO {
 		this.price = price;
 		this.quantity = quantity;
 		this.discount = discount;
-		this.images = images;
-		this.videos = videos;
 		this.description = description;
 		this.kindId = kindId;
 		this.screen = screen;
@@ -104,22 +100,6 @@ public class TabletDTO {
 
 	public void setDiscount(int discount) {
 		this.discount = discount;
-	}
-
-	public String getImages() {
-		return images;
-	}
-
-	public void setImages(String images) {
-		this.images = images;
-	}
-
-	public String getVideos() {
-		return videos;
-	}
-
-	public void setVideos(String videos) {
-		this.videos = videos;
 	}
 
 	public String getDescription() {
@@ -228,8 +208,6 @@ public class TabletDTO {
 				", price=" + price +
 				", quantity=" + quantity +
 				", discount=" + discount +
-				", images='" + images + '\'' +
-				", videos='" + videos + '\'' +
 				", description='" + description + '\'' +
 				", kindId=" + kindId +
 				", screen='" + screen + '\'' +
