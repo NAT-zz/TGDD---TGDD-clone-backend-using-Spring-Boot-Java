@@ -25,6 +25,7 @@ import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import hcmute.edu.tgdd.exception.handler.MyExceptionResonseHandler;
 import hcmute.edu.tgdd.model.DataResponse;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
@@ -69,7 +70,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		String accessToken = JWT.create()
 				// something unique
 				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 1000))
+				.withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
 				.withIssuer(request.getRequestURL().toString())
 				.withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.sign(algorithm);
@@ -79,22 +80,19 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 				.withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
 				.withIssuer(request.getRequestURL().toString())
 				.sign(algorithm);
-		
-//		response.setHeader("access_token", accessToken);
-//		response.setHeader("refresh_token", refreshToken);
-		
+				
 		Map<String, String> tokens = new HashMap<>();
 		tokens.put("access_token", accessToken);
 		tokens.put("refresh_token", refreshToken);
 		
-		response.setContentType("application/json");
-		new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+		MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse(tokens), null);
 	}		
 
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
 		response.setHeader("Authentication", "Failed");
+		MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse(failed), failed);
 	}
 	
 }
