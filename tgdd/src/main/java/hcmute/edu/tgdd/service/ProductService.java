@@ -65,4 +65,6 @@ public interface ProductService {
       String battery,
       Integer minPrice,
       Integer maxPrice);
+
+  List<Product> productSameKindAndCompany(int kindId, int companyId);
 }

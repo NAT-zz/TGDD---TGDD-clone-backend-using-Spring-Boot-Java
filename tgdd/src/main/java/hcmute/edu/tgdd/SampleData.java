@@ -10,26 +10,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-/**
- * @author Gia Hung
- */
 @Configuration
 public class SampleData {
   private static final Logger logger = LoggerFactory.getLogger(SampleData.class);
 
   @Bean
   CommandLineRunner initDatabase(
-          CompanyRepository companyRepository,
-          NationRepository nationRepository,
-          UserRepository userRepository,
-          UserService userService,
-          KindRepository kindRepository,
-          CartRepository cartRepository,
-          CartDetailRepository cartDetailRepository,
-          ProductRepository productRepository,
-          StatusRepository statusRepository,
-          ImageRepository imageRepository) {
+      CompanyRepository companyRepository,
+      NationRepository nationRepository,
+      UserRepository userRepository,
+      UserService userService,
+      KindRepository kindRepository,
+      CartRepository cartRepository,
+      CartDetailRepository cartDetailRepository,
+      ProductRepository productRepository,
+      StatusRepository statusRepository,
+      CommentRepository commentRepository) {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
@@ -45,11 +41,12 @@ public class SampleData {
         logger.info("insert data: " + nationRepository.save(naB));
         logger.info("insert data: " + nationRepository.save(naC));
 
+
         User cuA = new User("0333912381", "123", "Nguyen Tran Tuan", "HCM", "tuantran@gmail.com", true, Role.ROLE_CUSTOMER);
         User cuB = new User("0333912382", "123", "Nguyen Anh Tuan", "HCM", "tuan@gmail.com", true, Role.ROLE_ADMIN);
         logger.info("insert data: " + userService.insertNewUser(cuA));
         logger.info("insert data: " + userService.insertNewUser(cuB));
-        
+
         Kind kindB = new Kind("Laptop");
         Kind kindA = new Kind("Phone");
         Kind kindC = new Kind("Tablet");
@@ -80,27 +77,20 @@ public class SampleData {
         logger.info("insert data: " + productRepository.save(product4));
         logger.info("insert data: " + productRepository.save(product5));
 
-        Image image1 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361517/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_0.jpg", 1);
-        Image image2 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361613/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_1.jpg", 1);
-        Image image3 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361622/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_2.jpg", 1);
-        Image image4 = new Image("tgdd_product/Laptop Asus TUF Gaming FX506LHB_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361632/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_0.jpg", 2);
-        Image image5 = new Image("tgdd_product/Laptop Asus TUF Gaming FX506LHB_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361640/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_1.jpg", 2);
-        Image image6 = new Image("tgdd_product/Laptop Asus TUF Gaming FX506LHB_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361648/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_2.jpg", 2);
-        logger.info("insert data: " + imageRepository.save(image1));
-        logger.info("insert data: " + imageRepository.save(image2));
-        logger.info("insert data: " + imageRepository.save(image3));
-        logger.info("insert data: " + imageRepository.save(image4));
-        logger.info("insert data: " + imageRepository.save(image5));
-        logger.info("insert data: " + imageRepository.save(image6));
-
+        Status status0 = new Status("Chưa đăt hàng");
         Status status1 = new Status("Chờ xác nhận");
         Status status2 = new Status("Đang giao");
         Status status3 = new Status("Đã nhận");
         Status status4 = new Status("Đã hủy");
+        logger.info("insert data: " + statusRepository.save(status0));
         logger.info("insert data: " + statusRepository.save(status1));
         logger.info("insert data: " + statusRepository.save(status2));
         logger.info("insert data: " + statusRepository.save(status3));
-        logger.info("insert data: " + statusRepository.save(status4));
+
+        Comment comment1 = new Comment(1,"0869792657","Tạm được",3,"comment1.png");
+        Comment comment2 = new Comment(2,"0869792657","Tạm được",4,"comment2.png");
+        logger.info("insert data: " + commentRepository.save(comment1));
+        logger.info("insert data: " + commentRepository.save(comment2));
       }
     };
   }
