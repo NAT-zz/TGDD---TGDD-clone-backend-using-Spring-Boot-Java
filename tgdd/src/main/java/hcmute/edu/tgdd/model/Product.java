@@ -32,6 +32,7 @@ public class Product {
   private String backCam;
   private String sim;
   private String sizeWeight;
+  @Column(length = 5000)
   private String feature;
   private String screenCard;
   private String port;
