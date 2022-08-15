@@ -6,6 +6,7 @@ import hcmute.edu.tgdd.service.impl.CartDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,5 +58,16 @@ public class CartDetailController {
 			return new DataResponse("");
 		}
 		return new DataResponse("400", "Cannot find Cart Detail to delete", 200);
+	}
+
+	@GetMapping("/export")
+	public void exportToExcel(HttpServletResponse response){
+		response.setContentType("application/octet-stream");
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=cart_detail.xlsx";
+
+		response.setHeader(headerKey, headerValue);
+
+
 	}
 }
