@@ -31,18 +31,60 @@ public class SampleData {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
-        Company productA = new Company("SamSung");
-        Company productB = new Company("Apple");
-        logger.info("insert data: " + companyRepository.save(productA));
-        logger.info("insert data: " + companyRepository.save(productB));
+        Company company1 = new Company("Iphone"); //USA
+        Company company2 = new Company("SamSung"); //Korea
+        Company company3 = new Company("Oppo"); //China
+        Company company4 = new Company("Xiaomi"); //China
+        Company company5 = new Company("Vivo"); //China
+        Company company6 = new Company("Realme"); //China
+        Company company7 = new Company("Nokia");  //Filand
+        Company company8 = new Company("MacBook"); //USA
+        Company company9 = new Company("Asus");  //Taiwan
+        Company company10 = new Company("HP");   //USA
+        Company company11 = new Company("Lenovo"); //China
+        Company company12 = new Company("Acer"); //Taiwan
+        Company company13 = new Company("Dell"); //USA
+        Company company14 = new Company("MSI"); //Taiwan
+        Company company16 = new Company("Ipad"); //USA
+        Company company17 = new Company("Watch"); //USA
+        Company company18 = new Company("Gramin"); //Swiss
+        Company company19 = new Company("Befit"); //Vietnam
+        Company company20 = new Company("Kidcare"); //China
+        logger.info("insert data: " + companyRepository.save(company1));
+        logger.info("insert data: " + companyRepository.save(company2));
+        logger.info("insert data: " + companyRepository.save(company3));
+        logger.info("insert data: " + companyRepository.save(company4));
+        logger.info("insert data: " + companyRepository.save(company5));
+        logger.info("insert data: " + companyRepository.save(company6));
+        logger.info("insert data: " + companyRepository.save(company7));
+        logger.info("insert data: " + companyRepository.save(company8));
+        logger.info("insert data: " + companyRepository.save(company9));
+        logger.info("insert data: " + companyRepository.save(company10));
+        logger.info("insert data: " + companyRepository.save(company11));
+        logger.info("insert data: " + companyRepository.save(company12));
+        logger.info("insert data: " + companyRepository.save(company13));
+        logger.info("insert data: " + companyRepository.save(company14));
+        logger.info("insert data: " + companyRepository.save(company16));
+        logger.info("insert data: " + companyRepository.save(company17));
+        logger.info("insert data: " + companyRepository.save(company18));
+        logger.info("insert data: " + companyRepository.save(company19));
+        logger.info("insert data: " + companyRepository.save(company20));
 
-        Nation naA = new Nation("USA");
-        Nation naB = new Nation("Japan");
-        Nation naC = new Nation("China");
-        logger.info("insert data: " + nationRepository.save(naA));
-        logger.info("insert data: " + nationRepository.save(naB));
-        logger.info("insert data: " + nationRepository.save(naC));
-
+        Nation na1 = new Nation("USA");
+        Nation na2 = new Nation("Korea");
+        Nation na3 = new Nation("China");
+        Nation na4 = new Nation("Filand");
+        Nation na5 = new Nation("Taiwan");
+        Nation na6 = new Nation("Swiss");
+        Nation na7 = new Nation("Vietnam");
+        logger.info("insert data: " + nationRepository.save(na1));
+        logger.info("insert data: " + nationRepository.save(na2));
+        logger.info("insert data: " + nationRepository.save(na3));
+        logger.info("insert data: " + nationRepository.save(na4));
+        logger.info("insert data: " + nationRepository.save(na5));
+        logger.info("insert data: " + nationRepository.save(na6));
+        logger.info("insert data: " + nationRepository.save(na7));
+        
         User cuA = new User("0333912381", "123", "Nguyen Tran Tuan", "HCM", "tuantran@gmail.com", true, Role.ROLE_CUSTOMER);
         User cuB = new User("0333912382", "123", "Nguyen Anh Tuan", "HCM", "tuan@gmail.com", true, Role.ROLE_ADMIN);
         logger.info("insert data: " + userService.insertNewUser(cuA));
