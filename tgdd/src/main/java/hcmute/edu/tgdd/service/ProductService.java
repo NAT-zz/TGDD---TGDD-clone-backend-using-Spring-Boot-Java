@@ -6,6 +6,7 @@ import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
+import hcmute.edu.tgdd.model.Video;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -35,22 +36,6 @@ public interface ProductService {
 
   List<SmartWatchDTO> getAllSmartWatch(
       Integer pageNo, Integer pageSize, String sortBy, Integer kindId);
-
-  /* List<Product> filterByCompany(int companyId);
-
-  List<Product> filterByNation(int nationId);
-
-  List<Product> filterByKind(int kindId);
-
-  List<Product> filterByOS(String os);
-
-  List<Product> filterByRAM(String ram);
-
-  List<Product> filterByScreen(String screen);
-
-  List<Product> filterByMemory(String memory);
-
-  List<Product> filterByBattery(String battery);*/
 
   List<Product> filterByAllProducts(
       Integer pageNo,

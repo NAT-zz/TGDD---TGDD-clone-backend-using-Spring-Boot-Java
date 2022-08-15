@@ -6,6 +6,7 @@ import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Product;
+import hcmute.edu.tgdd.model.Video;
 import hcmute.edu.tgdd.service.impl.ProductServiceImpl;
 import hcmute.edu.tgdd.service.impl.StorageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,16 @@ public class ProductController {
   @DeleteMapping("/deleteImage")
   void deleteImage(@RequestParam("filePath") String filePath) {
     storageService.deleteImage(filePath);
+  }
+
+  @GetMapping("/findProductVideo/{id}")
+  DataResponse findVideoByProductId(@PathVariable Integer id) {
+    return new DataResponse(storageService.findVideoByProductId(id));
+  }
+
+  @PostMapping("/insertVideo")
+  DataResponse saveVideo(@RequestBody Video video) {
+    return new DataResponse(storageService.saveVideo(video));
   }
 
   @PutMapping("/{id}")

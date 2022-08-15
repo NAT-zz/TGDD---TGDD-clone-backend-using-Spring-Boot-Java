@@ -11,12 +11,20 @@ import java.util.Optional;
 
 public interface StorageService {
   Cloudinary cloudinary();
+
   Image saveImage(Image image);
+
   List<Image> findImageByProductId(Integer id);
+
   Optional<Image> findImageByFilePath(String filePath);
-  boolean isImageFile(MultipartFile file);
+
+  boolean isImage(MultipartFile file);
+
   String uploadImage(MultipartFile file, String filePath);
+
   boolean deleteImage(String filePath);
+
   Video saveVideo(Video video);
+
   List<Video> findVideoByProductId(Integer id);
 }

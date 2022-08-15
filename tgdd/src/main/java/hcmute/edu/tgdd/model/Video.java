@@ -7,8 +7,6 @@ public class Video {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  @Column(nullable = false, length = 120, unique = true)
-  private String filePath;
   @Column(nullable = false)
   private String url;
   @Column(nullable = false)
@@ -17,8 +15,7 @@ public class Video {
   public Video() {
   }
 
-  public Video(String filePath, String url, int productId) {
-    this.filePath = filePath;
+  public Video(String url, int productId) {
     this.url = url;
     this.productId = productId;
   }
@@ -29,14 +26,6 @@ public class Video {
 
   public void setId(int id) {
     this.id = id;
-  }
-
-  public String getFilePath() {
-    return filePath;
-  }
-
-  public void setFilePath(String filePath) {
-    this.filePath = filePath;
   }
 
   public String getUrl() {
@@ -59,7 +48,6 @@ public class Video {
   public String toString() {
     return "Video{" +
         "id=" + id +
-        ", filePath='" + filePath + '\'' +
         ", url='" + url + '\'' +
         ", productId=" + productId +
         '}';

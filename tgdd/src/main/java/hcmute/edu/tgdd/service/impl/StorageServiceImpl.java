@@ -23,7 +23,7 @@ public class StorageServiceImpl implements StorageService {
 
   // Info to connect to cloudinary
   @Override
-  public Cloudinary cloudinary(){
+  public Cloudinary cloudinary() {
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
         "cloud_name", "drwc3s5id",
         "api_key", "932855992229293",
@@ -48,14 +48,14 @@ public class StorageServiceImpl implements StorageService {
 
   // Check file type: image png, jpg, jpeg, bmp
   @Override
-  public boolean isImageFile(MultipartFile file) {
+  public boolean isImage(MultipartFile file) {
     return Arrays.asList(new String[] {"image/png","image/jpg","image/jpeg","image/bmp"})
         .contains(Objects.requireNonNull(file.getContentType()).trim().toLowerCase());
   }
 
   // Upload image to cloudinary
   @Override
-  public String uploadImage(MultipartFile file, String filePath){
+  public String uploadImage(MultipartFile file, String filePath) {
     Map r;
     try {
       // "resource_type","auto"  : auto define upload file type
