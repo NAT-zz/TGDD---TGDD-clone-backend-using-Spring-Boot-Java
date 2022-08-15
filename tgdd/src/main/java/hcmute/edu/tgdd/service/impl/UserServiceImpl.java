@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import hcmute.edu.tgdd.SampleData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import hcmute.edu.tgdd.SampleData;
 import hcmute.edu.tgdd.model.User;
 import hcmute.edu.tgdd.repository.UserRepository;
 import hcmute.edu.tgdd.service.UserService;

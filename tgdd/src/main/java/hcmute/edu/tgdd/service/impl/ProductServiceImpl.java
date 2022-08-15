@@ -338,4 +338,17 @@ public class ProductServiceImpl implements ProductService {
       }
     }
   }
+
+
+  //kindId và companyId truyền vào từ product
+  @Override
+  public List<Product> productSameKindAndCompany(int kindId, int companyId) {
+    List<Product> temp = productRepository.findByKindId(kindId);
+    List<Product> products = new ArrayList<>(temp);
+    temp.clear();
+    temp = productRepository.findByCompanyId(companyId);
+    products.addAll(temp);
+
+    return products;
+  }
 }
