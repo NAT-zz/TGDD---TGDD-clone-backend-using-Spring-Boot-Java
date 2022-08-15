@@ -59,13 +59,37 @@ public class SampleData {
 
         Cart cart1 = new Cart("0934033188", "giao nhanh", "Exxy3", 1);
         Cart cart2 = new Cart("0934099999", "giao nhanh 1", "REun6", 1);
+        Cart cart3 = new Cart("0934033188", "", "", 2);
+        Cart cart4 = new Cart("0934099999", "", "", 2);
+        Cart cart5 = new Cart("0934033188", "", "", 3);
+        Cart cart6 = new Cart("0934099999", "", "", 4);
         logger.info("insert data: " + cartRepository.save(cart1));
         logger.info("insert data: " + cartRepository.save(cart2));
+        logger.info("insert data: " + cartRepository.save(cart3));
+        logger.info("insert data: " + cartRepository.save(cart4));
+        logger.info("insert data: " + cartRepository.save(cart5));
+        logger.info("insert data: " + cartRepository.save(cart6));
 
         CartDetail cartDetail1 = new CartDetail(1, 5, 1);
-        CartDetail cartDetail2 = new CartDetail(2, 2, 2);
+        CartDetail cartDetail2 = new CartDetail(3, 2, 2);
+        CartDetail cartDetail3 = new CartDetail(2, 3, 1);
+        CartDetail cartDetail4 = new CartDetail(4, 1, 2);
+        CartDetail cartDetail5 = new CartDetail(5, 1, 3);
+        CartDetail cartDetail6 = new CartDetail(6, 1, 4);
+        CartDetail cartDetail7 = new CartDetail(7, 2, 5);
+        CartDetail cartDetail8 = new CartDetail(8, 3, 6);
+        CartDetail cartDetail9 = new CartDetail(10, 4, 3);
+        CartDetail cartDetail10 = new CartDetail(2, 10, 4);
         logger.info("insert data: " + cartDetailRepository.save(cartDetail1));
         logger.info("insert data: " + cartDetailRepository.save(cartDetail2));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail3));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail4));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail5));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail6));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail7));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail8));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail9));
+        logger.info("insert data: " + cartDetailRepository.save(cartDetail10));
 
         Product product1 = new Product("Samsung Galaxy S22 Ultra",1,1,25_990_000,34,16,"mo ta",1, "Android 12", "8 GB", "Dynamic AMOLED 2X6.8 inch, Quad HD+ (2K+)", "128 GB", "5000 mAh, 45 W", "Snapdragon 8 Gen 1", "40 MP", "Main 108 MP & Secondary 12 MP, 10 MP, 10 MP", "2 Nano SIM or 1 Nano SIM + 1 eSIM, support 5G", null, null, null, null, null, 2021);
         Product product2 = new Product("Laptop Asus TUF Gaming FX506LHB",1,1,16_490_000,30,17,"mo ta 2",2, "Windows 11 Home SL", "8 GB", "15.6 inch, Full HD (1920 x 1080), 144Hz", "512 GB SSD", null, "i5, 10300H, 2.5GHz", null, null, null, "359 mm long - 256 mm wide - 24.9 mm thick - 2.3 kg", "Has keyboard light", "GTX 1650 4GB", "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC, 2 x USB 3.2, HDMI, Headphone jack 3.5 mm, LAN (RJ45), USB 2.0", "Plastic cover", 2021);

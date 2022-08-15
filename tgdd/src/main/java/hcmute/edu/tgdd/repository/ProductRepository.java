@@ -12,15 +12,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
   List<Product> findAllByKindId(Integer kindId, Pageable pageable);
 
   List<Product> findByCompanyId(int companyId);
-  List<Product> findByKindId(int kindId);
 
-  /*  List<Product> findByCompanyId(int companyId);
-  List<Product> findByNationId(int nationId);
   List<Product> findByKindId(int kindId);
-  List<Product> findByOs(String os);
-  List<Product> findByRam(String ram);
-  List<Product> findByScreen(String screen);
-  List<Product> findByMemory(String memory);
-  List<Product> findByBattery(String battery);*/
-
 }

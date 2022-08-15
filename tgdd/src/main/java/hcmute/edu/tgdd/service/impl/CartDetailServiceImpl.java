@@ -1,5 +1,6 @@
 package hcmute.edu.tgdd.service.impl;
 
+import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.repository.CartDetailRepository;
 import hcmute.edu.tgdd.service.CartDetailService;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public class CartDetailServiceImpl implements CartDetailService {
 	@Autowired
 	private CartDetailRepository cartDetailRepository;
+	@Autowired
+	private CartServiceImpl cartService;
 
 	@Override
 	public List<CartDetail> getAllCartDetail() {
@@ -25,8 +28,25 @@ public class CartDetailServiceImpl implements CartDetailService {
 	}
 
 	@Override
-	public CartDetail insertCartDetail(CartDetail newCartDetail) {
-		return cartDetailRepository.save(newCartDetail);
+	public Optional<CartDetail> findByProductIdAndCartId(int productId, int cartId) {
+		return cartDetailRepository.findByProductIdAndCartId(productId,cartId);
+	}
+
+	@Override
+	public List<CartDetail> findByCartId(int id) {
+		return cartDetailRepository.findByCartId(id);
+	}
+
+	@Override
+	public CartDetail insertCartDetail(String customerPhone, CartDetail newCartDetail) {
+		List<Cart> carts = cartService.findByCustomerPhoneAndStatusId(customerPhone, 1);
+		newCartDetail.setCartId(carts.get(0).getId());
+		return findByProductIdAndCartId(newCartDetail.getProductId(), newCartDetail.getCartId())
+				.map(cartDetail -> {
+					cartDetail.setQuantity(cartDetail.getQuantity() + 1);
+					return cartDetailRepository.save(cartDetail);
+				})
+				.orElseGet(() -> cartDetailRepository.save(newCartDetail));
 	}
 
 	@Override

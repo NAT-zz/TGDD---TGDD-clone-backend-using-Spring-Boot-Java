@@ -111,9 +111,7 @@ public class ProductServiceImpl implements ProductService {
               return productRepository.save(product);
             })
         .orElseGet(
-            () -> {
-              return productRepository.save(newProduct);
-            });
+            () -> productRepository.save(newProduct));
   }
 
   @Override
