@@ -33,7 +33,8 @@ import hcmute.edu.tgdd.service.UserService;
 @RestController
 @RequestMapping(path = "/api/user")
 public class UserController {
-  @Autowired private UserService userService;
+  @Autowired
+	private UserService userService;
   
   // get all user
   @GetMapping("/getAllUsers")

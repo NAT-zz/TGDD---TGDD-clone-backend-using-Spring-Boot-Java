@@ -6,9 +6,9 @@ import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
-import hcmute.edu.tgdd.model.Video;
 import hcmute.edu.tgdd.repository.ProductRepository;
 import hcmute.edu.tgdd.service.ProductService;
+import hcmute.edu.tgdd.service.StorageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,9 +23,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-  @Autowired private ModelMapper modelMapper;
-  @Autowired private ProductRepository productRepository;
-  @Autowired private StorageServiceImpl storageService;
+  @Autowired
+  private ModelMapper modelMapper;
+  @Autowired
+  private ProductRepository productRepository;
+  @Autowired
+  private StorageService storageService;
 
   @Override
   public List<Product> getAllProduct(Integer pageNo, Integer pageSize, String sortBy) {
@@ -79,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
     productRepository.deleteById(id);
   }
 
+  @Override
   public Product updateProduct(Product newProduct, int id) {
     return productRepository
         .findById(id)
@@ -149,49 +153,6 @@ public class ProductServiceImpl implements ProductService {
         .map(product -> modelMapper.map(product, SmartWatchDTO.class))
         .collect(Collectors.toList());
   }
-
-  /*
-
-    @Override
-    public List<Product> filterByCompany(int companyId) {
-      return productRepository.findByCompanyId(companyId);
-    }
-
-    @Override
-    public List<Product> filterByNation(int nationId) {
-      return productRepository.findByNationId(nationId);
-    }
-
-    @Override
-    public List<Product> filterByKind(int kindId) {
-      return productRepository.findByKindId(kindId);
-    }
-
-    @Override
-    public List<Product> filterByOS(String os) {
-      return productRepository.findByOs(os);
-    }
-
-    @Override
-    public List<Product> filterByRAM(String ram) {
-      return productRepository.findByRam(ram);
-    }
-
-    @Override
-    public List<Product> filterByScreen(String screen) {
-      return productRepository.findByScreen(screen);
-    }
-
-    @Override
-    public List<Product> filterByMemory(String memory) {
-      return productRepository.findByMemory(memory);
-    }
-
-    @Override
-    public List<Product> filterByBattery(String battery) {
-      return productRepository.findByBattery(battery);
-    }
-  */
 
   @Override
   public List<Product> filterByAllProducts(

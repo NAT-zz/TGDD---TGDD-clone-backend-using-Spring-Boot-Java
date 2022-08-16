@@ -23,13 +23,11 @@ public class StatusController {
     @Autowired
     private StatusService statusService;
 
-
     @GetMapping("")
         //    List<Status> getAllStatus() { return statusService.getAllStatus(); }
     DataResponse getAllStatus()
     {
         List<Status> listStatus = statusService.getAllStatus();
-        //return new ResponseObject("0k","Get all status successfully",listStatus);
         return new DataResponse(listStatus);
     }
 

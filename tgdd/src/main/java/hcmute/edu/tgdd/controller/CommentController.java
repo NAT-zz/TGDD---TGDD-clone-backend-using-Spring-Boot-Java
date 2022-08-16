@@ -2,7 +2,7 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Comment;
 import hcmute.edu.tgdd.model.DataResponse;
-import hcmute.edu.tgdd.service.impl.CommentServiceImpl;
+import hcmute.edu.tgdd.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +16,7 @@ import java.util.Objects;
 public class CommentController {
 
   @Autowired
-  private CommentServiceImpl commentService;
-
+  private CommentService commentService;
 
   @GetMapping()
   DataResponse getAllComment() {

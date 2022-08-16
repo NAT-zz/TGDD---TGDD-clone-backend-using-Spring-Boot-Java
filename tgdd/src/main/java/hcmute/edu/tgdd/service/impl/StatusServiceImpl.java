@@ -12,26 +12,37 @@ import hcmute.edu.tgdd.service.StatusService;
 
 @Service
 public class StatusServiceImpl implements StatusService{
-	 @Autowired
-	    private StatusRepository statusRepository;
+	@Autowired
+	private StatusRepository statusRepository;
 
-	    public List<Status> getAllStatus() {
-	        return statusRepository.findAll();
-	    }
-	    public Optional<Status> findById(Integer id){
-	        return statusRepository.findById(id);
-	    }
-	    public List<Status> findByDescription(String description)
-	    {
-	        return statusRepository.findByDescription(description);
-	    }
-	    public Status save(Status Status){
-	        return statusRepository.save(Status);
-	    }
-	    public boolean existsById(Integer id){
-	        return statusRepository.existsById(id);
-	    }
-	    public void deleteById(Integer id){
-	        statusRepository.deleteById(id);
-	    }
+	@Override
+	public List<Status> getAllStatus() {
+			return statusRepository.findAll();
+	}
+
+	@Override
+	public Optional<Status> findById(Integer id){
+			return statusRepository.findById(id);
+	}
+
+	@Override
+	public List<Status> findByDescription(String description)
+	{
+			return statusRepository.findByDescription(description);
+	}
+
+	@Override
+	public Status save(Status Status){
+			return statusRepository.save(Status);
+	}
+
+	@Override
+	public boolean existsById(Integer id){
+			return statusRepository.existsById(id);
+	}
+
+	@Override
+	public void deleteById(Integer id){
+			statusRepository.deleteById(id);
+	}
 }
