@@ -67,7 +67,7 @@ public class SecurityConfig{
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/user/**").hasAnyAuthority(Role.ROLE_ADMIN.toString());	
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/user/**").hasAnyAuthority(Role.ROLE_ADMIN.toString());
         //product
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Product").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Product/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Product/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Product/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Product/**").hasAuthority(Role.ROLE_ADMIN.toString());
@@ -108,7 +108,7 @@ public class SecurityConfig{
 			@Override
 			public void handle(HttpServletRequest request, HttpServletResponse response,
 					AccessDeniedException accessDeniedException) throws IOException, ServletException {
-				MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse("403", "Access is denied", 200), null);
+				MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse("403", "Access is denied 3", 200), null);
 			}
 		});
         
