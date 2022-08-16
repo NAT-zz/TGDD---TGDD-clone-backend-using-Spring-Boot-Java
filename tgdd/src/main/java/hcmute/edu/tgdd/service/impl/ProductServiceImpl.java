@@ -6,6 +6,7 @@ import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
+import hcmute.edu.tgdd.model.Video;
 import hcmute.edu.tgdd.repository.ProductRepository;
 import hcmute.edu.tgdd.service.ProductService;
 import org.modelmapper.ModelMapper;
@@ -52,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
   public Optional<Image> uploadImage(Integer id, MultipartFile file) {
     return findById(id)
         .map(product -> {
-          if (!storageService.isImageFile(file)) {
+          if (!storageService.isImage(file)) {
             throw new RuntimeException("The file is not an image");
           }
 
@@ -110,9 +111,7 @@ public class ProductServiceImpl implements ProductService {
               return productRepository.save(product);
             })
         .orElseGet(
-            () -> {
-              return productRepository.save(newProduct);
-            });
+            () -> productRepository.save(newProduct));
   }
 
   @Override

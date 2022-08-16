@@ -32,19 +32,50 @@ public class CartController {
 	@GetMapping("/{id}")
 	DataResponse findById(@PathVariable Integer id) {
 		Optional<Cart> foundCart = cartService.findById(id);
-		return foundCart.isPresent() ?
-				new DataResponse(foundCart)
-				:
-				new DataResponse("400", "Cannot find Cart with id = " + id, 200);
+		if(foundCart.isPresent()) {
+			return new DataResponse(foundCart);
+		}
+		throw new RuntimeException("Cannot find Cart with id = " + id);
+	}
+
+	@GetMapping("/getCart")
+	DataResponse getCart(@RequestParam String customerPhone) {
+		if(Validate.isWhatever(Type.PHONE, customerPhone)) {
+			List<Cart> foundListCart = cartService.getCart(customerPhone);
+			return new DataResponse(foundListCart);
+		}
+		throw new RuntimeException("Invalid customer phone field");
+	}
+
+	@GetMapping("/getOrderHistory")
+	DataResponse getOrderHistory(@RequestParam String customerPhone) {
+		if(Validate.isWhatever(Type.PHONE, customerPhone)) {
+			List<Cart> foundListCart = cartService.getOrderHistory(customerPhone);
+			return new DataResponse(foundListCart);
+		}
+		throw new RuntimeException("Invalid customer phone field");
 	}
 
 	// insert new Cart
 	@PostMapping("/insert")
 	DataResponse insertCart(@RequestBody Cart newCart) {
 		if(Validate.isWhatever(Type.PHONE, newCart.getCustomerPhone())) {
-			return new DataResponse(cartService.insertCart(newCart));
+			if(cartService.findByCustomerPhoneAndStatusId(newCart.getCustomerPhone(), 1).size() == 0) {
+				return new DataResponse(cartService.insertCart(newCart));
+			}
+		} else {
+			throw new RuntimeException("Invalid customer phone field");
 		}
-		return new DataResponse("400", "Invalid customer phone field", 200);
+		return new DataResponse("Customer cart exist");
+	}
+
+	@PutMapping("/order")
+	DataResponse order(@RequestParam String customerPhone) {
+		if(Validate.isWhatever(Type.PHONE, customerPhone)) {
+			Optional<Cart> order = cartService.order(customerPhone);
+			return new DataResponse(order);
+		}
+		throw new RuntimeException("Invalid customer phone field");
 	}
 
 	// update Cart if found, otherwise insert
@@ -54,7 +85,7 @@ public class CartController {
 			Cart updatedCart = cartService.updateCart(newCart, id);
 			return new DataResponse(updatedCart);
 		}
-		return new DataResponse("400", "Invalid customer phone field", 200);
+		throw new RuntimeException("Invalid customer phone field");
 	}
 
 	// delete a Cart by id
@@ -64,6 +95,6 @@ public class CartController {
 			cartService.deleteCart(id);
 			return new DataResponse("");
 		}
-		return new DataResponse("400", "Cannot find Cart with id = " + id + " to delete", 200);
+		throw new RuntimeException("Cannot find Cart with id = " + id + " to delete");
 	}
 }

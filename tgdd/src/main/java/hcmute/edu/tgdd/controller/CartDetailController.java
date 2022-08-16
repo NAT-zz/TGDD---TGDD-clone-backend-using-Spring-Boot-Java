@@ -1,8 +1,11 @@
 package hcmute.edu.tgdd.controller;
 
+
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.service.impl.CartDetailServiceImpl;
+import hcmute.edu.tgdd.service.impl.CartServiceImpl;
+import hcmute.edu.tgdd.service.impl.ExportExcelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +14,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/CartDetail")
+@RequestMapping(path = "/api/CartDetail")
 public class CartDetailController {
 	@Autowired
 	private CartDetailServiceImpl cartDetailService;
+
+	@Autowired
+	private CartServiceImpl cartService;
+
+	@Autowired
+	private ExportExcelServiceImpl exportExcelService;
 
 	// get all CartDetail
 	@GetMapping("")
@@ -23,23 +32,33 @@ public class CartDetailController {
 		if (foundListCartDetail.size() > 0) {
 			return new DataResponse(foundListCartDetail);
 		}
-		return new DataResponse("400", "No Cart Detail found", 200);
+		throw new RuntimeException("No Cart Detail found");
 	}
 
 	// find CartDetail by id
 	@GetMapping("/{id}")
 	DataResponse findById(@PathVariable Integer id) {
 		Optional<CartDetail> foundCartDetail = cartDetailService.findById(id);
-		return foundCartDetail.isPresent() ?
-				new DataResponse(foundCartDetail)
-				:
-				new DataResponse("400", "Cannot find Cart Detail with id = " + id, 200);
+		if(foundCartDetail.isPresent()) {
+			return new DataResponse(foundCartDetail);
+		}
+		throw new RuntimeException("Cannot find Cart Detail with id = " + id);
+	}
+
+	@GetMapping("/findByCartId")
+	DataResponse findByCartId(@RequestParam Integer id) {
+		List<CartDetail> cartDetails = cartDetailService.findByCartId(id);
+		if(cartDetails.size() > 0) {
+			return new DataResponse(cartDetails);
+		}
+		throw new RuntimeException("Cannot find Cart Detail with cart id = " + id);
 	}
 
 	// insert new CartDetail
 	@PostMapping("/insert")
-	DataResponse insertCartDetail(@RequestBody CartDetail newCartDetail) {
-		return new DataResponse(cartDetailService.insertCartDetail(newCartDetail));
+	DataResponse insertCartDetail(@RequestParam String customerPhone, @RequestBody CartDetail newCartDetail) {
+		CartDetail cartDetail = cartDetailService.insertCartDetail(customerPhone, newCartDetail);
+		return new DataResponse(cartDetail);
 	}
 
 	// update CartDetail if found, otherwise insert
@@ -57,17 +76,19 @@ public class CartDetailController {
 			cartDetailService.deleteCartDetail(id);
 			return new DataResponse("");
 		}
-		return new DataResponse("400", "Cannot find Cart Detail to delete", 200);
+		throw new RuntimeException("Cannot find Cart Detail to delete");
 	}
 
 	@GetMapping("/export")
-	public void exportToExcel(HttpServletResponse response){
+	public void exportToExcel( HttpServletResponse response) throws Exception {
 		response.setContentType("application/octet-stream");
 		String headerKey = "Content-Disposition";
 		String headerValue = "attachment; filename=cart_detail.xlsx";
 
 		response.setHeader(headerKey, headerValue);
 
+		List<CartDetail> cartDetailList = cartDetailService.getAllCartDetail();
 
+		exportExcelService.export(response, cartDetailList);
 	}
 }

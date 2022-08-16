@@ -25,9 +25,41 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
+	public List<Cart> findByCustomerPhoneAndStatusId(String customerPhone, int statusId) {
+		return cartRepository.findByCustomerPhoneAndStatusId(customerPhone, statusId);
+	}
+
+	@Override
+	public List<Cart> getCart(String customerPhone) {
+		return cartRepository.findByCustomerPhoneAndStatusId(customerPhone, 1);
+	}
+
+	@Override
+	public List<Cart> getOrderHistory(String customerPhone) {
+		List<Cart> carts = cartRepository.findByCustomerPhone(customerPhone);
+		for(int i = 0; i < carts.size(); i++) {
+			if(carts.get(i).getStatusId() == 1) {
+				carts.remove(i);
+				i--;
+			}
+		}
+		return carts;
+	}
+
+	@Override
 	public Cart insertCart(Cart newCart) {
-		newCart.setStatusId(0);
+		newCart.setStatusId(1);
 		return cartRepository.save(newCart);
+	}
+
+	@Override
+	public Optional<Cart> order(String customerPhone) {
+		List<Cart> carts = cartRepository.findByCustomerPhoneAndStatusId(customerPhone, 1);
+		return cartRepository.findById(carts.get(0).getId())
+				.map(cart -> {
+					cart.setStatusId(2);
+					return cartRepository.save(cart);
+				});
 	}
 
 	@Override
@@ -40,7 +72,7 @@ public class CartServiceImpl implements CartService {
 					Cart.setStatusId(newCart.getStatusId());
 					return cartRepository.save(Cart);
 				}).orElseGet(() -> {
-					newCart.setStatusId(0);
+					newCart.setStatusId(1);
 					return cartRepository.save(newCart);
 				});
 	}
