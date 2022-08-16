@@ -61,12 +61,47 @@ public class SecurityConfig{
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/login/**", "/api/user/token/refresh/**").permitAll();
         
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/getAllUsers").hasAuthority(Role.ROLE_ADMIN.toString());
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/user/insert").hasAuthority(Role.ROLE_ADMIN.toString());
+        //user
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/user/insert").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/user/**").hasAnyAuthority(Role.ROLE_ADMIN.toString());	
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/user/**").hasAnyAuthority(Role.ROLE_ADMIN.toString());
+        //product
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Product").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Product/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Product/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Product/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        //status
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Status").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Status/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Status/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Status/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        //nation
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Nation").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Nation/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Nation/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Nation/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        //kind
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/kind").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/kind/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/kind/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/kind/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        //company
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Company").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Company/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Company/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Company/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        //comment
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Comment").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Comment/**").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Comment/**").hasAuthority(Role.ROLE_ADMIN.toString());
+        //cart
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/CartDetail", "/api/Cart").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/CartDetail/**", "/api/Cart").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/CartDetail/**", "/api/Cart").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/CartDetail/**", "/api/Cart").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
         
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Product").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
-        // http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/user/save/**").hasAuthority("ROLE_ADMIN");
-
+        
         http.exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
 			
 			@Override
