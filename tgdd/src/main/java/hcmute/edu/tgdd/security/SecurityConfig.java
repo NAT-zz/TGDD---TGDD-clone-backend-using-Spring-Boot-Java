@@ -77,22 +77,22 @@ public class SecurityConfig{
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Status/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Status/**").hasAuthority(Role.ROLE_ADMIN.toString());
         //nation
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Nation").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Nation/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Nation/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Nation/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Nation/**").hasAuthority(Role.ROLE_ADMIN.toString());
         //kind
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/kind").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/kind/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/kind/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/kind/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/kind/**").hasAuthority(Role.ROLE_ADMIN.toString());
         //company
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Company").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Company/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Company/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/Company/**").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Company/**").hasAuthority(Role.ROLE_ADMIN.toString());
         //comment
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Comment").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/Comment/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Comment/**").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Comment/**").hasAuthority(Role.ROLE_ADMIN.toString());
         //cart
