@@ -1,5 +1,11 @@
 package hcmute.edu.tgdd.controller;
 
+
+import hcmute.edu.tgdd.model.CartDetail;
+import hcmute.edu.tgdd.model.DataResponse;
+import hcmute.edu.tgdd.service.impl.CartDetailServiceImpl;
+import hcmute.edu.tgdd.service.impl.CartServiceImpl;
+import hcmute.edu.tgdd.service.impl.ExportExcelServiceImpl;
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.service.CartDetailService;
@@ -7,17 +13,21 @@ import hcmute.edu.tgdd.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/CartDetail")
+@RequestMapping(path = "/api/CartDetail")
 public class CartDetailController {
 	@Autowired
 	private CartDetailService cartDetailService;
 
 	@Autowired
 	private CartService cartService;
+
+	@Autowired
+	private ExportExcelServiceImpl exportExcelService;
 
 	// get all CartDetail
 	@GetMapping("")
@@ -71,5 +81,18 @@ public class CartDetailController {
 			return new DataResponse("");
 		}
 		throw new RuntimeException("Cannot find Cart Detail to delete");
+	}
+
+	@GetMapping("/export")
+	public void exportToExcel( HttpServletResponse response) throws Exception {
+		response.setContentType("application/octet-stream");
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=cart_detail.xlsx";
+
+		response.setHeader(headerKey, headerValue);
+
+		List<CartDetail> cartDetailList = cartDetailService.getAllCartDetail();
+
+		exportExcelService.export(response, cartDetailList);
 	}
 }

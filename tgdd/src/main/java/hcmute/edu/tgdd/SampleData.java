@@ -1,5 +1,10 @@
 package hcmute.edu.tgdd;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
+
 import hcmute.edu.tgdd.model.*;
 import hcmute.edu.tgdd.model.User.Role;
 import hcmute.edu.tgdd.repository.*;
@@ -10,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 @Configuration
 public class SampleData {
   private static final Logger logger = LoggerFactory.getLogger(SampleData.class);
@@ -84,9 +90,25 @@ public class SampleData {
         logger.info("insert data: " + nationRepository.save(na5));
         logger.info("insert data: " + nationRepository.save(na6));
         logger.info("insert data: " + nationRepository.save(na7));
-        
-        User cuA = new User("0333912381", "123", "Nguyen Tran Tuan", "HCM", "tuantran@gmail.com", true, Role.ROLE_CUSTOMER);
-        User cuB = new User("0333912382", "123", "Nguyen Anh Tuan", "HCM", "tuan@gmail.com", true, Role.ROLE_ADMIN);
+
+        User cuA =
+            new User(
+                "0333912381",
+                "123",
+                "Nguyen Tran Tuan",
+                "HCM",
+                "tuantran@gmail.com",
+                true,
+                Role.ROLE_CUSTOMER);
+        User cuB =
+            new User(
+                "0333912382",
+                "123",
+                "Nguyen Anh Tuan",
+                "HCM",
+                "tuan@gmail.com",
+                true,
+                Role.ROLE_ADMIN);
         logger.info("insert data: " + userService.insertNewUser(cuA));
         logger.info("insert data: " + userService.insertNewUser(cuB));
 
@@ -99,68 +121,27 @@ public class SampleData {
         logger.info("insert data: " + kindRepository.save(kindC));
         logger.info("insert data: " + kindRepository.save(kindD));
 
-        Cart cart1 = new Cart("0934033188", "giao nhanh", "Exxy3", 1);
-        Cart cart2 = new Cart("0934099999", "giao nhanh 1", "REun6", 1);
-        Cart cart3 = new Cart("0934033188", "", "", 2);
-        Cart cart4 = new Cart("0934099999", "", "", 2);
-        Cart cart5 = new Cart("0934033188", "", "", 3);
-        Cart cart6 = new Cart("0934099999", "", "", 4);
-        logger.info("insert data: " + cartRepository.save(cart1));
-        logger.info("insert data: " + cartRepository.save(cart2));
-        logger.info("insert data: " + cartRepository.save(cart3));
-        logger.info("insert data: " + cartRepository.save(cart4));
-        logger.info("insert data: " + cartRepository.save(cart5));
-        logger.info("insert data: " + cartRepository.save(cart6));
-
-        CartDetail cartDetail1 = new CartDetail(1, 5, 1);
-        CartDetail cartDetail2 = new CartDetail(3, 2, 2);
-        CartDetail cartDetail3 = new CartDetail(2, 3, 1);
-        CartDetail cartDetail4 = new CartDetail(4, 1, 2);
-        CartDetail cartDetail5 = new CartDetail(5, 1, 3);
-        CartDetail cartDetail6 = new CartDetail(6, 1, 4);
-        CartDetail cartDetail7 = new CartDetail(7, 2, 5);
-        CartDetail cartDetail8 = new CartDetail(8, 3, 6);
-        CartDetail cartDetail9 = new CartDetail(10, 4, 3);
-        CartDetail cartDetail10 = new CartDetail(2, 10, 4);
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail1));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail2));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail3));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail4));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail5));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail6));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail7));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail8));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail9));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail10));
-
-        Product product1 = new Product("Samsung Galaxy S22 Ultra",1,1,25_990_000,34,16,"mo ta",1, "Android 12", "8 GB", "Dynamic AMOLED 2X6.8 inch, Quad HD+ (2K+)", "128 GB", "5000 mAh, 45 W", "Snapdragon 8 Gen 1", "40 MP", "Main 108 MP & Secondary 12 MP, 10 MP, 10 MP", "2 Nano SIM or 1 Nano SIM + 1 eSIM, support 5G", null, null, null, null, null, 2021);
-        Product product2 = new Product("Laptop Asus TUF Gaming FX506LHB",1,1,16_490_000,30,17,"mo ta 2",2, "Windows 11 Home SL", "8 GB", "15.6 inch, Full HD (1920 x 1080), 144Hz", "512 GB SSD", null, "i5, 10300H, 2.5GHz", null, null, null, "359 mm long - 256 mm wide - 24.9 mm thick - 2.3 kg", "Has keyboard light", "GTX 1650 4GB", "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC, 2 x USB 3.2, HDMI, Headphone jack 3.5 mm, LAN (RJ45), USB 2.0", "Plastic cover", 2021);
-        Product product3 = new Product("Laptop Asus TUF Gaming FX517ZC",2,2,23_790_000,100,16,"mo ta 3",2, "Windows 11 Home SL", "8 GB", "15.6 inch, Full HD (1920 x 1080), 144Hz", "512 GB SSD", null, "i5, 12450H, 2GHz", null, null, null, "354 mm long - 251 mm wide - 20.7 mm thick - 2 kg", "Has keyboard light", "RTX 3050 4GB", "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC2 x USB 3.2, HDMI, Headphone jack 3.5 mmLAN (RJ45)Thunderbolt 4", "Plastic cover", 2022);
-        Product product4 = new Product("Tablet Samsung Galaxy Tab S8",2,1,20_990_000,34,15,"mo ta",3, "Android 12", "8 GB", "11 inch, LTPS", "128 GB", "8000 mAh, 45 W", "Snapdragon 8 Gen 1", "12 MP", "Main 13 MP & Secondary 6 MP", "1 Nano SIM", null, null, null, null, null, 2021);
-        Product product5 = new Product("Apple Watch SE 40mm",2,2,6_990_000,101,22,"mo ta",4, "IOS", null, "OLED1.57 inch", null, null, null, null, null, null, null, null, null, null, null, 2021);
-        
         //Phone
         Product phone1 = new Product("Iphone 11",1,1,14_990_000,30,23,"Apple đã chính thức trình làng bộ 3 siêu phẩm iPhone 11, trong đó phiên bản iPhone 11 64GB có mức giá rẻ nhất nhưng vẫn được nâng cấp mạnh mẽ như iPhone Xr ra mắt trước đó.",1, "IOS 15", "4 GB", "IPS LCD6.1\"Liquid Retina", "64 GB", "3110 mAh, 18 W", "Apple A13 Bionic", "12 MP", "2 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 4G", null, null, null, null, null, 2021);
         Product phone2 = new Product("Iphone 13 Pro Max",1,1,33_990_000,50,13,"Điện thoại iPhone 13 Pro Max 128 GB - siêu phẩm được mong chờ nhất ở nửa cuối năm 2021 đến từ Apple. Máy có thiết kế không mấy đột phá khi so với người tiền nhiệm, bên trong đây vẫn là một sản phẩm có màn hình siêu đẹp, tần số quét được nâng cấp lên 120 Hz mượt mà, cảm biến camera có kích thước lớn hơn, cùng hiệu năng mạnh mẽ với sức mạnh đến từ Apple A15 Bionic, sẵn sàng cùng bạn chinh phục mọi thử thách.",1, "IOS 15", "6 GB", "OLED6.7\"Super Retina XDR", "128 GB", "4352 mAh20 W", "Apple A15 Bionic", "12 MP", "3 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2022);
-        Product phone15 = new Product("Iphone 13 Pro",1,1,30_990_000,10,12,"Mỗi lần ra mắt phiên bản mới là mỗi lần iPhone chiếm sóng trên khắp các mặt trận và lần này cái tên khiến vô số người \"sục sôi\" là iPhone 13 Pro, chiếc điện thoại thông minh vẫn giữ nguyên thiết kế cao cấp, cụm 3 camera được nâng cấp, cấu hình mạnh mẽ cùng thời lượng pin lớn ấn tượng. ",1, "IOS 15", "6 GB", "OLED6.1\"Super Retina XDR", "128 GB", "3095 mAh20 W", "Apple A15 Bionic", "12 MP", "3 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2021);
+				Product phone3 = new Product("Samsung Galaxy S22 Ultra",2,2,30_990_000,34,16,"Galaxy S22 Ultra 5G chiếc smartphone cao cấp nhất trong bộ 3 Galaxy S22 series mà Samsung đã cho ra mắt. Tích hợp bút S Pen hoàn hảo trong thân máy, trang bị vi xử lý mạnh mẽ cho các tác vụ sử dụng vô cùng mượt mà và nổi bật hơn với cụm camera không viền độc đáo mang đậm dấu ấn riêng",1, "Android 12", "8 GB", "Dynamic AMOLED 2X6.8 inch, Quad HD+ (2K+)", "128 GB", "5000 mAh, 45 W", "Snapdragon 8 Gen 1", "40 MP", "Main 108 MP & Secondary 12 MP, 10 MP, 10 MP", "2 Nano SIM or 1 Nano SIM + 1 eSIM, support 5G", null, null, null, null, null, 2021);
+				Product phone4 = new Product("Samsung Galaxy A13",2,2,4_690_000,35,10,"Nhằm mang trải nghiệm tốt hơn trên dòng sản phẩm giá rẻ, Samsung cho ra mắt Galaxy A13 4G với một hiệu năng ổn định, camera chụp ảnh sắc nét và viên pin khủng đáp ứng nhu cầu sử dụng cả ngày cho bạn cùng một mức giá trang bị cực kỳ phải chăng.",1, "Android 12", "4 GB", "PLS TFT LCD6.6\"Full HD+", "128 GB", "5000 mAh15 W", "Exynos 850", "8 MP", "Chính 50 MP & Phụ 5 MP, 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2021);
+				Product phone5 = new Product("OPPO Reno7 series",3,3,9_990_000,70,0,"OPPO đã trình làng mẫu Reno7 Z 5G với thiết kế OPPO Glow độc quyền, camera mang hiệu ứng như máy DSLR chuyên nghiệp cùng viền sáng kép, máy có một cấu hình mạnh mẽ và đạt chứng nhận xếp hạng A về độ mượt.",1, "Android 11", "8 GB", "AMOLED6.43\"Full HD+", "128 GB", "4500 mAh33 W", "Snapdragon 695 5G", "16 MP", "Chính 64 MP & Phụ 2 MP, 2 MP", "2 Nano SIM (SIM 2 chung khe thẻ nhớ)Hỗ trợ 5G", null, null, null, null, null, 2021);
+				Product phone6 = new Product("OPPO A55",3,3,4_190_000,60,6,"OPPO cho ra mắt OPPO A55 4G chiếc smartphone giá rẻ tầm trung có thiết kế đẹp mắt, cấu hình khá ổn, cụm camera chất lượng và dung lượng pin ấn tượng, mang đến một lựa chọn trải nghiệm thú vị vừa túi tiền cho người tiêu dùng.",1, "Android 11", "8 GB", "IPS LCD6.5\"HD+", "64 GB", "5000 mAh18 W", "MediaTek Helio G35", "16 MP", "Chính 50 MP & Phụ 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2021);
+				Product phone7 = new Product("Xiaomi Redmi Note 11",4,3,4_690_000,63,6,"Điện thoại Redmi được mệnh danh là dòng sản phẩm quốc dân ngon - bổ  - rẻ của Xiaomi và Redmi Note 11 (4GB/64GB) cũng không phải ngoại lệ, máy sở hữu một hiệu năng ổn định, màn hình 90 Hz mượt mà, cụm camera AI đến 50 MP cùng một mức giá vô cùng tốt.",1, "Android 11", "4 GB", "AMOLED6.43\"Full HD+", "64 GB", "5000 mAh33 W", "Snapdragon 680 8 nhân", "13 MP", "Chính 50 MP & Phụ 8 MP, 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2021);
+				Product phone8 = new Product("Xiaomi Redmi Note 11S 5G",4,3,6_490_000,89,0,"Tại sự kiện ra mắt sản phẩm mới diễn ra hôm 29/3, điện thoại Xiaomi đã ra mắt Redmi Note 11S 5G toàn cầu. Thiết bị là một bản nâng cấp đáng giá so với Redmi Note 11S 4G, cùng xem máy có gì đặc biệt thôi nào.",1, "Android 11", "6 GB", "IPS LCD6.6\"Full HD+", "128 GB", "5000 mAh33 W", "MediaTek Dimensity 810 5G", "13 MP", "Chính 50 MP & Phụ 8 MP, 2 MP", "2 Nano SIM (SIM 2 chung khe thẻ nhớ)Hỗ trợ 5G", null, null, null, null, null, 2021);
+				Product phone9 = new Product("Vivo Y15s",5,3,3_490_000,89,0,"Vivo vừa mang một chiến binh mới đến phân khúc tầm trung giá rẻ có tên Vivo Y15s, một sản phẩm sở hữu khá nhiều ưu điểm như thiết kế đẹp, màn hình lớn, camera kép, pin cực trâu và còn rất nhiều điều thú vị khác đang chờ đón bạn.",1, "Android 11 (Go Edition)", "3 GB", "IPS LCD6.51\"HD+", "32 GB", "5000 mAh10 W", "MediaTek Helio P35", "8 MP", "Chính 13 MP & Phụ 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2022);
+				Product phone10 = new Product("Vivo X80",5,3,19_990_000,89,0,"Vivo X80 được xem là thiết bị hướng đến đối tượng người dùng chuyên nhiếp ảnh trên điện thoại, bằng việc hợp tác cùng nhà sản xuất ống kính nổi tiếng mang thương hiệu ZEISS. Với những tính năng mới mẻ hay chế độ quay - chụp độc đáo, X80 hứa hẹn mang đến cho bạn những trải nghiệm đầy mới lạ và chất lượng.",1, "Android 12", "12 GB", "AMOLED6.78\"Full HD+", "256 GB", "4500 mAh80 W", "MediaTek Dimensity 9000 8 nhân", "32 MP", "Chính 50 MP & Phụ 12 MP, 12 MP", "2 Nano SIMHỗ trợ 5G", null, null, null, null, null, 2018);
+				Product phone11 = new Product("Realme C35",6,3,4_290_000,42,0,"Điện thoại Realme C35 thuộc phân khúc giá rẻ được nhà Realme cho ra mắt với thiết kế trẻ trung, dung lượng pin lớn cùng camera hỗ trợ nhiều tính năng. Đây sẽ là thiết bị liên lạc, giải trí và làm việc ổn định,… cho các nhu cầu sử dụng của bạn.",1, "Android 11", "4 GB", "IPS LCD6.6\"Full HD+", "64 GB", "5000 mAh18 W", "Unisoc T616", "8 MP", "Chính 50 MP & Phụ 2 MP, 0.3 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2022);
+				Product phone12 = new Product("Realme 9 Pro 5G ",6,3,7_990_000,40,0,"Realme 9 Pro - chiếc điện thoại tầm trung được Realme giới thiệu với thiết kế phản quang hoàn toàn mới, máy có một vẻ ngoài năng động, hiệu năng mạnh mẽ, cụm camera AI 64 MP và một tốc độ sạc ổn định.",1, "Android 12", "8 GB", "IPS LCD6.6\"Full HD+", "128 GB", "5000 mAh33 W", "Snapdragon 695 5G 8 nhân", "16 MP", "Chính 64 MP & Phụ 8 MP, 2 MP", "2 Nano SIM (SIM 2 chung khe thẻ nhớ)Hỗ trợ 5G", null, null, null, null, null, 2019);
+				Product phone13 = new Product("Nokia G21 ",7,4,4_290_000,50,9,"Nokia G21 là thế hệ tiếp theo thuộc G series do Nokia sản xuất với những cải tiến nổi bật như màn hình kích thước lớn, hiệu năng ổn định mang đến trải nghiệm mượt mà trên các tác vụ hằng ngày cùng thời gian sử dụng lâu dài nhờ viên pin khủng được tích hợp trên điện thoại.",1, "Android 11", "4 GB", "TFT LCD6.5\"HD+", "128 GB", "5050 mAh18 W", "Unisoc T606", "8 MP", "Chính 50 MP & Phụ 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2010);
+				Product phone14 = new Product("Nokia G11 ",7,4,3_890_000,50,17,"Nokia G11 được hãng cho ra mắt với hiệu năng ổn định, màn hình kích thước lớn mang đến những trải nghiệm giải trí tuyệt vời cùng thời gian sử dụng lâu dài với viên pin cực khủng.",1, "Android 11", "4 GB", "TFT LCD6.5\"HD+", "64 GB", "5050 mAh18 W", "Unisoc T606", "8 MP", "Chính 13 MP & Phụ 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2010);
+				Product phone15 = new Product("Iphone 13 Pro",1,1,30_990_000,10,12,"Mỗi lần ra mắt phiên bản mới là mỗi lần iPhone chiếm sóng trên khắp các mặt trận và lần này cái tên khiến vô số người \"sục sôi\" là iPhone 13 Pro, chiếc điện thoại thông minh vẫn giữ nguyên thiết kế cao cấp, cụm 3 camera được nâng cấp, cấu hình mạnh mẽ cùng thời lượng pin lớn ấn tượng. ",1, "IOS 15", "6 GB", "OLED6.1\"Super Retina XDR", "128 GB", "3095 mAh20 W", "Apple A15 Bionic", "12 MP", "3 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2021);
         Product phone16 = new Product("Iphone 13",1,1,24_990_000,10,15,"Trong khi sức hút đến từ bộ 4 phiên bản iPhone 12 vẫn chưa nguội đi, thì hãng điện thoại Apple đã mang đến cho người dùng một siêu phẩm mới iPhone 13 với nhiều cải tiến thú vị sẽ mang lại những trải nghiệm hấp dẫn nhất cho người dùng.",1, "IOS 15", "4 GB", "OLED6.1\"Super Retina XDR", "128 GB", "3240 mAh20 W", "Apple A15 Bionic", "12 MP", "2 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2021);
         Product phone17 = new Product("Iphone 13 mini",1,1,21_990_000,17,13,"iPhone 13 mini được Apple ra mắt với hàng loạt nâng cấp về cấu hình và các tính năng hữu ích, lại có thiết kế vừa vặn. Chiếc điện thoại này hứa hẹn là một thiết bị hoàn hảo hướng tới những khách hàng thích sự nhỏ gọn nhưng vẫn giữ được sự mạnh mẽ bên trong.",1, "IOS 15", "4 GB", "OLED5.4\"Super Retina XDR", "128 GB", "3240 mAh20 W", "Apple A15 Bionic", "12 MP", "2 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2021);
         Product phone18 = new Product("Iphone 12",1,1,19_990_000,25,12,"Trong những tháng cuối năm 2020, Apple đã chính thức giới thiệu đến người dùng cũng như iFan thế hệ iPhone 12 series mới với hàng loạt tính năng bứt phá, thiết kế được lột xác hoàn toàn, hiệu năng đầy mạnh mẽ và một trong số đó chính là iPhone 12 64GB.",1, "IOS 15", "4 GB", "OLED6.1\"Super Retina XDR", "64 GB", "2815 mAh20 W", "Apple A14 Bionic", "12 MP", "2 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2021);
         Product phone19 = new Product("Iphone 12 mini",1,1,20_990_000,26,28,"Apple tiếp tục khẳng định vị thế của mình khi cho ra mắt mẫu iPhone 12 series với nhiều điểm được tối ưu hơn, nâng cấp mạnh hơn. Trong đó, điện thoại iPhone 12 mini 128 GB được ví như là phiên bản thu nhỏ hơn là bản rút gọn với cấu hình không khác gì mấy anh lớn có mức giá hấp dẫn hơn.",1, "IOS 15", "4 GB", "OLED5.4\"Super Retina XDR", "128 GB", "2815 mAh20 W", "Apple A14 Bionic", "12 MP", "2 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2021);
         Product phone20 = new Product("Iphone SE",1,1,13_490_000,11,11,"Như vậy là sau bao ngày chờ đợi thì iPhone SE 64 GB (2022) cũng đã được giới thiệu tại sự kiện Apple Peek Performance. Thiết bị nổi bật với cấu hình mạnh mẽ, chạy chip hiện đại nhất của Apple hiện tại nhưng giá bán lại rất phải chăng.",1, "IOS 15", "4 GB", "IPS LCD4.7\"Retina HD", "64 GB", "2018 mAh20 W", "Apple A15 Bionic", "7 MP", "12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2021);
-        
-        Product phone3 = new Product("Samsung Galaxy S22 Ultra",2,2,25_990_000,34,16,"Galaxy S22 Ultra 5G chiếc smartphone cao cấp nhất trong bộ 3 Galaxy S22 series mà Samsung đã cho ra mắt. Tích hợp bút S Pen hoàn hảo trong thân máy, trang bị vi xử lý mạnh mẽ cho các tác vụ sử dụng vô cùng mượt mà và nổi bật hơn với cụm camera không viền độc đáo mang đậm dấu ấn riêng",1, "Android 12", "8 GB", "Dynamic AMOLED 2X6.8 inch, Quad HD+ (2K+)", "128 GB", "5000 mAh, 45 W", "Snapdragon 8 Gen 1", "40 MP", "Main 108 MP & Secondary 12 MP, 10 MP, 10 MP", "2 Nano SIM or 1 Nano SIM + 1 eSIM, support 5G", null, null, null, null, null, 2021);
-        Product phone4 = new Product("Samsung Galaxy A13",2,2,4_690_000,35,10,"Nhằm mang trải nghiệm tốt hơn trên dòng sản phẩm giá rẻ, Samsung cho ra mắt Galaxy A13 4G với một hiệu năng ổn định, camera chụp ảnh sắc nét và viên pin khủng đáp ứng nhu cầu sử dụng cả ngày cho bạn cùng một mức giá trang bị cực kỳ phải chăng.",1, "Android 12", "4 GB", "PLS TFT LCD6.6\"Full HD+", "128 GB", "5000 mAh15 W", "Exynos 850", "8 MP", "Chính 50 MP & Phụ 5 MP, 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2021);
-        Product phone5 = new Product("OPPO Reno7 series",3,3,9_990_000,70,0,"OPPO đã trình làng mẫu Reno7 Z 5G với thiết kế OPPO Glow độc quyền, camera mang hiệu ứng như máy DSLR chuyên nghiệp cùng viền sáng kép, máy có một cấu hình mạnh mẽ và đạt chứng nhận xếp hạng A về độ mượt.",1, "Android 11", "8 GB", "AMOLED6.43\"Full HD+", "128 GB", "4500 mAh33 W", "Snapdragon 695 5G", "16 MP", "Chính 64 MP & Phụ 2 MP, 2 MP", "2 Nano SIM (SIM 2 chung khe thẻ nhớ)Hỗ trợ 5G", null, null, null, null, null, 2021);
-        Product phone6 = new Product("OPPO A55",3,3,4_190_000,60,6,"OPPO cho ra mắt OPPO A55 4G chiếc smartphone giá rẻ tầm trung có thiết kế đẹp mắt, cấu hình khá ổn, cụm camera chất lượng và dung lượng pin ấn tượng, mang đến một lựa chọn trải nghiệm thú vị vừa túi tiền cho người tiêu dùng.",1, "Android 11", "8 GB", "IPS LCD6.5\"HD+", "64 GB", "5000 mAh18 W", "MediaTek Helio G35", "16 MP", "Chính 50 MP & Phụ 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2021);
-        Product phone7 = new Product("Xiaomi Redmi Note 11",4,3,4_690_000,63,6,"Điện thoại Redmi được mệnh danh là dòng sản phẩm quốc dân ngon - bổ  - rẻ của Xiaomi và Redmi Note 11 (4GB/64GB) cũng không phải ngoại lệ, máy sở hữu một hiệu năng ổn định, màn hình 90 Hz mượt mà, cụm camera AI đến 50 MP cùng một mức giá vô cùng tốt.",1, "Android 11", "4 GB", "AMOLED6.43\"Full HD+", "64 GB", "5000 mAh33 W", "Snapdragon 680 8 nhân", "13 MP", "Chính 50 MP & Phụ 8 MP, 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2021);
-        Product phone8 = new Product("Xiaomi Redmi Note 11S 5G",4,3,6_490_000,89,0,"Tại sự kiện ra mắt sản phẩm mới diễn ra hôm 29/3, điện thoại Xiaomi đã ra mắt Redmi Note 11S 5G toàn cầu. Thiết bị là một bản nâng cấp đáng giá so với Redmi Note 11S 4G, cùng xem máy có gì đặc biệt thôi nào.",1, "Android 11", "6 GB", "IPS LCD6.6\"Full HD+", "128 GB", "5000 mAh33 W", "MediaTek Dimensity 810 5G", "13 MP", "Chính 50 MP & Phụ 8 MP, 2 MP", "2 Nano SIM (SIM 2 chung khe thẻ nhớ)Hỗ trợ 5G", null, null, null, null, null, 2021);
-        Product phone9 = new Product("Vivo Y15s",5,3,3_490_000,89,0,"Vivo vừa mang một chiến binh mới đến phân khúc tầm trung giá rẻ có tên Vivo Y15s, một sản phẩm sở hữu khá nhiều ưu điểm như thiết kế đẹp, màn hình lớn, camera kép, pin cực trâu và còn rất nhiều điều thú vị khác đang chờ đón bạn.",1, "Android 11 (Go Edition)", "3 GB", "IPS LCD6.51\"HD+", "32 GB", "5000 mAh10 W", "MediaTek Helio P35", "8 MP", "Chính 13 MP & Phụ 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2022);
-        Product phone10 = new Product("Vivo X80",5,3,19_990_000,89,0,"Vivo X80 được xem là thiết bị hướng đến đối tượng người dùng chuyên nhiếp ảnh trên điện thoại, bằng việc hợp tác cùng nhà sản xuất ống kính nổi tiếng mang thương hiệu ZEISS. Với những tính năng mới mẻ hay chế độ quay - chụp độc đáo, X80 hứa hẹn mang đến cho bạn những trải nghiệm đầy mới lạ và chất lượng.",1, "Android 12", "12 GB", "AMOLED6.78\"Full HD+", "256 GB", "4500 mAh80 W", "MediaTek Dimensity 9000 8 nhân", "32 MP", "Chính 50 MP & Phụ 12 MP, 12 MP", "2 Nano SIMHỗ trợ 5G", null, null, null, null, null, 2018);
-        Product phone11 = new Product("Realme C35",6,3,4_290_000,42,0,"Điện thoại Realme C35 thuộc phân khúc giá rẻ được nhà Realme cho ra mắt với thiết kế trẻ trung, dung lượng pin lớn cùng camera hỗ trợ nhiều tính năng. Đây sẽ là thiết bị liên lạc, giải trí và làm việc ổn định,… cho các nhu cầu sử dụng của bạn.",1, "Android 11", "4 GB", "IPS LCD6.6\"Full HD+", "64 GB", "5000 mAh18 W", "Unisoc T616", "8 MP", "Chính 50 MP & Phụ 2 MP, 0.3 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2022);
-        Product phone12 = new Product("Realme 9 Pro 5G ",6,3,7_990_000,40,0,"Realme 9 Pro - chiếc điện thoại tầm trung được Realme giới thiệu với thiết kế phản quang hoàn toàn mới, máy có một vẻ ngoài năng động, hiệu năng mạnh mẽ, cụm camera AI 64 MP và một tốc độ sạc ổn định.",1, "Android 12", "8 GB", "IPS LCD6.6\"Full HD+", "128 GB", "5000 mAh33 W", "Snapdragon 695 5G 8 nhân", "16 MP", "Chính 64 MP & Phụ 8 MP, 2 MP", "2 Nano SIM (SIM 2 chung khe thẻ nhớ)Hỗ trợ 5G", null, null, null, null, null, 2019);
-        Product phone13 = new Product("Nokia G21 ",7,4,4_290_000,50,9,"Nokia G21 là thế hệ tiếp theo thuộc G series do Nokia sản xuất với những cải tiến nổi bật như màn hình kích thước lớn, hiệu năng ổn định mang đến trải nghiệm mượt mà trên các tác vụ hằng ngày cùng thời gian sử dụng lâu dài nhờ viên pin khủng được tích hợp trên điện thoại.",1, "Android 11", "4 GB", "TFT LCD6.5\"HD+", "128 GB", "5050 mAh18 W", "Unisoc T606", "8 MP", "Chính 50 MP & Phụ 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2010);
-        Product phone14 = new Product("Nokia G11 ",7,4,3_890_000,50,17,"Nokia G11 được hãng cho ra mắt với hiệu năng ổn định, màn hình kích thước lớn mang đến những trải nghiệm giải trí tuyệt vời cùng thời gian sử dụng lâu dài với viên pin cực khủng.",1, "Android 11", "4 GB", "TFT LCD6.5\"HD+", "64 GB", "5050 mAh18 W", "Unisoc T606", "8 MP", "Chính 13 MP & Phụ 2 MP, 2 MP", "2 Nano SIMHỗ trợ 4G", null, null, null, null, null, 2010);
         
         logger.info("insert data: " + productRepository.save(phone1));
         logger.info("insert data: " + productRepository.save(phone2));
@@ -182,6 +163,7 @@ public class SampleData {
         logger.info("insert data: " + productRepository.save(phone18));
         logger.info("insert data: " + productRepository.save(phone19));
         logger.info("insert data: " + productRepository.save(phone20));
+
         //Tablet
         Product tablet1 = new Product("iPad Pro M1 11 inch",1,1,46_990_000,30,10,"Trải nghiệm khung hình sống động cùng cảm giác chạm vuốt cực mượt",3, "iPadOS 15", "16 GB", "11\"Liquid Retina", "1 TB", "28.65 Wh (~ 7538 mAh)20 W", "Apple M1", "12 MP", "Chính 12 MP & Phụ 10 MP, TOF 3D LiDAR", "1 Nano SIM hoặc 1 eSIM", "Dài 247.6 mm - Ngang 178.5 mm - Dày 5.9 mm - Nặng 470 g", "\r\n"
         		+ "4 loa\r\n"
@@ -500,7 +482,7 @@ public class SampleData {
 				//laptop
 				Product laptop1 = new Product("Asus TUF Gaming FX506LHB",9,5,19_490_000,100,15,"Nếu bạn đang tìm kiếm một chiếc laptop gaming nhưng vẫn sở hữu một mức giá phải chăng thì laptop Asus TUF Gaming FX506LHB i5 (HN188W) sẽ là sự lựa chọn đáng cân nhắc với card đồ họa rời NVIDIA GeForce GTX mạnh mẽ cùng phong cách thiết kế cứng cáp, độc đáo.",2, "Windows 11 Home SL", "8 GB", "15.6 inch, Full HD (1920 x 1080), 144Hz", "512 GB SSD", null, "i5, 10300H, 2.5GHz", null, null, null, "Dài 359 mm - Rộng 256 mm - Dày 24.9 mm - Nặng 2.3 kg", "Có đèn bàn phím", "Card rời, GTX 1650 4GB", "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC2 x USB 3.2HDMIJack tai nghe 3.5 mmLAN (RJ45)USB 2.0", "Vỏ nhựa", 2021);
 				Product laptop2 = new Product("Asus ZenBook UX425EA",9,5,22_490_000,100,7,"Với những thông số kỹ thuật ấn tượng cùng phong cách thiết kế của một chiếc laptop mỏng nhẹ - thời trang, laptop Asus ZenBook UX425EA (KI839W) sẽ là một người bạn đồng hành hoàn hảo cùng người dùng trong mọi tác vụ.",2, "Windows 11 Home SL", "8 GB", "14 inch, Full HD (1920 x 1080)", "512 GB SSD", null, "i5, 1135G7, 2.4GHz", null, null, null, "Dài 319 mm - Rộng 208 mm - Dày 13.9 mm - Nặng 1.17 kg", "Có đèn bàn phím", "Card tích hợp, Intel Iris Xe", "1 x USB 3.2, 2 x Thunderbolt 4 USB-C, HDMI", "Vỏ kim loại nguyên khối", 2021);
-				Product laptop3 = new Product("Asus TUF Gaming FX507ZC",9,5,31_490_000,100,14,"Laptop Asus TUF Gaming FX507ZC i7 (HN124W) cực chất cùng hiệu năng mạnh mẽ từ CPU Intel thế hệ 12, thiết kế thời thượng sẵn sàng thách thức chinh phục ở mọi đấu trường ảo.",2, "Windows 11 Home SL", "8 GB", "15.6 inch, Full HD (1920 x 1080), 144Hz", "512 GB SSD", null, "i7, 12700H, 2.30 GHz", null, null, null, "Dài 354 mm - Rộng 251 mm - Dày 24.9 mm - Nặng 2.2 kg", "Có đèn bàn phím", "Card rời, RTX 3050 4GB", "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC, 2 x USB 3.2, HDMI, Jack tai nghe 3.5 mm, LAN (RJ45), Thunderbolt 4", "Vỏ nhựa", 2022);
+				Product laptop3 = new Product("Asus TUF Gaming FX507ZC",9,5,31_490_000,100,16,"Laptop Asus TUF Gaming FX507ZC i7 (HN124W) cực chất cùng hiệu năng mạnh mẽ từ CPU Intel thế hệ 12, thiết kế thời thượng sẵn sàng thách thức chinh phục ở mọi đấu trường ảo.",2, "Windows 11 Home SL", "8 GB", "15.6 inch, Full HD (1920 x 1080), 144Hz", "512 GB SSD", null, "i7, 12700H, 2.30 GHz", null, null, null, "Dài 354 mm - Rộng 251 mm - Dày 24.9 mm - Nặng 2.2 kg", "Có đèn bàn phím", "Card rời, RTX 3050 4GB", "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC, 2 x USB 3.2, HDMI, Jack tai nghe 3.5 mm, LAN (RJ45), Thunderbolt 4", "Vỏ nhựa", 2022);
 				Product laptop4 = new Product("Asus ZenBook UX425E",9,5,28_990_000,100,6,"Laptop Asus ZenBook UX425E i7 (KI843W) là phiên bản laptop cao cấp - sang trọng kèm nhiều tính năng thông minh được trang bị, công nghệ màn hình ấn tượng, hiệu năng vượt trội là sản phẩm hoàn hảo dành cho sinh viên, nhân viên văn phòng hay doanh nhân.",2, "Windows 11 Home SL", "16 GB", "14 inch, Full HD (1920 x 1080)", "512 GB SSD", null, "i7, 1165G7, 2.8 GHz", null, null, null, "Dài 319 mm - Rộng 208 mm - Dày 13.9 mm - Nặng 1.17 kg", "Có đèn bàn phím", "Card tích hợp, Intel Iris Xe", " 1 x USB 3.2, 2 x Thunderbolt 4 USB-C, HDMI", "Vỏ kim loại nguyên khối", 2021);
 				Product laptop5 = new Product("Apple MacBook Air M1 2020",8,1,33_990_000,100,8,"Laptop Apple Air M1 2020 có thiết kế đẹp, sang trọng với CPU M1 độc quyền từ Apple cho hiệu năng đồ họa cao, màn hình Retina hiển thị siêu nét cùng với hệ thống bảo mật tối ưu.",2, "Mac OS", "16 GB", "13.3 inch, Retina (2560 x 1600)", "256 GB SSD", null, "Apple M1", null, null, null, "Dài 304.1 mm - Rộng 212.4 mm - Dày 4.1 mm đến 16.1 mm - Nặng 1.29 kg", "Có đèn bàn phím", "Card tích hợp, 7 nhân GPU", "2 x Thunderbolt 3 (USB-C), Jack tai nghe 3.5 mm", "Vỏ kim loại nguyên khối", 2020);
 				Product laptop6 = new Product("Apple MacBook Pro M2 2022",8,1,33_990_000,100,5,"Thiết kế thanh lịch, sang trọng cùng hiệu năng vượt trội đến từ vi xử lý tân tiến Apple M2 có trong Macbook Pro M2, hứa hẹn sẽ mang lại nhiều giá trị cho người dùng sáng tạo, phục vụ tốt nhu cầu thiết kế đồ hoạ nâng cao.",2, "Mac OS", "8 GB", "13.3 inch, Retina (2560 x 1600)", "256 GB SSD", null, "Apple M2, 100GB/s", null, null, null, "Dài 304.1 mm - Rộng 212.4 mm - Dày 15.6 mm - Nặng 1.4 kg", "Có đèn bàn phím", "Card tích hợp, 10 nhân GPU", "2 x Thunderbolt , Jack tai nghe 3.5 mm", "Vỏ kim loại", 2022);
@@ -539,7 +521,6 @@ public class SampleData {
 				logger.info("insert data: " + productRepository.save(laptop18));
 				logger.info("insert data: " + productRepository.save(laptop19));
 				logger.info("insert data: " + productRepository.save(laptop20));
-
 
 				//smartwatch
 				Product watch1 = new Product("Apple Watch SE 40mm viền nhôm dây silicone",16,1,8_990_000,101,20,"Apple Watch SE 40mm viền nhôm dây silicone hồng có thiết kế bo tròn 4 góc giúp thao tác vuốt chạm thoải mái hơn. Mặt kính cường lực Ion-X strengthened glass với kích thước 1.57 inch, hiển thị rõ ràng. Khung viền nhôm chắc chắn cùng dây đeo silicone có độ đàn hồi cao, êm ái, tạo cảm giác thoải mái khi đeo.",4, "WatchOS 7", null, "OLED, 1.57 inch",  "32GB", "Khoảng 1.5 ngày", "Apple S7", null, null, null, "Dài 40 mm - Ngang 34 mm - Dày 10.7 mm - Nặng 30.49g", "Chế độ luyện tập, Theo dõi giấc ngủ, Tính lượng calories tiêu thụ, Tính quãng đường chạy, Đo nhịp tim, Đếm số bước chân", null, null, null, 2020);
@@ -584,28 +565,126 @@ public class SampleData {
 				logger.info("insert data: " + productRepository.save(watch19));
 				logger.info("insert data: " + productRepository.save(watch20));
 
-        
-        logger.info("insert data: " + productRepository.save(product1));
-        logger.info("insert data: " + productRepository.save(product2));
-        logger.info("insert data: " + productRepository.save(product3));
-        logger.info("insert data: " + productRepository.save(product4));
-        logger.info("insert data: " + productRepository.save(product5));
+        Image image1 = new Image("tgdd_product/Iphone 11_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660641583/tgdd_product/Iphone%2011_0.jpg", 1);
+        Image image2 = new Image("tgdd_product/Iphone 11_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660641621/tgdd_product/Iphone%2011_1.jpg", 1);
+        Image image3 = new Image("tgdd_product/Iphone 11_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660641662/tgdd_product/Iphone%2011_2.jpg", 1);
+        Image image4 = new Image("tgdd_product/Iphone 13 Pro Max_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660642510/tgdd_product/Iphone%2013%20Pro%20Max_0.jpg", 2);
+        Image image5 = new Image("tgdd_product/Iphone 13 Pro Max_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660642555/tgdd_product/Iphone%2013%20Pro%20Max_1.jpg", 2);
+        Image image6 = new Image("tgdd_product/Iphone 13 Pro Max_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660642597/tgdd_product/Iphone%2013%20Pro%20Max_2.jpg", 2);
+				Image image7 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660642717/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_0.jpg", 3);
+				Image image8 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660642828/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_1.jpg", 3);
+				Image image9 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660642868/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_2.jpg", 3);
+				Image image10 = new Image("tgdd_product/iPad Pro M1 11 inch_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660642963/tgdd_product/iPad%20Pro%20M1%2011%20inch_0.jpg", 21);
+				Image image11 = new Image("tgdd_product/iPad Pro M1 11 inch_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643002/tgdd_product/iPad%20Pro%20M1%2011%20inch_1.jpg", 21);
+				Image image12 = new Image("tgdd_product/iPad Pro M1 11 inch_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643043/tgdd_product/iPad%20Pro%20M1%2011%20inch_2.jpg", 21);
+				Image image13 = new Image("tgdd_product/iPad Pro M1 12.9 inch_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643257/tgdd_product/iPad%20Pro%20M1%2012.9%20inch_0.jpg", 22);
+				Image image14 = new Image("tgdd_product/iPad Pro M1 12.9 inch_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643302/tgdd_product/iPad%20Pro%20M1%2012.9%20inch_1.jpg", 22);
+				Image image15 = new Image("tgdd_product/iPad Pro M1 12.9 inch_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643326/tgdd_product/iPad%20Pro%20M1%2012.9%20inch_2.jpg", 22);
+				Image image16 = new Image("tgdd_product/iPad Air 5 M1_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643451/tgdd_product/iPad%20Air%205%20M1_0.jpg", 23);
+				Image image17 = new Image("tgdd_product/iPad Air 5 M1_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643480/tgdd_product/iPad%20Air%205%20M1_1.jpg", 23);
+				Image image18 = new Image("tgdd_product/iPad Air 5 M1_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643510/tgdd_product/iPad%20Air%205%20M1_2.jpg", 23);
+				Image image19 = new Image("tgdd_product/Asus TUF Gaming FX506LHB_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643603/tgdd_product/Asus%20TUF%20Gaming%20FX506LHB_0.jpg", 41);
+				Image image20 = new Image("tgdd_product/Asus TUF Gaming FX506LHB_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643652/tgdd_product/Asus%20TUF%20Gaming%20FX506LHB_1.jpg", 41);
+				Image image21 = new Image("tgdd_product/Asus TUF Gaming FX506LHB_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643686/tgdd_product/Asus%20TUF%20Gaming%20FX506LHB_2.jpg", 41);
+				Image image22 = new Image("tgdd_product/Asus ZenBook UX425EA_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643782/tgdd_product/Asus%20ZenBook%20UX425EA_0.jpg", 42);
+				Image image23 = new Image("tgdd_product/Asus ZenBook UX425EA_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643811/tgdd_product/Asus%20ZenBook%20UX425EA_1.jpg", 42);
+				Image image24 = new Image("tgdd_product/Asus ZenBook UX425EA_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660643963/tgdd_product/Asus%20ZenBook%20UX425EA_2.jpg", 42);
+				Image image25 = new Image("tgdd_product/Asus ZenBook UX425E_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644174/tgdd_product/Asus%20ZenBook%20UX425E_0.jpg", 44);
+				Image image26 = new Image("tgdd_product/Asus ZenBook UX425E_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644204/tgdd_product/Asus%20ZenBook%20UX425E_1.jpg", 44);
+				Image image27 = new Image("tgdd_product/Asus ZenBook UX425E_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644230/tgdd_product/Asus%20ZenBook%20UX425E_2.jpg", 44);
+				Image image28 = new Image("tgdd_product/Apple Watch SE 40mm viền nhôm dây silicone_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644353/tgdd_product/Apple%20Watch%20SE%2040mm%20vi%E1%BB%81n%20nh%C3%B4m%20d%C3%A2y%20silicone_0.jpg", 61);
+				Image image29 = new Image("tgdd_product/Apple Watch SE 40mm viền nhôm dây silicone_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644479/tgdd_product/Apple%20Watch%20SE%2040mm%20vi%E1%BB%81n%20nh%C3%B4m%20d%C3%A2y%20silicone_1.jpg", 61);
+				Image image30 = new Image("tgdd_product/Apple Watch SE 40mm viền nhôm dây silicone_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644521/tgdd_product/Apple%20Watch%20SE%2040mm%20vi%E1%BB%81n%20nh%C3%B4m%20d%C3%A2y%20silicone_2.jpg", 61);
+				Image image31 = new Image("tgdd_product/Apple Watch Series 7 GPS 41mm_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644586/tgdd_product/Apple%20Watch%20Series%207%20GPS%2041mm_0.jpg", 62);
+				Image image32 = new Image("tgdd_product/Apple Watch Series 7 GPS 41mm_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644706/tgdd_product/Apple%20Watch%20Series%207%20GPS%2041mm_1.jpg", 62);
+				Image image33 = new Image("tgdd_product/Apple Watch Series 7 GPS 41mm_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644737/tgdd_product/Apple%20Watch%20Series%207%20GPS%2041mm_2.jpg", 62);
+				Image image34 = new Image("tgdd_product/Apple Watch Series 7 LTE 41mm_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644828/tgdd_product/Apple%20Watch%20Series%207%20LTE%2041mm_0.jpg", 63);
+				Image image35 = new Image("tgdd_product/Apple Watch Series 7 LTE 41mm_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644873/tgdd_product/Apple%20Watch%20Series%207%20LTE%2041mm_1.jpg", 63);
+				Image image36 = new Image("tgdd_product/Apple Watch Series 7 LTE 41mm_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644901/tgdd_product/Apple%20Watch%20Series%207%20LTE%2041mm_2.jpg", 63);
 
-        Image image1 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361517/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_0.jpg", 1);
-        Image image2 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361613/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_1.jpg", 1);
-        Image image3 = new Image("tgdd_product/Samsung Galaxy S22 Ultra_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361622/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_2.jpg", 1);
-        Image image4 = new Image("tgdd_product/Laptop Asus TUF Gaming FX506LHB_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361632/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_0.jpg", 2);
-        Image image5 = new Image("tgdd_product/Laptop Asus TUF Gaming FX506LHB_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361640/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_1.jpg", 2);
-        Image image6 = new Image("tgdd_product/Laptop Asus TUF Gaming FX506LHB_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361648/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_2.jpg", 2);
         logger.info("insert data: " + imageRepository.save(image1));
         logger.info("insert data: " + imageRepository.save(image2));
         logger.info("insert data: " + imageRepository.save(image3));
         logger.info("insert data: " + imageRepository.save(image4));
         logger.info("insert data: " + imageRepository.save(image5));
         logger.info("insert data: " + imageRepository.save(image6));
+				logger.info("insert data: " + imageRepository.save(image7));
+				logger.info("insert data: " + imageRepository.save(image8));
+				logger.info("insert data: " + imageRepository.save(image9));
+				logger.info("insert data: " + imageRepository.save(image10));
+				logger.info("insert data: " + imageRepository.save(image11));
+				logger.info("insert data: " + imageRepository.save(image12));
+				logger.info("insert data: " + imageRepository.save(image13));
+				logger.info("insert data: " + imageRepository.save(image14));
+				logger.info("insert data: " + imageRepository.save(image15));
+				logger.info("insert data: " + imageRepository.save(image16));
+				logger.info("insert data: " + imageRepository.save(image17));
+				logger.info("insert data: " + imageRepository.save(image18));
+				logger.info("insert data: " + imageRepository.save(image19));
+				logger.info("insert data: " + imageRepository.save(image20));
+				logger.info("insert data: " + imageRepository.save(image21));
+				logger.info("insert data: " + imageRepository.save(image22));
+				logger.info("insert data: " + imageRepository.save(image23));
+				logger.info("insert data: " + imageRepository.save(image24));
+				logger.info("insert data: " + imageRepository.save(image25));
+				logger.info("insert data: " + imageRepository.save(image26));
+				logger.info("insert data: " + imageRepository.save(image27));
+				logger.info("insert data: " + imageRepository.save(image28));
+				logger.info("insert data: " + imageRepository.save(image29));
+				logger.info("insert data: " + imageRepository.save(image30));
+				logger.info("insert data: " + imageRepository.save(image31));
+				logger.info("insert data: " + imageRepository.save(image32));
+				logger.info("insert data: " + imageRepository.save(image33));
+				logger.info("insert data: " + imageRepository.save(image34));
+				logger.info("insert data: " + imageRepository.save(image35));
+				logger.info("insert data: " + imageRepository.save(image36));
 
-        Video video1 = new Video("https://youtu.be/XQMh9vPKTpg", 1);
+        Video video1 = new Video("https://youtu.be/jtMHyn8uFDI", 2);
+				Video video2 = new Video("https://youtu.be/XQMh9vPKTpg", 3);
+				Video video3 = new Video("https://youtu.be/kd3Glk5qcgo", 23);
+				Video video4 = new Video("https://youtu.be/oKRZYbG8Wes", 42);
+				Video video5 = new Video("https://youtu.be/5QrPadPrDEw", 62);
+				Video video6 = new Video("https://youtu.be/5QrPadPrDEw", 63);
         logger.info("insert data: " + videoRepository.save(video1));
+				logger.info("insert data: " + videoRepository.save(video2));
+				logger.info("insert data: " + videoRepository.save(video3));
+				logger.info("insert data: " + videoRepository.save(video4));
+				logger.info("insert data: " + videoRepository.save(video5));
+				logger.info("insert data: " + videoRepository.save(video6));
+				
+				Cart cart1 = new Cart("0934033188", "giao nhanh", "Exxy3", 1);
+				Cart cart2 = new Cart("0934099999", "giao nhanh 1", "REun6", 1);
+				Cart cart3 = new Cart("0934033188", "", "", 2);
+				Cart cart4 = new Cart("0934099999", "", "", 2);
+				Cart cart5 = new Cart("0934033188", "", "", 3);
+				Cart cart6 = new Cart("0934099999", "", "", 4);
+				logger.info("insert data: " + cartRepository.save(cart1));
+				logger.info("insert data: " + cartRepository.save(cart2));
+				logger.info("insert data: " + cartRepository.save(cart3));
+				logger.info("insert data: " + cartRepository.save(cart4));
+				logger.info("insert data: " + cartRepository.save(cart5));
+				logger.info("insert data: " + cartRepository.save(cart6));
+
+				CartDetail cartDetail1 = new CartDetail(1, 5, 1);
+				CartDetail cartDetail2 = new CartDetail(3, 2, 2);
+				CartDetail cartDetail3 = new CartDetail(2, 3, 1);
+				CartDetail cartDetail4 = new CartDetail(4, 1, 2);
+				CartDetail cartDetail5 = new CartDetail(5, 1, 3);
+				CartDetail cartDetail6 = new CartDetail(6, 1, 4);
+				CartDetail cartDetail7 = new CartDetail(7, 2, 5);
+				CartDetail cartDetail8 = new CartDetail(8, 3, 6);
+				CartDetail cartDetail9 = new CartDetail(10, 4, 3);
+				CartDetail cartDetail10 = new CartDetail(2, 10, 4);
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail1));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail2));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail3));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail4));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail5));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail6));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail7));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail8));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail9));
+				logger.info("insert data: " + cartDetailRepository.save(cartDetail10));
 
         Status status0 = new Status("Chưa đăt hàng");
         Status status1 = new Status("Chờ xác nhận");
@@ -618,8 +697,8 @@ public class SampleData {
         logger.info("insert data: " + statusRepository.save(status3));
         logger.info("insert data: " + statusRepository.save(status4));
 
-        Comment comment1 = new Comment(1,"0869792657","Tạm được",3,"comment1.png");
-        Comment comment2 = new Comment(2,"0869792657","Tạm được",4,"comment2.png");
+        Comment comment1 = new Comment(1, "0869792657", "Tạm được", 3, "comment1.png");
+        Comment comment2 = new Comment(2, "0869792657", "Tạm được", 4, "comment2.png");
         logger.info("insert data: " + commentRepository.save(comment1));
         logger.info("insert data: " + commentRepository.save(comment2));
       }

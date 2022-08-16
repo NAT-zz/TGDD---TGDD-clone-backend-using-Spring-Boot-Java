@@ -20,6 +20,9 @@ public class PhoneDTO {
   private String sim;
   private String battery;
 
+  public PhoneDTO() {
+  }
+
   public PhoneDTO(int id, String name, int companyId, int nationId, double price, int quantity, int discount, String description, int kindId, String screen, String os, String frontCam, String backCam, String chip, String ram, String memory, String sim, String battery) {
     this.id = id;
     this.name = name;
