@@ -57,11 +57,11 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter{
 						filterChain.doFilter(request, response);
 					}
 					catch (Exception e) {
-						MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse("403", "Access is denied 1", 200), e);
+						MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse("403", "Access is denied", 200), e);
 					}
 				}
 				else {
-					MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse("403", "Access is denied 2", 200), null);
+					MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse("403", "Access is denied", 200), null);
 					filterChain.doFilter(request, response);
 				}
 			}
