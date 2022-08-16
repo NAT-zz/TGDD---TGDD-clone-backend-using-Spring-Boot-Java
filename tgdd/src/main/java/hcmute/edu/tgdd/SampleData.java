@@ -37,8 +37,6 @@ public class SampleData {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
-
-
         Company company1 = new Company("Iphone"); //USA
         Company company2 = new Company("SamSung"); //Korea
         Company company3 = new Company("Oppo"); //China
@@ -58,7 +56,6 @@ public class SampleData {
         Company company18 = new Company("Gramin"); //Sweden
         Company company19 = new Company("Befit"); //Vietnam
         Company company20 = new Company("Kidcare"); //China
-
         logger.info("insert data: " + companyRepository.save(company1));
         logger.info("insert data: " + companyRepository.save(company2));
         logger.info("insert data: " + companyRepository.save(company3));
@@ -124,170 +121,6 @@ public class SampleData {
         logger.info("insert data: " + kindRepository.save(kindC));
         logger.info("insert data: " + kindRepository.save(kindD));
 
-<<<<<<< HEAD
-=======
-        Cart cart1 = new Cart("0934033188", "giao nhanh", "Exxy3", 1);
-        Cart cart2 = new Cart("0934099999", "giao nhanh 1", "REun6", 1);
-        Cart cart3 = new Cart("0934033188", "", "", 2);
-        Cart cart4 = new Cart("0934099999", "", "", 2);
-        Cart cart5 = new Cart("0934033188", "", "", 3);
-        Cart cart6 = new Cart("0934099999", "", "", 4);
-        logger.info("insert data: " + cartRepository.save(cart1));
-        logger.info("insert data: " + cartRepository.save(cart2));
-        logger.info("insert data: " + cartRepository.save(cart3));
-        logger.info("insert data: " + cartRepository.save(cart4));
-        logger.info("insert data: " + cartRepository.save(cart5));
-        logger.info("insert data: " + cartRepository.save(cart6));
-
-        CartDetail cartDetail1 = new CartDetail(1, 5, 1);
-        CartDetail cartDetail2 = new CartDetail(3, 2, 2);
-        CartDetail cartDetail3 = new CartDetail(2, 3, 1);
-        CartDetail cartDetail4 = new CartDetail(4, 1, 2);
-        CartDetail cartDetail5 = new CartDetail(5, 1, 3);
-        CartDetail cartDetail6 = new CartDetail(6, 1, 4);
-        CartDetail cartDetail7 = new CartDetail(7, 2, 5);
-        CartDetail cartDetail8 = new CartDetail(8, 3, 6);
-        CartDetail cartDetail9 = new CartDetail(10, 4, 3);
-        CartDetail cartDetail10 = new CartDetail(2, 10, 4);
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail1));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail2));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail3));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail4));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail5));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail6));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail7));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail8));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail9));
-        logger.info("insert data: " + cartDetailRepository.save(cartDetail10));
-
-
-        Product product1 =
-            new Product(
-                "Samsung Galaxy S22 Ultra",
-                1,
-                1,
-                25_990_000,
-                34,
-                16,
-                "mo ta",
-                1,
-                "Android 12",
-                "8 GB",
-                "Dynamic AMOLED 2X6.8 inch, Quad HD+ (2K+)",
-                "128 GB",
-                "5000 mAh, 45 W",
-                "Snapdragon 8 Gen 1",
-                "40 MP",
-                "Main 108 MP & Secondary 12 MP, 10 MP, 10 MP",
-                "2 Nano SIM or 1 Nano SIM + 1 eSIM, support 5G",
-                null,
-                null,
-                null,
-                null,
-                null,
-                2021);
-        Product product2 =
-            new Product(
-                "Laptop Asus TUF Gaming FX506LHB",
-                1,
-                1,
-                16_490_000,
-                30,
-                17,
-                "mo ta 2",
-                2,
-                "Windows 11 Home SL",
-                "8 GB",
-                "15.6 inch, Full HD (1920 x 1080), 144Hz",
-                "512 GB SSD",
-                null,
-                "i5, 10300H, 2.5GHz",
-                null,
-                null,
-                null,
-                "359 mm long - 256 mm wide - 24.9 mm thick - 2.3 kg",
-                "Has keyboard light",
-                "GTX 1650 4GB",
-                "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC, 2 x USB 3.2, HDMI, Headphone jack 3.5 mm, LAN (RJ45), USB 2.0",
-                "Plastic cover",
-                2021);
-        Product product3 =
-            new Product(
-                "Laptop Asus TUF Gaming FX517ZC",
-                2,
-                2,
-                23_790_000,
-                100,
-                16,
-                "mo ta 3",
-                2,
-                "Windows 11 Home SL",
-                "8 GB",
-                "15.6 inch, Full HD (1920 x 1080), 144Hz",
-                "512 GB SSD",
-                null,
-                "i5, 12450H, 2GHz",
-                null,
-                null,
-                null,
-                "354 mm long - 251 mm wide - 20.7 mm thick - 2 kg",
-                "Has keyboard light",
-                "RTX 3050 4GB",
-                "1x USB 3.2 Gen 2 Type-C support DisplayPort / power delivery / G-SYNC2 x USB 3.2, HDMI, Headphone jack 3.5 mmLAN (RJ45)Thunderbolt 4",
-                "Plastic cover",
-                2022);
-        Product product4 =
-            new Product(
-                "Tablet Samsung Galaxy Tab S8",
-                2,
-                1,
-                20_990_000,
-                34,
-                15,
-                "mo ta",
-                3,
-                "Android 12",
-                "8 GB",
-                "11 inch, LTPS",
-                "128 GB",
-                "8000 mAh, 45 W",
-                "Snapdragon 8 Gen 1",
-                "12 MP",
-                "Main 13 MP & Secondary 6 MP",
-                "1 Nano SIM",
-                null,
-                null,
-                null,
-                null,
-                null,
-                2021);
-        Product product5 =
-            new Product(
-                "Apple Watch SE 40mm",
-                2,
-                1,
-                6_990_000,
-                101,
-                22,
-                "mo ta",
-                4,
-                "IOS",
-                null,
-                "OLED1.57 inch",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                2021);
-
->>>>>>> f0e5680ffb92b385bc636e0c721b87aff8f31f9e
         //Phone
         Product phone1 = new Product("Iphone 11",1,1,14_990_000,30,23,"Apple đã chính thức trình làng bộ 3 siêu phẩm iPhone 11, trong đó phiên bản iPhone 11 64GB có mức giá rẻ nhất nhưng vẫn được nâng cấp mạnh mẽ như iPhone Xr ra mắt trước đó.",1, "IOS 15", "4 GB", "IPS LCD6.1\"Liquid Retina", "64 GB", "3110 mAh, 18 W", "Apple A13 Bionic", "12 MP", "2 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 4G", null, null, null, null, null, 2021);
         Product phone2 = new Product("Iphone 13 Pro Max",1,1,33_990_000,50,13,"Điện thoại iPhone 13 Pro Max 128 GB - siêu phẩm được mong chờ nhất ở nửa cuối năm 2021 đến từ Apple. Máy có thiết kế không mấy đột phá khi so với người tiền nhiệm, bên trong đây vẫn là một sản phẩm có màn hình siêu đẹp, tần số quét được nâng cấp lên 120 Hz mượt mà, cảm biến camera có kích thước lớn hơn, cùng hiệu năng mạnh mẽ với sức mạnh đến từ Apple A15 Bionic, sẵn sàng cùng bạn chinh phục mọi thử thách.",1, "IOS 15", "6 GB", "OLED6.7\"Super Retina XDR", "128 GB", "4352 mAh20 W", "Apple A15 Bionic", "12 MP", "3 camera 12 MP", "1 Nano SIM & 1 eSIMHỗ trợ 5G", null, null, null, null, null, 2022);
@@ -330,6 +163,7 @@ public class SampleData {
         logger.info("insert data: " + productRepository.save(phone18));
         logger.info("insert data: " + productRepository.save(phone19));
         logger.info("insert data: " + productRepository.save(phone20));
+
         //Tablet
         Product tablet1 = new Product("iPad Pro M1 11 inch",1,1,46_990_000,30,10,"Trải nghiệm khung hình sống động cùng cảm giác chạm vuốt cực mượt",3, "iPadOS 15", "16 GB", "11\"Liquid Retina", "1 TB", "28.65 Wh (~ 7538 mAh)20 W", "Apple M1", "12 MP", "Chính 12 MP & Phụ 10 MP, TOF 3D LiDAR", "1 Nano SIM hoặc 1 eSIM", "Dài 247.6 mm - Ngang 178.5 mm - Dày 5.9 mm - Nặng 470 g", "\r\n"
         		+ "4 loa\r\n"
@@ -731,7 +565,6 @@ public class SampleData {
 				logger.info("insert data: " + productRepository.save(watch19));
 				logger.info("insert data: " + productRepository.save(watch20));
 
-<<<<<<< HEAD
         Image image1 = new Image("tgdd_product/Iphone 11_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660641583/tgdd_product/Iphone%2011_0.jpg", 1);
         Image image2 = new Image("tgdd_product/Iphone 11_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660641621/tgdd_product/Iphone%2011_1.jpg", 1);
         Image image3 = new Image("tgdd_product/Iphone 11_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660641662/tgdd_product/Iphone%2011_2.jpg", 1);
@@ -768,45 +601,7 @@ public class SampleData {
 				Image image34 = new Image("tgdd_product/Apple Watch Series 7 LTE 41mm_0", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644828/tgdd_product/Apple%20Watch%20Series%207%20LTE%2041mm_0.jpg", 63);
 				Image image35 = new Image("tgdd_product/Apple Watch Series 7 LTE 41mm_1", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644873/tgdd_product/Apple%20Watch%20Series%207%20LTE%2041mm_1.jpg", 63);
 				Image image36 = new Image("tgdd_product/Apple Watch Series 7 LTE 41mm_2", "https://res.cloudinary.com/drwc3s5id/image/upload/v1660644901/tgdd_product/Apple%20Watch%20Series%207%20LTE%2041mm_2.jpg", 63);
-=======
 
-        logger.info("insert data: " + productRepository.save(product1));
-        logger.info("insert data: " + productRepository.save(product2));
-        logger.info("insert data: " + productRepository.save(product3));
-        logger.info("insert data: " + productRepository.save(product4));
-        logger.info("insert data: " + productRepository.save(product5));
-
-        Image image1 =
-            new Image(
-                "tgdd_product/Samsung Galaxy S22 Ultra_0",
-                "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361517/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_0.jpg",
-                1);
-        Image image2 =
-            new Image(
-                "tgdd_product/Samsung Galaxy S22 Ultra_1",
-                "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361613/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_1.jpg",
-                1);
-        Image image3 =
-            new Image(
-                "tgdd_product/Samsung Galaxy S22 Ultra_2",
-                "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361622/tgdd_product/Samsung%20Galaxy%20S22%20Ultra_2.jpg",
-                1);
-        Image image4 =
-            new Image(
-                "tgdd_product/Laptop Asus TUF Gaming FX506LHB_0",
-                "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361632/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_0.jpg",
-                2);
-        Image image5 =
-            new Image(
-                "tgdd_product/Laptop Asus TUF Gaming FX506LHB_1",
-                "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361640/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_1.jpg",
-                2);
-        Image image6 =
-            new Image(
-                "tgdd_product/Laptop Asus TUF Gaming FX506LHB_2",
-                "https://res.cloudinary.com/drwc3s5id/image/upload/v1660361648/tgdd_product/Laptop%20Asus%20TUF%20Gaming%20FX506LHB_2.jpg",
-                2);
->>>>>>> f0e5680ffb92b385bc636e0c721b87aff8f31f9e
         logger.info("insert data: " + imageRepository.save(image1));
         logger.info("insert data: " + imageRepository.save(image2));
         logger.info("insert data: " + imageRepository.save(image3));
