@@ -1,21 +1,22 @@
 package hcmute.edu.tgdd.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import hcmute.edu.tgdd.dto.LaptopDTO;
 import hcmute.edu.tgdd.dto.PhoneDTO;
 import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
-import hcmute.edu.tgdd.model.Video;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
 
   List<Product> getAllProduct(Integer pageNo, Integer pageSize, String sortBy);
+  
+  List<Product> findByNameLike(String name);
 
   Optional<Product> findById(Integer id);
 

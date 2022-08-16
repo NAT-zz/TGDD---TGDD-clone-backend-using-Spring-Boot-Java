@@ -44,8 +44,8 @@ public class ProductController {
     List<Product> listProduct = productService.getAllProduct(pageNo, pageSize, sortBy);
     return new DataResponse(listProduct);
   }
-  @GetMapping("/findByNameLike/{name}")
-  DataResponse getProductSByName(@PathVariable String name) {
+  @GetMapping("/findByName")
+  DataResponse getProductSByName(@RequestParam(name = "name") String name) {
 	  List<Product> foundProducts = productService.findByNameLike(name);
 	  if(!foundProducts.isEmpty())  
 		  return new DataResponse(foundProducts);
