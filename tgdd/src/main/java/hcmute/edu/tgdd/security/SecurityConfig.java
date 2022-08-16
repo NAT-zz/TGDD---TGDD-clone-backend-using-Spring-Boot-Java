@@ -96,6 +96,7 @@ public class SecurityConfig{
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/Comment/**").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/Comment/**").hasAuthority(Role.ROLE_ADMIN.toString());
         //cart
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/CartDetail/export").hasAuthority(Role.ROLE_ADMIN.toString());
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/CartDetail", "/api/Cart").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/CartDetail/**", "/api/Cart").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/CartDetail/**", "/api/Cart").hasAnyAuthority(Role.ROLE_ADMIN.toString(), Role.ROLE_CUSTOMER.toString());
