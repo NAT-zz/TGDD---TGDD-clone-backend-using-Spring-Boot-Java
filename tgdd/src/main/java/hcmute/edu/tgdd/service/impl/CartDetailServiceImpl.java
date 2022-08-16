@@ -4,6 +4,7 @@ import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.repository.CartDetailRepository;
 import hcmute.edu.tgdd.service.CartDetailService;
+import hcmute.edu.tgdd.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class CartDetailServiceImpl implements CartDetailService {
 	@Autowired
 	private CartDetailRepository cartDetailRepository;
 	@Autowired
-	private CartServiceImpl cartService;
+	private CartService cartService;
 
 	@Override
 	public List<CartDetail> getAllCartDetail() {

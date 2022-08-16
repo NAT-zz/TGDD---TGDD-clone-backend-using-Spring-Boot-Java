@@ -2,6 +2,7 @@ package hcmute.edu.tgdd.service.impl;
 
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.model.Product;
+import hcmute.edu.tgdd.service.ExportExcelService;
 import hcmute.edu.tgdd.service.ProductService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -15,11 +16,12 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ExportExcelServiceImpl {
+public class ExportExcelServiceImpl implements ExportExcelService {
   @Autowired private ProductService productService;
   private XSSFWorkbook workbook;
   private XSSFSheet sheet;
@@ -68,15 +70,16 @@ public class ExportExcelServiceImpl {
     font.setFontHeight(14);
     style.setFont(font);
 
-
-    List<CartDetail> shortCartDetailList = removeDuplicatesProductDetail(cartDetailList);
+    HashMap<Integer, Integer> hashMap = new HashMap<>();
+    List<CartDetail> shortCartDetailList = removeDuplicatesProductDetail(cartDetailList, hashMap);
 
     List<Product> productList = getProductListFromCartDetailList(shortCartDetailList);
 
-    System.out.println(shortCartDetailList.size());
-    System.out.println(productList.size());
+    System.out.println(hashMap);
 
-    for (CartDetail c : shortCartDetailList) {
+    for (int i = 0; i < shortCartDetailList.size(); i++) {
+      CartDetail c = shortCartDetailList.get(i);
+      Product p = productList.get(i);
       Row row = sheet.createRow(rowCount++);
 
       Cell cell = row.createCell(0);
@@ -95,7 +98,7 @@ public class ExportExcelServiceImpl {
       cell.setCellStyle(style);
 
       cell = row.createCell(3);
-      cell.setCellValue("");
+      cell.setCellValue(c.getQuantity() * hashMap.get(c.getProductId()));
       sheet.autoSizeColumn(3);
       cell.setCellStyle(style);
 
@@ -105,7 +108,7 @@ public class ExportExcelServiceImpl {
       cell.setCellStyle(style);
 
       cell = row.createCell(5);
-      cell.setCellValue("");
+      cell.setCellValue(p.getPrice() * hashMap.get(p.getId()) * c.getQuantity());
       sheet.autoSizeColumn(5);
       cell.setCellStyle(style);
 
@@ -113,8 +116,10 @@ public class ExportExcelServiceImpl {
     }
   }
 
+  @Override
   public void export(HttpServletResponse response, List<CartDetail> cartDetailList)
       throws Exception {
+
     workbook = new XSSFWorkbook();
     sheet = workbook.createSheet("CartDetail");
 
@@ -127,15 +132,19 @@ public class ExportExcelServiceImpl {
     outputStream.close();
   }
 
-  public List<CartDetail> removeDuplicatesProductDetail(List<CartDetail> list) {
+  private List<CartDetail> removeDuplicatesProductDetail(List<CartDetail> list,  HashMap<Integer, Integer> hashMap) {
 
     List<CartDetail> newList = new ArrayList<>();
     newList.add(list.get(0));
-    for (int i = 0; i < list.size(); i++) {
+    hashMap.put(1, 1);
+    for (int i = 1; i < list.size(); i++) {
       CartDetail element = list.get(i);
+      hashMap.put(element.getProductId(), 1);
       int flag = 1;
       for (int j = 0; j < newList.size(); j++) {
         if (newList.get(j).getProductId() == element.getProductId()) {
+          int loopCount = hashMap.get(element.getProductId()) + 1;
+          hashMap.put(element.getProductId(), loopCount);
           flag = 0;
           break;
         }
@@ -148,7 +157,7 @@ public class ExportExcelServiceImpl {
     return newList;
   }
 
-  public List<Product> getProductListFromCartDetailList(List<CartDetail> list) {
+  private List<Product> getProductListFromCartDetailList(List<CartDetail> list) {
     List<Product> productList = new ArrayList<>();
 
     for (int i = 0; i < list.size(); i++) {
@@ -159,4 +168,5 @@ public class ExportExcelServiceImpl {
 
     return productList;
   }
+
 }

@@ -2,7 +2,7 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.model.DataResponse;
-import hcmute.edu.tgdd.service.impl.CartServiceImpl;
+import hcmute.edu.tgdd.service.CartService;
 import hcmute.edu.tgdd.utils.Validate;
 import hcmute.edu.tgdd.utils.Validate.Type;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping(path = "api/Cart")
 public class CartController {
 	@Autowired
-	private CartServiceImpl cartService;
+	private CartService cartService;
 
 	// get all Cart
 	@GetMapping("")

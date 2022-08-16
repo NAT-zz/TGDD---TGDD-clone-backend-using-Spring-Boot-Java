@@ -29,6 +29,8 @@ public interface ProductService {
 
   void deleteById(Integer id);
 
+  Product updateProduct(Product newProduct, int id);
+
   List<LaptopDTO> getAllLaptop(Integer pageNo, Integer pageSize, String sortBy, Integer kindId);
 
   List<PhoneDTO> getAllPhone(Integer pageNo, Integer pageSize, String sortBy, Integer kindId);

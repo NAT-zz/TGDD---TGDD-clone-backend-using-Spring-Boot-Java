@@ -7,14 +7,12 @@ import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.model.Video;
-import hcmute.edu.tgdd.service.impl.ProductServiceImpl;
-import hcmute.edu.tgdd.service.impl.StorageServiceImpl;
+import hcmute.edu.tgdd.service.ProductService;
+import hcmute.edu.tgdd.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +20,12 @@ import java.util.Optional;
 @RequestMapping(path = "/api/Product")
 public class ProductController {
 
-  @Autowired private ProductServiceImpl productService;
-  @Autowired private StorageServiceImpl storageService;
+
+  @Autowired
+  private ProductService productService;
+  @Autowired
+  private StorageService storageService;
+
 
   @GetMapping("")
   DataResponse getAllProduct(

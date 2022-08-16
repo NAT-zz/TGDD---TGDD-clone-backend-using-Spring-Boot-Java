@@ -6,6 +6,10 @@ import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.service.impl.CartDetailServiceImpl;
 import hcmute.edu.tgdd.service.impl.CartServiceImpl;
 import hcmute.edu.tgdd.service.impl.ExportExcelServiceImpl;
+import hcmute.edu.tgdd.model.CartDetail;
+import hcmute.edu.tgdd.model.DataResponse;
+import hcmute.edu.tgdd.service.CartDetailService;
+import hcmute.edu.tgdd.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +21,10 @@ import java.util.Optional;
 @RequestMapping(path = "/api/CartDetail")
 public class CartDetailController {
 	@Autowired
-	private CartDetailServiceImpl cartDetailService;
+	private CartDetailService cartDetailService;
 
 	@Autowired
-	private CartServiceImpl cartService;
+	private CartService cartService;
 
 	@Autowired
 	private ExportExcelServiceImpl exportExcelService;
