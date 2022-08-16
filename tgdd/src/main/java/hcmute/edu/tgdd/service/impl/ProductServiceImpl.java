@@ -311,4 +311,9 @@ public class ProductServiceImpl implements ProductService {
 
     return products;
   }
+
+  @Override
+  public List<Product> findByNameLike(String name) {
+  	return productRepository.findByNameContainingIgnoreCase(name);
+  }
 }

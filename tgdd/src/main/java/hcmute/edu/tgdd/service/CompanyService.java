@@ -1,12 +1,11 @@
 package hcmute.edu.tgdd.service;
 
-import hcmute.edu.tgdd.model.Company;
-import hcmute.edu.tgdd.repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import hcmute.edu.tgdd.model.Company;
 
 @Service
 public interface CompanyService {

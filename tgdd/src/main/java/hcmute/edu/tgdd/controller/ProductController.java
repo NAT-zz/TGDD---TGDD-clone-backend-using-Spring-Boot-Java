@@ -1,5 +1,20 @@
 package hcmute.edu.tgdd.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import hcmute.edu.tgdd.dto.LaptopDTO;
 import hcmute.edu.tgdd.dto.PhoneDTO;
 import hcmute.edu.tgdd.dto.SmartWatchDTO;
@@ -9,12 +24,6 @@ import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.model.Video;
 import hcmute.edu.tgdd.service.ProductService;
 import hcmute.edu.tgdd.service.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/Product")
@@ -31,6 +40,14 @@ public class ProductController {
       @RequestParam(defaultValue = "id") String sortBy) {
     List<Product> listProduct = productService.getAllProduct(pageNo, pageSize, sortBy);
     return new DataResponse(listProduct);
+  }
+  @GetMapping("/findByNameLike/{name}")
+  DataResponse getProductSByName(@PathVariable String name) {
+	  List<Product> foundProducts = productService.findByNameLike(name);
+	  if(!foundProducts.isEmpty())  
+		  return new DataResponse(foundProducts);
+	  else
+		  throw new RuntimeException("No products found");
   }
 
   @GetMapping("/{id}")
