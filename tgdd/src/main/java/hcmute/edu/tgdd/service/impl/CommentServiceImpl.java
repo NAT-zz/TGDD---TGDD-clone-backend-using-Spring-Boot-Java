@@ -17,7 +17,7 @@ public class CommentServiceImpl implements CommentService{
   public List<Comment> getAllComment(){ return  commentRepository.findAll();}
 
   @Override
-  public List<Comment> getCommentByProduct(Integer productId){ return  commentRepository.findAll();}
+  public List<Comment> getCommentByProduct(Integer productId){ return  commentRepository.findAllByProductId(productId);}
 
   @Override
   public Comment saveComment (Comment comment){

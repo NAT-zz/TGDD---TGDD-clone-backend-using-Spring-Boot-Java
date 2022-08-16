@@ -44,7 +44,7 @@ public class CartDetailServiceImpl implements CartDetailService {
 		newCartDetail.setCartId(carts.get(0).getId());
 		return findByProductIdAndCartId(newCartDetail.getProductId(), newCartDetail.getCartId())
 				.map(cartDetail -> {
-					cartDetail.setQuantity(cartDetail.getQuantity() + 1);
+					cartDetail.setQuantity(cartDetail.getQuantity() + newCartDetail.getQuantity());
 					return cartDetailRepository.save(cartDetail);
 				})
 				.orElseGet(() -> cartDetailRepository.save(newCartDetail));
