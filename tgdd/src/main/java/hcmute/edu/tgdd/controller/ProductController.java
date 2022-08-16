@@ -19,10 +19,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/Product")
 public class ProductController {
+
+
   @Autowired
   private ProductService productService;
   @Autowired
   private StorageService storageService;
+
 
   @GetMapping("")
   DataResponse getAllProduct(
@@ -55,9 +58,7 @@ public class ProductController {
   }
 
   @PostMapping("/uploadImage")
-  DataResponse saveImage(
-      @RequestParam("id") Integer id,
-      @RequestParam("file") MultipartFile file) {
+  DataResponse saveImage(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
     return new DataResponse(productService.uploadImage(id, file));
   }
 
@@ -153,7 +154,17 @@ public class ProductController {
 
     List<Product> listProduct =
         productService.filterByAllProducts(
-            pageNo, pageSize, companyId, nationId, kindId, os, ram, screen, memory, battery, minPrice, maxPrice);
+            pageNo, pageSize, companyId, nationId, kindId, os, ram, screen, memory, battery,
+            minPrice, maxPrice);
+    return new DataResponse(listProduct);
+  }
+
+  @GetMapping("/relate")
+  DataResponse relatedProduct(
+      @RequestParam(defaultValue = "0") Integer companyId,
+      @RequestParam(defaultValue = "0") Integer kindId) {
+
+    List<Product> listProduct = productService.productSameKindAndCompany(companyId, kindId);
     return new DataResponse(listProduct);
   }
 }

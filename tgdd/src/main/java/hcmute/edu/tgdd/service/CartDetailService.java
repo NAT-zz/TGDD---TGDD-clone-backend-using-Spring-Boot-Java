@@ -21,4 +21,6 @@ public interface CartDetailService {
 	public boolean existsById(Integer id);
 
 	public void deleteCartDetail(Integer id);
+
+
 }

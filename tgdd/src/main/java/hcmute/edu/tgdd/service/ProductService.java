@@ -7,6 +7,7 @@ import hcmute.edu.tgdd.dto.TabletDTO;
 import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.model.Video;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
