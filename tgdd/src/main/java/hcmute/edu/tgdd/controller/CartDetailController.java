@@ -3,11 +3,7 @@ package hcmute.edu.tgdd.controller;
 
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.model.DataResponse;
-import hcmute.edu.tgdd.service.impl.CartDetailServiceImpl;
-import hcmute.edu.tgdd.service.impl.CartServiceImpl;
 import hcmute.edu.tgdd.service.impl.ExportExcelServiceImpl;
-import hcmute.edu.tgdd.model.CartDetail;
-import hcmute.edu.tgdd.model.DataResponse;
 import hcmute.edu.tgdd.service.CartDetailService;
 import hcmute.edu.tgdd.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +80,7 @@ public class CartDetailController {
 	}
 
 	@GetMapping("/export")
-	public void exportToExcel( HttpServletResponse response) throws Exception {
+	public void exportToExcel(HttpServletResponse response) throws Exception {
 		response.setContentType("application/octet-stream");
 		String headerKey = "Content-Disposition";
 		String headerValue = "attachment; filename=cart_detail.xlsx";

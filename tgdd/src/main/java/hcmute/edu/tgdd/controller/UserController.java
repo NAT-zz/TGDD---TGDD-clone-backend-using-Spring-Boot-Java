@@ -88,9 +88,10 @@ public DataResponse findById(@PathVariable String phone) throws Exception{
 		}
 		else throw new RuntimeException("User not found with phone: " + phone);
 	}
+
 	//get new token from refresh token
 	@GetMapping("/token/refresh")
-	public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws StreamWriteException, DatabindException, IOException {
+	public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String authorizationHeader = request.getHeader("Authorization");
 		if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")) {
 				String refreshToken = authorizationHeader.substring("Bearer ".length());

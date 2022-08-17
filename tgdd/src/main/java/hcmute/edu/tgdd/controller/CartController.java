@@ -9,11 +9,14 @@ import hcmute.edu.tgdd.utils.Validate;
 import hcmute.edu.tgdd.utils.Validate.Type;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import ch.qos.logback.core.status.Status;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
@@ -34,7 +37,7 @@ public class CartController {
 		if (foundListCart.size() > 0) {
 			return new DataResponse(foundListCart);
 		}
-		return new DataResponse("400", "No Cart found", 200);
+		throw new RuntimeException("No Cart found");
 	}
 
 	// find Cart by id
@@ -67,15 +70,18 @@ public class CartController {
 
 	// insert new Cart
 	@PostMapping("/insert")
-	DataResponse insertCart(@RequestBody Cart newCart) {
-		if(Validate.isWhatever(Type.PHONE, newCart.getCustomerPhone())) {
-			if(cartService.findByCustomerPhoneAndStatusId(newCart.getCustomerPhone(), 1).size() == 0) {
+	DataResponse insertCart(@RequestBody @Validated Cart newCart, BindingResult result) {
+		if(cartService.findByCustomerPhoneAndStatusId(newCart.getCustomerPhone(), 1).size() == 0) {
+			if(!result.hasErrors()) {
 				return new DataResponse(cartService.insertCart(newCart));
 			}
-		} else {
-			throw new RuntimeException("Invalid customer phone field");
+			else {
+				throw new RuntimeException(Objects.requireNonNull(result.getFieldError()).toString());
+			}
 		}
-		return new DataResponse("Customer cart exist");
+		else {
+			return new DataResponse("Customer cart exist");
+		}
 	}
 
 	@PutMapping("/order")
@@ -89,12 +95,14 @@ public class CartController {
 
 	// update Cart if found, otherwise insert
 	@PutMapping("/{id}")
-	DataResponse updateCart(@RequestBody Cart newCart, @PathVariable Integer id) {
-		if(Validate.isWhatever(Type.PHONE ,newCart.getCustomerPhone())) {
+	DataResponse updateCart(@RequestBody @Validated Cart newCart, BindingResult result, @PathVariable Integer id) {
+		if(!result.hasErrors()) {
 			Cart updatedCart = cartService.updateCart(newCart, id);
 			return new DataResponse(updatedCart);
 		}
-		throw new RuntimeException("Invalid customer phone field");
+		else {
+			throw new RuntimeException(Objects.requireNonNull(result.getFieldError()).toString());
+		}
 	}
 	
 	@PutMapping("/updateCartStatus")

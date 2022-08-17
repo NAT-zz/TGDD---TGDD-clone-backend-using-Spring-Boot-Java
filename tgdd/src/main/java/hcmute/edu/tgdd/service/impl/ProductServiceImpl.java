@@ -67,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Fail to upload image");
           }
 
-          Image image = new Image("tgdd_product/" + product.getName() + "_" + images.size(), url, id);
+          Image image = new Image("tgdd_product/" + product.getName() + "_" + images.size(), url, id, 0);
           return storageService.saveImage(image);
         });
   }
@@ -315,5 +315,17 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public List<Product> findByNameLike(String name) {
   	return productRepository.findByNameContainingIgnoreCase(name);
+  }
+
+  @Override
+  public List<Product> findAllByDiscountGreaterThan(int discount){return productRepository.findAllByDiscountGreaterThan(discount);}
+
+  @Override
+  public void updateDiscountProduct(int productId,int discount){
+    productRepository.findById(productId)
+        .map(product -> {
+          product.setDiscount(discount);
+          return productRepository.save(product);
+        });
   }
 }
