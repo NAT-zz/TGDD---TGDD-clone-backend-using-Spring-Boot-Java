@@ -20,6 +20,8 @@ public interface CartService {
   Optional<Cart> order(String customerPhone);
 
   public Cart updateCart(Cart newCart, Integer id);
+  Optional<Cart> updateCartStatus(Integer cartId, Integer status);
+  
 	public boolean existsById(Integer id);
 	public void deleteCart(Integer id);
 }
