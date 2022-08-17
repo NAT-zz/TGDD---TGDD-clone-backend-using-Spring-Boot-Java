@@ -21,7 +21,12 @@ public interface CartService {
   Optional<Cart> order(String customerPhone);
 
   public Cart updateCart(Cart newCart, Integer id);
+<<<<<<< HEAD
 
+=======
+  Optional<Cart> updateCartStatus(Integer cartId, Integer status);
+  
+>>>>>>> 55042fe5d447965f194e5c2a93da6211c76f0a91
 	public boolean existsById(Integer id);
 
 	public void deleteCart(Integer id);

@@ -2,10 +2,14 @@ package hcmute.edu.tgdd.service.impl;
 
 import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.repository.CartRepository;
+import hcmute.edu.tgdd.repository.StatusRepository;
 import hcmute.edu.tgdd.service.CartService;
+import hcmute.edu.tgdd.service.StatusService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +17,7 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService {
 	@Autowired
 	private CartRepository cartRepository;
-
+	
 	@Override
 	public List<Cart> getAllCart() {
 		return cartRepository.findAll();
@@ -85,5 +89,13 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void deleteCart(Integer id) {
 		cartRepository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Cart> updateCartStatus(Integer cartId, Integer status) {
+		return findById(cartId).map(Cart -> {
+			Cart.setStatusId(status);
+			return Cart;
+		});
 	}
 }

@@ -1,7 +1,10 @@
 package hcmute.edu.tgdd.service.impl;
 
+import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.model.CartDetail;
 import hcmute.edu.tgdd.model.Product;
+import hcmute.edu.tgdd.model.Statistics;
+import hcmute.edu.tgdd.service.CartService;
 import hcmute.edu.tgdd.service.ExportExcelService;
 import hcmute.edu.tgdd.service.ProductService;
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,17 +18,26 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class ExportExcelServiceImpl implements ExportExcelService {
+<<<<<<< HEAD
   @Autowired
   private ProductService productService;
   private XSSFWorkbook workbook;
   private XSSFSheet sheet;
+=======
+  @Autowired private ProductService productService;
+  @Autowired private CartService cartService;
+
+  private XSSFWorkbook workbook;
+  private XSSFSheet sheet;
+  private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+>>>>>>> 55042fe5d447965f194e5c2a93da6211c76f0a91
 
   private void writeHeaderRows() {
     Row row = sheet.createRow(0);
@@ -61,7 +73,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     cell.setCellStyle(style);
   }
 
-  private void writeDataRows(List<CartDetail> cartDetailList ) {
+  private void writeDataRows(List<CartDetail> cartDetailList) {
     int rowCount = 1;
     int stt = 1;
 
@@ -74,8 +86,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     List<CartDetail> shortCartDetailList = removeDuplicatesProductDetail(cartDetailList, hashMap);
 
     List<Product> productList = getProductListFromCartDetailList(shortCartDetailList);
-
-    System.out.println(hashMap);
 
     for (int i = 0; i < shortCartDetailList.size(); i++) {
       CartDetail c = shortCartDetailList.get(i);
@@ -131,7 +141,226 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     outputStream.close();
   }
 
+<<<<<<< HEAD
   private List<CartDetail> removeDuplicatesProductDetail(List<CartDetail> list,  HashMap<Integer, Integer> hashMap) {
+=======
+  @Override
+  public void exportStatisticsByDay(HttpServletResponse response, List<CartDetail> cartDetailList)
+      throws Exception {
+
+    workbook = new XSSFWorkbook();
+    sheet = workbook.createSheet("StatisticsByDay");
+
+    writeHeaderRowsDay();
+    writeDataRowsDay(cartDetailList);
+
+    ServletOutputStream outputStream = response.getOutputStream();
+    workbook.write(outputStream);
+    workbook.close();
+    outputStream.close();
+  }
+
+  @Override
+  public void exportStatisticsByYear(HttpServletResponse response, List<CartDetail> cartDetailList, int year)
+          throws Exception {
+
+    workbook = new XSSFWorkbook();
+    sheet = workbook.createSheet("StatisticsByYear");
+
+    writeHeaderRowsYear();
+    writeDataRowsYear(cartDetailList, year);
+
+    ServletOutputStream outputStream = response.getOutputStream();
+    workbook.write(outputStream);
+    workbook.close();
+    outputStream.close();
+  }
+
+  private void writeDataRowsYear(List<CartDetail> cartDetailList, int year) {
+    int rowCount = 1;
+
+    CellStyle style = workbook.createCellStyle();
+    XSSFFont font = workbook.createFont();
+    font.setFontHeight(14);
+    style.setFont(font);
+
+    List<Product> productList = getProductListFromCartDetailList(cartDetailList);
+    List<Cart> cartList = getCartListFromCartDetailList(cartDetailList);
+
+    List<Statistics> statisticsByDay = statisticsByDay(cartDetailList, productList, cartList);
+
+    for (int i = 0; i < 12; i++) {
+      Row row = sheet.createRow(rowCount++);
+
+      Cell cell = row.createCell(0);
+      cell.setCellValue(i+1);
+      sheet.autoSizeColumn(0);
+      cell.setCellStyle(style);
+
+      double price = getRevenueByMonth(statisticsByDay, i, year);
+      DecimalFormat format = new DecimalFormat("###,###,###");
+
+      cell = row.createCell(1);
+      cell.setCellValue(format.format(price)+" VNĐ");
+      sheet.autoSizeColumn(1);
+      cell.setCellStyle(style);
+    }
+
+  }
+
+  private double getRevenueByMonth(List<Statistics> statisticsByDay, int month, int year) {
+    double revenue = 0;
+    for (int i = 0; i < statisticsByDay.size(); i++){
+      Date date = statisticsByDay.get(i).getDate();
+      if(date.getYear()+1900 != year)
+        continue;
+
+      if(date.getMonth() == month){
+        revenue = revenue + statisticsByDay.get(i).getTotalRevenue();
+      }
+    }
+    return  revenue;
+  }
+
+  private void writeHeaderRowsYear() {
+    Row row = sheet.createRow(0);
+
+    CellStyle style = workbook.createCellStyle();
+    XSSFFont font = workbook.createFont();
+    font.setBold(true);
+    font.setFontHeight(16);
+    style.setFont(font);
+
+    Cell cell = row.createCell(0);
+    cell.setCellValue("Tháng");
+    cell.setCellStyle(style);
+
+    cell = row.createCell(1);
+    cell.setCellValue("Doanh thu");
+    cell.setCellStyle(style);
+  }
+
+
+
+  private void writeHeaderRowsDay() {
+    Row row = sheet.createRow(0);
+
+    CellStyle style = workbook.createCellStyle();
+    XSSFFont font = workbook.createFont();
+    font.setBold(true);
+    font.setFontHeight(16);
+    style.setFont(font);
+
+    Cell cell = row.createCell(0);
+    cell.setCellValue("Ngày");
+    cell.setCellStyle(style);
+
+    cell = row.createCell(1);
+    cell.setCellValue("Số lượng sản phẩm bán được");
+    cell.setCellStyle(style);
+
+    cell = row.createCell(2);
+    cell.setCellValue("Tổng doanh thu");
+    cell.setCellStyle(style);
+  }
+
+  private void writeDataRowsDay(List<CartDetail> cartDetailList) {
+    int rowCount = 1;
+
+    CellStyle style = workbook.createCellStyle();
+    XSSFFont font = workbook.createFont();
+    font.setFontHeight(14);
+    style.setFont(font);
+
+    List<Product> productList = getProductListFromCartDetailList(cartDetailList);
+    List<Cart> cartList = getCartListFromCartDetailList(cartDetailList);
+
+    List<Statistics> statistics = statisticsByDay(cartDetailList, productList, cartList);
+
+    for (int i = 0; i < statistics.size(); i++) {
+      Statistics s = statistics.get(i);
+
+      Row row = sheet.createRow(rowCount++);
+
+      String date = simpleDateFormat.format(s.getDate());
+
+      Cell cell = row.createCell(0);
+      cell.setCellValue(date);
+      sheet.autoSizeColumn(0);
+      cell.setCellStyle(style);
+
+      cell = row.createCell(1);
+      cell.setCellValue(s.getProductsSold());
+      sheet.autoSizeColumn(1);
+      cell.setCellStyle(style);
+
+      DecimalFormat format = new DecimalFormat("###,###,###");
+
+      cell = row.createCell(2);
+      cell.setCellValue(format.format(s.getTotalRevenue())+" VNĐ");
+      sheet.autoSizeColumn(2);
+      cell.setCellStyle(style);
+    }
+  }
+
+  private List<Statistics> statisticsByDay(
+      List<CartDetail> cartDetailList, List<Product> productList, List<Cart> cartList) {
+    List<Statistics> statisticsList = new ArrayList<>();
+
+    HashMap<Date, Integer> countDateMap = new HashMap<>();
+    insertDateToHashMap(cartList, countDateMap);
+
+    HashMap<Date, Double> hashMap = new HashMap<>();
+    HashMap<Date, Integer> hashMapSold = new HashMap<>();
+
+    for(int position = 0; position < countDateMap.size(); position++){
+      Date key = (new ArrayList<>(countDateMap.keySet())).get(position);
+
+      for (int i = 0; i < cartList.size(); i++) {
+        if(cartList.get(i).getDate().compareTo(key) == 0)
+        {
+          for (int j = 0; j < cartDetailList.size(); j++) {
+            if (cartDetailList.get(j).getCartId() == cartList.get(i).getId()) {
+              if (hashMap.containsKey(key)) {
+                double price = hashMap.get(key) + productList.get(j).getPrice() * cartDetailList.get(j).getQuantity();
+                int sold = hashMapSold.get(key) + cartDetailList.get(j).getQuantity();
+                hashMap.put(key, price);
+                hashMapSold.put(key, sold);
+              } else {
+                double price = cartDetailList.get(j).getQuantity() * productList.get(j).getPrice();
+                hashMap.put(key, price);
+                hashMapSold.put(key,cartDetailList.get(j).getQuantity() );
+              }
+            }
+          }
+        }
+      }
+      Statistics statistics = new Statistics();
+      statistics.setDate(key);
+      statistics.setProductsSold(hashMapSold.get(key));
+      statistics.setTotalRevenue(hashMap.get(key));
+      statisticsList.add(statistics);
+    }
+
+    return statisticsList;
+  }
+
+  private void insertDateToHashMap(List<Cart> cartList, HashMap<Date, Integer> hashMap) {
+    for (int i = 0; i < cartList.size(); i++) {
+      Date date = cartList.get(i).getDate();
+      if (hashMap.containsKey(date)) {
+        int count = hashMap.get(date) + 1;
+        hashMap.put(date, count);
+      } else {
+        hashMap.put(date, 1);
+      }
+    }
+  }
+
+  private List<CartDetail> removeDuplicatesProductDetail(
+      List<CartDetail> list, HashMap<Integer, Integer> hashMap) {
+
+>>>>>>> 55042fe5d447965f194e5c2a93da6211c76f0a91
     List<CartDetail> newList = new ArrayList<>();
     newList.add(list.get(0));
     hashMap.put(1, 1);
@@ -164,4 +393,22 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     }
     return productList;
   }
+<<<<<<< HEAD
+=======
+
+  private List<Cart> getCartListFromCartDetailList(List<CartDetail> list) {
+    List<Cart> productList = new ArrayList<>();
+    Set<Integer> cartSet = new HashSet<>();
+    for (int i = 0; i < list.size(); i++) {
+      int id = list.get(i).getCartId();
+      cartSet.add(id);
+    }
+    for (Integer integer : cartSet) {
+      Optional<Cart> p = cartService.findById(integer);
+      p.ifPresent(productList::add);
+    }
+
+    return productList;
+  }
+>>>>>>> 55042fe5d447965f194e5c2a93da6211c76f0a91
 }
