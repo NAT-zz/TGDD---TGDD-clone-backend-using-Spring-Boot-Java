@@ -184,4 +184,10 @@ public class ProductController {
     List<Product> listProduct = productService.productSameKindAndCompany(companyId, kindId);
     return new DataResponse(listProduct);
   }
+  @GetMapping("/discount")
+  DataResponse discountProduct(
+      @RequestParam(defaultValue = "10") Integer discount){
+    List<Product> productList = productService.findAllByDiscountGreaterThan(discount);
+    return new DataResponse(productList);
+  }
 }

@@ -316,4 +316,7 @@ public class ProductServiceImpl implements ProductService {
   public List<Product> findByNameLike(String name) {
   	return productRepository.findByNameContainingIgnoreCase(name);
   }
+
+  @Override
+  public List<Product> findAllByDiscountGreaterThan(int discount){return productRepository.findAllByDiscountGreaterThan(discount);}
 }
