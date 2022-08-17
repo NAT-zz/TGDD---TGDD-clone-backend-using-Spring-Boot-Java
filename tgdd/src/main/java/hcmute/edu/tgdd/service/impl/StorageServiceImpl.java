@@ -48,6 +48,11 @@ public class StorageServiceImpl implements StorageService {
   }
 
   @Override
+  public List<Image> findImageByCommentId(Integer id) {
+    return imageRepository.findByCommentId(id);
+  }
+
+  @Override
   public Optional<Image> findImageByFilePath(String filePath) {
     return imageRepository.findByFilePath(filePath);
   }

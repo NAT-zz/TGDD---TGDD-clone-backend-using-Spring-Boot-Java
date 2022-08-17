@@ -1,5 +1,7 @@
 package hcmute.edu.tgdd.model;
 
+import hcmute.edu.tgdd.utils.Validate;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -40,7 +42,12 @@ public class Cart {
     }
 
     public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+        if (Validate.isWhatever(Validate.Type.PHONE, customerPhone)) {
+            this.customerPhone = customerPhone;
+        }
+        else {
+            throw new RuntimeException("Invalid customer phone field");
+        }
     }
 
     public Date getDate() {

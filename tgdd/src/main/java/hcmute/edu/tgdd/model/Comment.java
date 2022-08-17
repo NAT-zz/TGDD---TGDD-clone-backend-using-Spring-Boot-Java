@@ -15,17 +15,15 @@ public class Comment {
   private String review;
   @Column(nullable = false,length = 1)
   private int rate;
-  private String image;
 
   public Comment() {
   }
 
-  public Comment(int productId, String phoneUser, String review, int rate, String image) {
+  public Comment(int productId, String phoneUser, String review, int rate) {
     this.productId = productId;
     this.phoneUser = phoneUser;
     this.review = review;
     this.rate = rate;
-    this.image = image;
   }
 
   public int getId() {
@@ -71,14 +69,6 @@ public class Comment {
     this.rate = rate;
   }
 
-  public String getImage() {
-    return image;
-  }
-
-  public void setImage(String image) {
-    this.image = image;
-  }
-
   @Override
   public String toString() {
     return "Comment{" +
@@ -86,7 +76,6 @@ public class Comment {
         ", productId=" + productId +
         ", phoneUser='" + phoneUser + '\'' +
         ", rate=" + rate +
-        ", image='" + image + '\'' +
         '}';
   }
 }

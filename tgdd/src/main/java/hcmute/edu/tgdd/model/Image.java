@@ -11,16 +11,19 @@ public class Image {
   private String filePath;
   @Column(nullable = false)
   private String url;
-  @Column(nullable = false)
+  @Column
   private int productId;
+  @Column
+  private int commentId;
 
   public Image() {
   }
 
-  public Image(String filePath, String url, int productId) {
+  public Image(String filePath, String url, int productId, int commentId) {
     this.filePath = filePath;
     this.url = url;
     this.productId = productId;
+    this.commentId = commentId;
   }
 
   public int getId() {
@@ -55,13 +58,22 @@ public class Image {
     this.productId = productId;
   }
 
+  public int getCommentId() {
+    return commentId;
+  }
+
+  public void setCommentId(int commentId) {
+    this.commentId = commentId;
+  }
+
   @Override
   public String toString() {
     return "Image{" +
         "id=" + id +
         ", filePath='" + filePath + '\'' +
         ", url='" + url + '\'' +
-        ", productId=" + productId +
+        ", productId=" + productId + '\'' +
+        ", commentId=" + commentId +
         '}';
   }
 }
