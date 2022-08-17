@@ -8,5 +8,6 @@ import java.util.List;
 public interface ExportExcelService {
 
     void export(HttpServletResponse response, List<CartDetail> cartDetailList) throws Exception;
-
+    void exportStatisticsByDay(HttpServletResponse response, List<CartDetail> cartDetailList) throws Exception;
+    void exportStatisticsByYear(HttpServletResponse response, List<CartDetail> cartDetailList, int year) throws Exception;
 }

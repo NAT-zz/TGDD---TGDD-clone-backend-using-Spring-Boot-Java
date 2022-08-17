@@ -3,6 +3,7 @@ package hcmute.edu.tgdd.service;
 import java.util.List;
 import java.util.Optional;
 
+import hcmute.edu.tgdd.model.Cart;
 import org.springframework.web.multipart.MultipartFile;
 
 import hcmute.edu.tgdd.dto.LaptopDTO;
@@ -21,6 +22,7 @@ public interface ProductService {
   Optional<Product> findById(Integer id);
 
   List<Product> findByName(String name);
+
 
   Product save(Product product);
 

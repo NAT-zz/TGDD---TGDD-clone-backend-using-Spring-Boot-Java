@@ -95,4 +95,31 @@ public class CartDetailController {
 
 		exportExcelService.export(response, cartDetailList);
 	}
+
+	@GetMapping("/statisticsByDay")
+	public void statisticsByDay( HttpServletResponse response) throws Exception {
+		response.setContentType("application/octet-stream");
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=statisticsByDay.xlsx";
+
+		response.setHeader(headerKey, headerValue);
+
+		List<CartDetail> cartDetailList = cartDetailService.getAllCartDetail();
+
+		exportExcelService.exportStatisticsByDay(response, cartDetailList);
+	}
+
+	@GetMapping("/statisticsByYear/{year}")
+	public void statisticsByDay( HttpServletResponse response,  @PathVariable Integer year) throws Exception {
+		response.setContentType("application/octet-stream");
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=statisticsByYear.xlsx";
+
+		response.setHeader(headerKey, headerValue);
+
+		List<CartDetail> cartDetailList = cartDetailService.getAllCartDetail();
+
+		exportExcelService.exportStatisticsByYear(response, cartDetailList, year);
+	}
+
 }
