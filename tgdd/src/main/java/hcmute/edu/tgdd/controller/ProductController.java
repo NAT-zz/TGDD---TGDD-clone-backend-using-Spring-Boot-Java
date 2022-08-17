@@ -184,4 +184,22 @@ public class ProductController {
     List<Product> listProduct = productService.productSameKindAndCompany(companyId, kindId);
     return new DataResponse(listProduct);
   }
+  @GetMapping("/discount")
+  DataResponse discountProduct(
+      @RequestParam(defaultValue = "10") Integer discount){
+    List<Product> productList = productService.findAllByDiscountGreaterThan(discount);
+    return new DataResponse(productList);
+  }
+  @PutMapping("/updateDiscount")
+  DataResponse updateDiscountProduct(
+      @RequestParam(defaultValue = "0") Integer productId,
+      @RequestParam(defaultValue = "0") Integer discount) {
+    boolean exists = productService.existsById(productId);
+    if (exists) {
+      productService.updateDiscountProduct(productId,discount);
+      return new DataResponse("");
+    }
+    throw new RuntimeException("Cannot find product to update");
+  }
+
 }
