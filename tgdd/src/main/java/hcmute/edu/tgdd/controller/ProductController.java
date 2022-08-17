@@ -190,4 +190,16 @@ public class ProductController {
     List<Product> productList = productService.findAllByDiscountGreaterThan(discount);
     return new DataResponse(productList);
   }
+  @PutMapping("/updateDiscount")
+  DataResponse updateDiscountProduct(
+      @RequestParam(defaultValue = "0") Integer productId,
+      @RequestParam(defaultValue = "0") Integer discount) {
+    boolean exists = productService.existsById(productId);
+    if (exists) {
+      productService.updateDiscountProduct(productId,discount);
+      return new DataResponse("");
+    }
+    throw new RuntimeException("Cannot find product to update");
+  }
+
 }

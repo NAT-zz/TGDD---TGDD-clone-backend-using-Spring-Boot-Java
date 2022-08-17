@@ -58,4 +58,6 @@ public interface ProductService {
   List<Product> productSameKindAndCompany(int kindId, int companyId);
 
   List<Product> findAllByDiscountGreaterThan(int discount);
+
+  void updateDiscountProduct(int productId, int discount);
 }

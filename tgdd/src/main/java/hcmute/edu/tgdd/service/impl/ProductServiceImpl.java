@@ -319,4 +319,13 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public List<Product> findAllByDiscountGreaterThan(int discount){return productRepository.findAllByDiscountGreaterThan(discount);}
+
+  @Override
+  public void updateDiscountProduct(int productId,int discount){
+    productRepository.findById(productId)
+        .map(product -> {
+          product.setDiscount(discount);
+          return productRepository.save(product);
+        });
+  }
 }
