@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CartService {
-	public List<Cart> getAllCart();
+	List<Cart> getAllCart();
 
-	public Optional<Cart> findById(Integer id);
+	Optional<Cart> findById(Integer id);
 
   List<Cart> findByCustomerPhoneAndStatusId(String customerPhone, int statusId);
 
@@ -16,15 +16,15 @@ public interface CartService {
 
 	List<Cart> getOrderHistory(String customerPhone);
 
-	public Cart insertCart(Cart newCart);
+	Cart insertCart(Cart newCart);
 
   Optional<Cart> order(String customerPhone);
 
-  public Cart updateCart(Cart newCart, Integer id);
+  Cart updateCart(Cart newCart, Integer id);
 
   Optional<Cart> updateCartStatus(Integer cartId, Integer status);
 
-	public boolean existsById(Integer id);
+	boolean existsById(Integer id);
 
-	public void deleteCart(Integer id);
+	void deleteCart(Integer id);
 }

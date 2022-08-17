@@ -13,8 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import ch.qos.logback.core.status.Status;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -112,7 +110,6 @@ public class CartController {
 				new DataResponse(cartService.updateCartStatus(cartId, statusId)) : 
 				new MyExceptionHandler().handleRuntimeException(new RuntimeException("Data not found"));
 	}
-	
 
 	// delete a Cart by id
 	@DeleteMapping("/{id}")

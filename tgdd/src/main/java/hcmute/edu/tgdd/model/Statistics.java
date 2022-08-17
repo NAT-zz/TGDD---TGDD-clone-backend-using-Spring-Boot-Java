@@ -10,6 +10,12 @@ public class Statistics {
   public Statistics() {
   }
 
+  public Statistics(Date date, int productsSold, double totalRevenue) {
+    this.date = date;
+    this.productsSold = productsSold;
+    this.totalRevenue = totalRevenue;
+  }
+
   public Date getDate() {
     return date;
   }
@@ -31,12 +37,6 @@ public class Statistics {
   }
 
   public void setTotalRevenue(double totalRevenue) {
-    this.totalRevenue = totalRevenue;
-  }
-
-  public Statistics(Date date, int productsSold, double totalRevenue) {
-    this.date = date;
-    this.productsSold = productsSold;
     this.totalRevenue = totalRevenue;
   }
 

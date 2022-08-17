@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -27,8 +26,10 @@ import java.util.*;
 public class ExportExcelServiceImpl implements ExportExcelService {
   @Autowired
   private ProductService productService;
+
   @Autowired
   private CartService cartService;
+
   private XSSFWorkbook workbook;
   private XSSFSheet sheet;
   private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
