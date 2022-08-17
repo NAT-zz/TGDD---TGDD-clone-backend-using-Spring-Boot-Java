@@ -6,7 +6,5 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface ExportExcelService {
-
     void export(HttpServletResponse response, List<CartDetail> cartDetailList) throws Exception;
-
 }

@@ -13,10 +13,12 @@ public class TgddApplication {
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
 	}
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(TgddApplication.class, args);
 	}

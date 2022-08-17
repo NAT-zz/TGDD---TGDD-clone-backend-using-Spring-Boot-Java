@@ -34,22 +34,26 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	public List<User> getAllUser() {
 		return userRepository.findAll();
 	}
+
 	@Override
 	public Optional<User> findUserByPhone(String phone) {
 		return userRepository.findById(phone);
 	}
+
 	@Override
 	public User findByPhone(String phone) {
 		return userRepository.findByPhone(phone);
 	}
+
 	@Override
 	public User insertNewUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
+
 	@Override
 	public User updateUserByPhone(User newUser, String phone){
-		User updatedUser = findUserByPhone(phone)
+		return findUserByPhone(phone)
 				.map(thisUser -> {
 					thisUser.setFullname(newUser.getFullname());
 					thisUser.setEmail(newUser.getEmail());
@@ -57,27 +61,30 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 					thisUser.setRole(newUser.getRole());
 					thisUser.setAddress(newUser.getAddress());
 					thisUser.setGender(newUser.isGender());
-					
+
 					return insertNewUser(thisUser);
 				}).orElseThrow();
-		return updatedUser;
 	}
+
 	@Override
 	public void deleteUserByPhone(String phone) {
 		userRepository.deleteById(phone);
 	}
+
 	@Override
 	public boolean userExistedByPhone(String phone) {
 		return userRepository.existsById(phone);
 	}
+
 	@Override
 	public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
 		User user = userRepository.findByPhone(phone);
-		if (user==null) {
+		if (user == null) {
 			throw new UsernameNotFoundException("User not found in the database");
 		} else {
 			logger.info("User found in the database: {}", phone);
 		}
+
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();		
 		authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
 		return new org.springframework.security.core.userdetails.User(user.getPhone(), user.getPassword(), authorities);

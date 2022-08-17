@@ -24,6 +24,7 @@ import hcmute.edu.tgdd.service.StorageService;
 public class StorageServiceImpl implements StorageService {
   @Autowired
   private ImageRepository imageRepository;
+
   @Autowired
   private VideoRepository videoRepository;
 

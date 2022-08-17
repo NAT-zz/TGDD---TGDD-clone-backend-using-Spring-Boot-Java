@@ -7,13 +7,16 @@ import hcmute.edu.tgdd.model.User;
 
 public interface UserService {
 	List<User> getAllUser();
+
 	Optional<User> findUserByPhone(String phone);
+
 	User findByPhone(String phone);
 	
 	User insertNewUser(User user);
+
 	User updateUserByPhone(User newUser, String phone);
 	
 	void deleteUserByPhone(String phone);
+
 	boolean userExistedByPhone(String phone);
 }
-	

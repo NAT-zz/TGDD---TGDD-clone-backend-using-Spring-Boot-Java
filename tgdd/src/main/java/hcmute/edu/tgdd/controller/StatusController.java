@@ -24,7 +24,6 @@ public class StatusController {
     private StatusService statusService;
 
     @GetMapping("")
-        //    List<Status> getAllStatus() { return statusService.getAllStatus(); }
     DataResponse getAllStatus()
     {
         List<Status> listStatus = statusService.getAllStatus();
@@ -40,6 +39,7 @@ public class StatusController {
             throw new RuntimeException("Cannot find status with id = " + id);
 
     }
+
     @PostMapping("/insert")
     DataResponse insertStatus(@RequestBody Status status){
         List<Status> listStatus = statusService.findByDescription(status.getDescription().trim());
@@ -61,6 +61,7 @@ public class StatusController {
                 });
         return new DataResponse(updateStatus);
     }
+
     @DeleteMapping("/{id}")
     DataResponse deleteStatus(@PathVariable Integer id){
         boolean exists = statusService.existsById(id);

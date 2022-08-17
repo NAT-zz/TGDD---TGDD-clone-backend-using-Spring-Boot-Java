@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface CartService {
 	public List<Cart> getAllCart();
+
 	public Optional<Cart> findById(Integer id);
 
   List<Cart> findByCustomerPhoneAndStatusId(String customerPhone, int statusId);
@@ -20,6 +21,8 @@ public interface CartService {
   Optional<Cart> order(String customerPhone);
 
   public Cart updateCart(Cart newCart, Integer id);
+
 	public boolean existsById(Integer id);
+
 	public void deleteCart(Integer id);
 }

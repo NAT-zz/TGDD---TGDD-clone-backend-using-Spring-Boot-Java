@@ -25,8 +25,10 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
   @Autowired
   private ModelMapper modelMapper;
+
   @Autowired
   private ProductRepository productRepository;
+
   @Autowired
   private StorageService storageService;
 
@@ -173,7 +175,7 @@ public class ProductServiceImpl implements ProductService {
     List<Product> productList = productRepository.findAll();
 
     int fromIndex = (pageNo) * pageSize;
-    if(productList.isEmpty() || productList.size() <= fromIndex){
+    if(productList.isEmpty() || productList.size() <= fromIndex) {
       return Collections.emptyList();
     }
     
@@ -300,16 +302,10 @@ public class ProductServiceImpl implements ProductService {
   }
 
 
-  //kindId và companyId truyền vào từ product
+  // kindId và companyId truyền vào từ product
   @Override
-  public List<Product> productSameKindAndCompany(int kindId, int companyId) {
-    List<Product> temp = productRepository.findByKindId(kindId);
-    List<Product> products = new ArrayList<>(temp);
-    temp.clear();
-    temp = productRepository.findByCompanyId(companyId);
-    products.addAll(temp);
-
-    return products;
+  public List<Product> findByKindIdAndCompanyId(int kindId, int companyId) {
+    return productRepository.findByKindIdAndCompanyId(kindId, companyId);
   }
 
   @Override
@@ -321,7 +317,7 @@ public class ProductServiceImpl implements ProductService {
   public List<Product> findAllByDiscountGreaterThan(int discount){return productRepository.findAllByDiscountGreaterThan(discount);}
 
   @Override
-  public void updateDiscountProduct(int productId,int discount){
+  public void updateDiscountProduct(int productId,int discount) {
     productRepository.findById(productId)
         .map(product -> {
           product.setDiscount(discount);

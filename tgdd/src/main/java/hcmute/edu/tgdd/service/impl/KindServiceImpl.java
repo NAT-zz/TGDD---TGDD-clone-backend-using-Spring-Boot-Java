@@ -47,12 +47,11 @@ public class KindServiceImpl implements KindService{
 
 	@Override
 	public Kind updateKindById(Kind newKind, int id) {
-		Kind updateKind = findKindById(id)
+		return findKindById(id)
 				.map(kind -> {
 					kind.setName(newKind.getName());
 
 					return updateOrInsert(kind);
 				}).orElseThrow();
-		return updateKind;
 	}
 }

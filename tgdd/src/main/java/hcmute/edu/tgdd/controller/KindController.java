@@ -50,6 +50,7 @@ public class KindController {
 				ResponseEntity.ok().body(
 						new DataResponse(listAllKind));		
 	}
+
 	// find by id
 	@GetMapping("/{id}")
 	public ResponseEntity<DataResponse> findById(@PathVariable int id) {
@@ -58,6 +59,7 @@ public class KindController {
 			ResponseEntity.status(HttpStatus.OK).body(new DataResponse(foundKind)) :
 			ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DataResponse("404", "Kind not found with id = " + id, 400));
 	}
+
 	//update only
 	@PutMapping("/{id}")
 	public DataResponse updateKind(@RequestBody Kind newKind, @PathVariable int id){
@@ -70,6 +72,7 @@ public class KindController {
 		}
 		return new DataResponse(updateKind);
 	}
+
 	//delete
 	@DeleteMapping("/{id}")
 	public ResponseEntity<DataResponse> deleteKind(@PathVariable int id) {

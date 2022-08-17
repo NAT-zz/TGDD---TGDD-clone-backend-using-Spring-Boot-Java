@@ -47,14 +47,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		}
 		catch (Exception e) {
 			response.setHeader("Error", e.getMessage());
-	        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);					
-	        response.setContentType("application/json");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.setContentType("application/json");
 			try {
 				new ObjectMapper().writeValue(response.getOutputStream(),  new DataResponse("403", "Bad credentials",200));
-			} catch (StreamWriteException e1) {
-				e1.printStackTrace();
-			} catch (DatabindException e1) {
-				e1.printStackTrace();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -77,7 +73,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		
 		String refreshToken = JWT.create()
 				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+				.withExpiresAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
 				.withIssuer(request.getRequestURL().toString())
 				.sign(algorithm);
 				
@@ -90,9 +86,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException failed) throws IOException, ServletException {
+			AuthenticationException failed) throws IOException {
 		response.setHeader("Authentication", "Failed");
 		MyExceptionResonseHandler.exceptionResponseHandler(response, new DataResponse(failed), failed);
 	}
-	
 }

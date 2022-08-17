@@ -81,7 +81,9 @@ public class ProductController {
 
   @DeleteMapping("/deleteImage")
   void deleteImage(@RequestParam("filePath") String filePath) {
-    storageService.deleteImage(filePath);
+    if(!storageService.deleteImage(filePath)) {
+      throw new RuntimeException("Cannot find image with filePath = " + filePath);
+    }
   }
 
   @GetMapping("/findProductVideo/{id}")
@@ -178,18 +180,19 @@ public class ProductController {
 
   @GetMapping("/relate")
   DataResponse relatedProduct(
-      @RequestParam(defaultValue = "0") Integer companyId,
-      @RequestParam(defaultValue = "0") Integer kindId) {
-
-    List<Product> listProduct = productService.productSameKindAndCompany(companyId, kindId);
+      @RequestParam(defaultValue = "0") Integer kindId,
+      @RequestParam(defaultValue = "0") Integer companyId) {
+    List<Product> listProduct = productService.findByKindIdAndCompanyId(kindId, companyId);
     return new DataResponse(listProduct);
   }
+
   @GetMapping("/discount")
   DataResponse discountProduct(
       @RequestParam(defaultValue = "10") Integer discount){
     List<Product> productList = productService.findAllByDiscountGreaterThan(discount);
     return new DataResponse(productList);
   }
+
   @PutMapping("/updateDiscount")
   DataResponse updateDiscountProduct(
       @RequestParam(defaultValue = "0") Integer productId,
@@ -201,5 +204,4 @@ public class ProductController {
     }
     throw new RuntimeException("Cannot find product to update");
   }
-
 }

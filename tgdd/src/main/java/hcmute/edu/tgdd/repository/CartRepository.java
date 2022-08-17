@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, Integer> {
 	List<Cart> findByCustomerPhone(String customerPhone);
-	List<Cart> findByStatusId(int statusId);
+
 	List<Cart> findByCustomerPhoneAndStatusId(String customerPhone, int statusId);
 }

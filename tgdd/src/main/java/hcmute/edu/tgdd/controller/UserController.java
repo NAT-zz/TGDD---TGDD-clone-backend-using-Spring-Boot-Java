@@ -45,21 +45,21 @@ public class UserController {
 			new DataResponse(listAllUser);
 	}
 	
-// find user by phone/id , name (phone for now)
-@GetMapping(value = {"/{phone}"})
-public DataResponse findById(@PathVariable String phone) throws Exception{
-	Optional<User> foundUser = userService.findUserByPhone(phone.trim());
-	return foundUser.isPresent() ? 
-		new DataResponse(foundUser) :
-		new DataResponse("400", "User not found with phone = " + phone, 400);
+	// find user by phone/id , name (phone for now)
+	@GetMapping(value = {"/{phone}"})
+	public DataResponse findById(@PathVariable String phone) throws Exception{
+		Optional<User> foundUser = userService.findUserByPhone(phone.trim());
+		return foundUser.isPresent() ?
+				new DataResponse(foundUser) :
+				new DataResponse("400", "User not found with phone = " + phone, 400);
 	}
 
   // insert new user
   @PostMapping("/insert")
   DataResponse insertUser(@RequestBody @Validated User user, BindingResult result) {
-      if(userService.userExistedByPhone(user.getPhone().trim())) {
-          throw new RuntimeException("Phone already existed");
-      }
+		if(userService.userExistedByPhone(user.getPhone().trim())) {
+			throw new RuntimeException("Phone already existed");
+		}
       
 	  if(!result.hasErrors())
 		  return new DataResponse(userService.insertNewUser(user));
@@ -79,6 +79,7 @@ public DataResponse findById(@PathVariable String phone) throws Exception{
 		else
 			throw new RuntimeException("User not found with phone: " + phone);
 	}
+
 	//delete
 	@DeleteMapping("/{phone}")
 	public DataResponse deleteUser(@PathVariable String phone) {

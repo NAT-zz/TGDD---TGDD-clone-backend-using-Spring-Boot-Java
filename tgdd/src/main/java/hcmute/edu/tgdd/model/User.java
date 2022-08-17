@@ -108,7 +108,4 @@ public class User {
 		return "User [phone=" + phone + ", password=" + password + ", fullname=" + fullname + ", address=" + address
 				+ ", email=" + email + ", gender=" + gender + ", role=" + role + "]";
 	}
-	
-	
-	
 }

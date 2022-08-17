@@ -22,10 +22,10 @@ import java.util.Optional;
 
 @Service
 public class ExportExcelServiceImpl implements ExportExcelService {
-  @Autowired private ProductService productService;
+  @Autowired
+  private ProductService productService;
   private XSSFWorkbook workbook;
   private XSSFSheet sheet;
-
 
   private void writeHeaderRows() {
     Row row = sheet.createRow(0);
@@ -119,7 +119,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
   @Override
   public void export(HttpServletResponse response, List<CartDetail> cartDetailList)
       throws Exception {
-
     workbook = new XSSFWorkbook();
     sheet = workbook.createSheet("CartDetail");
 
@@ -133,7 +132,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
   }
 
   private List<CartDetail> removeDuplicatesProductDetail(List<CartDetail> list,  HashMap<Integer, Integer> hashMap) {
-
     List<CartDetail> newList = new ArrayList<>();
     newList.add(list.get(0));
     hashMap.put(1, 1);
@@ -153,20 +151,17 @@ public class ExportExcelServiceImpl implements ExportExcelService {
         newList.add(element);
       }
     }
-
     return newList;
   }
 
   private List<Product> getProductListFromCartDetailList(List<CartDetail> list) {
     List<Product> productList = new ArrayList<>();
 
-    for (int i = 0; i < list.size(); i++) {
-      int id = list.get(i).getProductId();
+    for (CartDetail cartDetail : list) {
+      int id = cartDetail.getProductId();
       Optional<Product> p = productService.findById(id);
       p.ifPresent(productList::add);
     }
-
     return productList;
   }
-
 }

@@ -14,6 +14,7 @@ public final class MyExceptionResonseHandler {
 			response.setHeader("Error", e.getMessage());
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.setContentType("application/json");
-		new ObjectMapper().writeValue(response.getOutputStream(),  dataResponse);new ObjectMapper().writeValue(response.getOutputStream(),  new DataResponse("403", "Access is denied", 200));
+		new ObjectMapper().writeValue(response.getOutputStream(), dataResponse);
+		new ObjectMapper().writeValue(response.getOutputStream(), new DataResponse("403", "Access is denied", 200));
 	}
 }

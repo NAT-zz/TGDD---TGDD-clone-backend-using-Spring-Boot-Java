@@ -35,7 +35,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter{
 					request.getServletPath().contains("/api/Company") && "GET".equalsIgnoreCase(request.getMethod()) ||
 					request.getServletPath().contains("/api/Comment") && "GET".equalsIgnoreCase(request.getMethod())) {
 				filterChain.doFilter(request, response);
-			}else {
+			} else {
 				String authorizationHeader = request.getHeader("Authorization");
 				if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")) {
 					try {
@@ -48,8 +48,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter{
 						String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
 
 						Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-						for(int i=0;i<roles.length;i++)
-							authorities.add(new SimpleGrantedAuthority(roles[i]));
+						for (String role : roles)
+							authorities.add(new SimpleGrantedAuthority(role));
 
 						UsernamePasswordAuthenticationToken authenticationToken =
 								new UsernamePasswordAuthenticationToken(username , null, authorities);

@@ -5,7 +5,6 @@ import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Video;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 

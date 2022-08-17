@@ -55,7 +55,7 @@ public interface ProductService {
       Integer minPrice,
       Integer maxPrice);
 
-  List<Product> productSameKindAndCompany(int kindId, int companyId);
+  List<Product> findByKindIdAndCompanyId(int kindId, int companyId);
 
   List<Product> findAllByDiscountGreaterThan(int discount);
 

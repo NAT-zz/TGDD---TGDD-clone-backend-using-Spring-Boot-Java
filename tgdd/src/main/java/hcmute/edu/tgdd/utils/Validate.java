@@ -27,5 +27,4 @@ public class Validate {
 		Matcher matcher = pattern.matcher(value);
 		return matcher.matches();
 	}
-	
 }
