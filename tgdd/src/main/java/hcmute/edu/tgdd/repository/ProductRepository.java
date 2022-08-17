@@ -1,6 +1,5 @@
 package hcmute.edu.tgdd.repository;
 
-import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.model.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -100,7 +100,6 @@ public class CartDetailController {
 		response.setHeader(headerKey, headerValue);
 
 		List<CartDetail> cartDetailList = cartDetailService.getAllCartDetail();
-
 		exportExcelService.exportStatisticsByDay(response, cartDetailList);
 	}
 
@@ -113,8 +112,6 @@ public class CartDetailController {
 		response.setHeader(headerKey, headerValue);
 
 		List<CartDetail> cartDetailList = cartDetailService.getAllCartDetail();
-
 		exportExcelService.exportStatisticsByYear(response, cartDetailList, year);
 	}
-
 }

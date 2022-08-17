@@ -25,19 +25,13 @@ import java.util.*;
 
 @Service
 public class ExportExcelServiceImpl implements ExportExcelService {
-<<<<<<< HEAD
   @Autowired
   private ProductService productService;
+  @Autowired
+  private CartService cartService;
   private XSSFWorkbook workbook;
   private XSSFSheet sheet;
-=======
-  @Autowired private ProductService productService;
-  @Autowired private CartService cartService;
-
-  private XSSFWorkbook workbook;
-  private XSSFSheet sheet;
-  private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
->>>>>>> 55042fe5d447965f194e5c2a93da6211c76f0a91
+  private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
   private void writeHeaderRows() {
     Row row = sheet.createRow(0);
@@ -141,13 +135,9 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     outputStream.close();
   }
 
-<<<<<<< HEAD
-  private List<CartDetail> removeDuplicatesProductDetail(List<CartDetail> list,  HashMap<Integer, Integer> hashMap) {
-=======
   @Override
   public void exportStatisticsByDay(HttpServletResponse response, List<CartDetail> cartDetailList)
       throws Exception {
-
     workbook = new XSSFWorkbook();
     sheet = workbook.createSheet("StatisticsByDay");
 
@@ -163,7 +153,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
   @Override
   public void exportStatisticsByYear(HttpServletResponse response, List<CartDetail> cartDetailList, int year)
           throws Exception {
-
     workbook = new XSSFWorkbook();
     sheet = workbook.createSheet("StatisticsByYear");
 
@@ -205,7 +194,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
       sheet.autoSizeColumn(1);
       cell.setCellStyle(style);
     }
-
   }
 
   private double getRevenueByMonth(List<Statistics> statisticsByDay, int month, int year) {
@@ -239,8 +227,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     cell.setCellValue("Doanh thu");
     cell.setCellStyle(style);
   }
-
-
 
   private void writeHeaderRowsDay() {
     Row row = sheet.createRow(0);
@@ -341,7 +327,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
       statistics.setTotalRevenue(hashMap.get(key));
       statisticsList.add(statistics);
     }
-
     return statisticsList;
   }
 
@@ -359,8 +344,6 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 
   private List<CartDetail> removeDuplicatesProductDetail(
       List<CartDetail> list, HashMap<Integer, Integer> hashMap) {
-
->>>>>>> 55042fe5d447965f194e5c2a93da6211c76f0a91
     List<CartDetail> newList = new ArrayList<>();
     newList.add(list.get(0));
     hashMap.put(1, 1);
@@ -393,22 +376,20 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     }
     return productList;
   }
-<<<<<<< HEAD
-=======
 
   private List<Cart> getCartListFromCartDetailList(List<CartDetail> list) {
     List<Cart> productList = new ArrayList<>();
     Set<Integer> cartSet = new HashSet<>();
+
     for (int i = 0; i < list.size(); i++) {
       int id = list.get(i).getCartId();
       cartSet.add(id);
     }
+
     for (Integer integer : cartSet) {
       Optional<Cart> p = cartService.findById(integer);
       p.ifPresent(productList::add);
     }
-
     return productList;
   }
->>>>>>> 55042fe5d447965f194e5c2a93da6211c76f0a91
 }

@@ -4,7 +4,6 @@ import hcmute.edu.tgdd.dto.LaptopDTO;
 import hcmute.edu.tgdd.dto.PhoneDTO;
 import hcmute.edu.tgdd.dto.SmartWatchDTO;
 import hcmute.edu.tgdd.dto.TabletDTO;
-import hcmute.edu.tgdd.model.Cart;
 import hcmute.edu.tgdd.model.Image;
 import hcmute.edu.tgdd.model.Product;
 import hcmute.edu.tgdd.repository.ProductRepository;
@@ -49,7 +48,6 @@ public class ProductServiceImpl implements ProductService {
   public List<Product> findByName(String name) {
     return productRepository.findByName(name);
   }
-
 
   @Override
   public Product save(Product product) {
