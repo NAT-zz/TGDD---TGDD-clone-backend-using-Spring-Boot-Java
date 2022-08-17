@@ -25,7 +25,7 @@ public class CartController {
 		if (foundListCart.size() > 0) {
 			return new DataResponse(foundListCart);
 		}
-		return new DataResponse("400", "No Cart found", 200);
+		throw new RuntimeException("No Cart found");
 	}
 
 	// find Cart by id

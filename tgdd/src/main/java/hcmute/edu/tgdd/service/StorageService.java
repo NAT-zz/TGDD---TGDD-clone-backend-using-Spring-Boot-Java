@@ -16,6 +16,8 @@ public interface StorageService {
 
   List<Image> findImageByProductId(Integer id);
 
+  List<Image> findImageByCommentId(Integer id);
+
   Optional<Image> findImageByFilePath(String filePath);
 
   boolean isImage(MultipartFile file);

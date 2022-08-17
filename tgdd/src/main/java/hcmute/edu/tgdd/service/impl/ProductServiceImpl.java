@@ -67,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Fail to upload image");
           }
 
-          Image image = new Image("tgdd_product/" + product.getName() + "_" + images.size(), url, id);
+          Image image = new Image("tgdd_product/" + product.getName() + "_" + images.size(), url, id, 0);
           return storageService.saveImage(image);
         });
   }
